@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Year_training extends Model
 {
     use HasFactory;
+
+    public function trainings()
+    {
+        return $this->hasMany(Training::class, 'year_training_id', 'id');
+    }
 }

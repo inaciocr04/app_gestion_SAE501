@@ -15,4 +15,23 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function student_statu()
+    {
+        return $this->hasMany(Student_statu::class, 'student_id');
+    }
+
+    public function trainings()
+    {
+        return $this->hasMany(Training::class, 'student_id', 'id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+    public function visits()
+    {
+        return $this->hasMany(Visits::class);
+    }
+
 }
