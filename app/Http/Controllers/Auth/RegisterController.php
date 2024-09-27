@@ -23,12 +23,25 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        $role = null;
+        if (str_ends_with($request->email, '@etu.unistra.fr')) {
+            $role = 'student';
+        } elseif ($request->has('is_teacher') && $request->has('is_manager')) {
+            return back()->withErrors(['role' => 'Veuillez choisir un seul rôle (enseignant ou gestionnaire).']);
+        } elseif ($request->has('is_teacher')) {
+            $role = 'teacher';
+        } elseif ($request->has('is_manager')) {
+            $role = 'manager';
+        }
+
         $validated['password'] = Hash::make($validated['password']);
+
+        $validated['role'] = $role;
 
         $user = User::create($validated);
 
         Auth::login($user);
 
-        return redirect()->route('home')->withStatus('Inscription réussie !');
+        return redirect()->route('dashboard')->withStatus('Inscription réussie !');
     }
 }
