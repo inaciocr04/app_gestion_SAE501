@@ -9,6 +9,11 @@ class Training extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'student_id',
+        'year_training_id',
+        'actual_year_id'
+    ];
     public function actual_years()
     {
         return $this->belongsTo(Actual_year::class, 'actual_year_id');

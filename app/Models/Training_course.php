@@ -9,6 +9,10 @@ class Training_course extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'course_title'
+    ];
+
     public function trainings()
     {
         return $this->hasMany(Training::class);

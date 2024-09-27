@@ -10,9 +10,22 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'date_birth',
+        'student_number',
+        'telephone_number',
+        'unistra_email',
+        'address',
+        'postcode',
+        'city',
+        'personal_email',
+    ];
+
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function student_statu()

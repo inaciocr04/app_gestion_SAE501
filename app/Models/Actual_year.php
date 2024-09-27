@@ -9,6 +9,9 @@ class Actual_year extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'year_title'
+    ];
     public function student_status()
     {
         return $this->hasMany(Student_statu::class, 'actual_year_id','id');

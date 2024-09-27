@@ -10,6 +10,15 @@ class Student_statu extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'student_id',
+        'teacher_id',
+        'statut_id',
+        'actual_year_id',
+        'start_date_status',
+        'end_date_status'
+    ];
+
     public function teachers(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
