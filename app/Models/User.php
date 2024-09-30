@@ -54,10 +54,11 @@ class User extends Authenticatable
     public function isTeacher()
     {
         return $this->role === 'teacher';
-    }    public function isManager()
-{
-    return $this->role === 'manager';
-}
+    }
+    public function isManager()
+    {
+        return $this->role === 'manager';
+    }
 
     public function student(): HasOne
     {

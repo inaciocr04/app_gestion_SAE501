@@ -20,19 +20,19 @@
     <nav x-data="{ showLogoutForm: false }">
         <ul>
             @if(Auth::user()->isStudent())
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Tableaux des étudiants</a></li>
+                <li><a href="{{Route('dashboard')}}">Accueil</a></li>
+                <li><a href="{{Route('global.students')}}">Tableaux des étudiants</a></li>
                 <li><a href="{{Route('student.show', ['id' => auth()->user()->id] )}}">Mes informations étudiantes</a></li>
                 <li><a href="#">Dépôt des repos</a></li>
             @elseif(Auth::user()->isTeacher())
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Tableaux des étudiants</a></li>
+                <li><a href="{{Route('dashboard')}}">Accueil</a></li>
+                <li><a href="{{Route('global.students')}}">Tableaux des étudiants</a></li>
                 <li><a href="#">Mes étudiants</a></li>
                 <li><a href="#">Calendrier</a></li>
             @elseif(Auth::user()->isManager())
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Utilisateurs</a></li>
-                <li><a href="#">Etudiants</a></li>
+                <li><a href="{{Route('dashboard')}}">Accueil</a></li>
+                <li><a href="{{Route('user.index')}}">Utilisateurs</a></li>
+                <li><a href="{{Route('global.students')}}">Etudiants</a></li>
                 <li><a href="#">Enseignants</a></li>
                 <li><a href="#">Entreprises</a></li>
                 <li><a href="#">Calendrier</a></li>
