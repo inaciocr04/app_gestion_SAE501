@@ -1,4 +1,4 @@
-<x-auth-layout title="Inscription" :action="route('register')" submitMessage="Inscription" titleForm="Inscrivez-vous">
+<x-auth-layout title="Inscription" :action="route('register')" submitMessage="Inscription" titleForm="Inscrivez-vous" infoForm="Si vous n'avez pas de compte inscrivez-vous avec le formulaire a côté.">
     <x-input name="name" label="Nom complet" />
     <x-input name="email" label="Adresse e-mail" type="email" />
     <x-input name="password" label="Mot de passe" type="password" />
