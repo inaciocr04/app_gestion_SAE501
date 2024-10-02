@@ -32,6 +32,8 @@ class RegisterController extends Controller
             $role = 'teacher';
         } elseif ($request->has('is_manager')) {
             $role = 'manager';
+        }elseif (str_ends_with($request->email, '@unistra.fr')){
+            $role = 'teacher';
         }
 
         $validated['password'] = Hash::make($validated['password']);

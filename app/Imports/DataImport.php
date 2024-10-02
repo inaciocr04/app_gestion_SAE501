@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Actual_year;
+use App\Models\Company;
 use App\Models\Course;
 use App\Models\Statu;
 use App\Models\Student;
@@ -29,7 +30,7 @@ class DataImport implements ToModel, WithHeadingRow
                 'lastname' => $row['nom'],
                 'date_birth' => $row['date_naissance'],
                 'student_number' => $row['num_etudiant'],
-                'telephone_number' => $row['tel_tudiant'],
+                'telephone_number' => $row['tel_etudiant'],
                 'unistra_email' => $row['courriel_unistra'],
                 'address' => $row['adresse_etudiant'],
                 'postcode' => $row['code_postal_etudiant'],

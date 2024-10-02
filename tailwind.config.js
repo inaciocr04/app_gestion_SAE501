@@ -7,7 +7,11 @@ export default {
   ],
   theme: {
     extend: {
+        fontFamily: {
+            custom: ['PP Telegraf', 'sans-serif'],
+        },
         colors: {
+            'bg-primary-color': '#075275',
             'primary-color': '#13293D',
             'secondary-color': '#006494',
             'third-color': '#1D94CC',

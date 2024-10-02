@@ -1,4 +1,4 @@
-<x-auth-layout title="Connexion" :action="route('login')" submitMessage="Connexion" titleForm="Connectez-vous">
+<x-auth-layout title="Connexion" :action="route('login')" submitMessage="Connexion" titleForm="Connectez-vous" infoForm="Si vous avez un compte connectez-vous avec le formulaire a côté.">
     <x-input name="email" label="Adresse e-mail" type="email" />
     <x-input name="password" label="Mot de passe" type="password" />
     <div class="flex items-center justify-between">
