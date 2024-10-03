@@ -18,7 +18,6 @@ class UserIsManager
             return $next($request);
         }
 
-        // Redirection ou action si l'utilisateur n'est pas un manager
         return redirect('/dashboard')->withErrors('Accès refusé.');
     }
 }

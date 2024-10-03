@@ -9,6 +9,13 @@ class Visits extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'student_id',
+      'company_id',
+      'note',
+      'date',
+    ];
+
     public function student()
     {
         return $this->belongsTo(Student::class);
