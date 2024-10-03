@@ -9,6 +9,15 @@ class Tutor extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'company_id',
+        'civility',
+        'firstname',
+        'lastname',
+        'telephone_number',
+        'email',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);

@@ -11,12 +11,16 @@ class Student_statu extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tutor_id',
         'student_id',
         'teacher_id',
         'statut_id',
         'actual_year_id',
         'start_date_status',
-        'end_date_status'
+        'end_date_status',
+        'start_date_company',
+        'end_date_company',
+        'status_company'
     ];
 
     public function teachers(): BelongsTo
