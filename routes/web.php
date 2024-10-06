@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -15,11 +16,9 @@ Route::get('/', function () {
     return Auth::check() ? redirect('dashboard') : redirect('login');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () {
-        return view('home.index');
-    })->name('home');
-});
+Route::get('/account', [HomeController::class, 'show'])->name('account');
+Route::get('/account/modification', [HomeController::class, 'index'])->name('account_modif');
+Route::patch('/account/modification', [HomeController::class, 'updatePassword']);
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -36,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
-    Route::get('student/{id}', [UserController::class, 'show'])->name('student.show');
+    Route::get('student/{id}', [StudentController::class, 'show'])->name('student.show');
 });
 
 Route::middleware(UserIsManager::class)->group(function () {

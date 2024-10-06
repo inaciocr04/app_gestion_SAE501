@@ -12,12 +12,5 @@ class UserController extends Controller
         $users = User::orderBy('name')->get();
         return view('user.index', ['users' => $users]);
     }
-    public function show($id)
-    {
-        $user = User::findOrFail($id);
 
-        $student = $user->student;
-
-        return view('student.show', compact('user', 'student'));
-    }
 }
