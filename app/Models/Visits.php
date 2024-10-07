@@ -10,18 +10,25 @@ class Visits extends Model
     use HasFactory;
 
     protected $fillable = [
-      'student_id',
-      'company_id',
-      'note',
-      'date',
+        'student_id',
+        'company_id',
+        'year_training_id',
+        'note',
+        'visit_statu',
+        'start_date_visit',
+        'end_date_visit',
     ];
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id');
     }
-    public function teacher()
+    public function company()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Company::class);
+    }
+    public function year_training()
+    {
+        return $this->belongsTo(Year_training::class);
     }
 }

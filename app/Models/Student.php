@@ -21,6 +21,10 @@ class Student extends Model
         'postcode',
         'city',
         'personal_email',
+        'permanent_telephone_number',
+        'permanent_address',
+        'permanent_postcode',
+        'permanent_city',
     ];
 
     public function user(): BelongsTo

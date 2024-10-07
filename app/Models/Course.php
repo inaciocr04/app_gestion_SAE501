@@ -12,7 +12,8 @@ class Course extends Model
     protected $fillable = [
         'student_id',
         'training_courses_id',
-        'start_date'
+        'start_date',
+        'year_training_id',
     ];
 
     public function student()
@@ -21,6 +22,10 @@ class Course extends Model
     }
     public function training_course()
     {
-        return $this->belongsTo(Training_course::class);
+        return $this->belongsTo(Training_course::class, 'training_courses_id');
+    }
+    public function year_training()
+    {
+        return $this->belongsTo(Year_training::class, 'year_training_id');
     }
 }

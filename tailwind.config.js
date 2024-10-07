@@ -9,6 +9,7 @@ export default {
     extend: {
         fontFamily: {
             custom: ['PP Telegraf', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
         },
         colors: {
             'bg-primary-color': '#075275',

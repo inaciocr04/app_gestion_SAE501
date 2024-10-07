@@ -20,21 +20,22 @@ class Student_statu extends Model
         'end_date_status',
         'start_date_company',
         'end_date_company',
-        'status_company'
+        'status_company',
+        'year_training_id',
     ];
 
-    public function teachers(): BelongsTo
+    public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
     }
 
-    public function Tutor()
+    public function tutor()
     {
         return $this->belongsTo(Tutor::class);
     }
     public function statu()
     {
-        return $this->belongsTo(Statu::class);
+        return $this->belongsTo(Statu::class, 'statut_id');
     }
 
     public function student()
@@ -45,5 +46,10 @@ class Student_statu extends Model
     public function actual_year()
     {
         return $this->belongsTo(Actual_year::class, 'actual_year_id', 'id');
+    }
+
+    public function year_training()
+    {
+        return $this->belongsTo(Year_training::class, 'year_training_id', 'id');
     }
 }

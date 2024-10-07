@@ -46,6 +46,10 @@ class DataImport implements ToModel, WithHeadingRow
                 'address' => $row['adresse_etudiant'],
                 'postcode' => $row['code_postal_etudiant'],
                 'city' => $row['ville_etudiant'],
+                'permanent_telephone_number' => $row['tel_permanent'],
+                'permanent_address' => $row['adresse_permanent'],
+                'permanent_postcode' => $row['code_postal_permanent'],
+                'permanent_city' => $row['ville_permanente'],
             ]
         );
 
@@ -84,20 +88,48 @@ class DataImport implements ToModel, WithHeadingRow
             $Tutors = null;
         }
 
+        $YearTraining = Year_training::firstOrCreate(
+            ['training_title' => $row['code_diplome']]
+        );
 
-        $note = $row['suivi_visite'];
+        $visit_statu = $row['suivi_visite'];
+        $note = $row['remarque'];
 
-        $dates = $row['dates'];
+        $start_date_visit = $row['date_debut_visite'] ?? null;
+        if ($start_date_visit) {
+            if (is_numeric($start_date_visit)) {
+                $start_date_visit = Date::excelToDateTimeObject($start_date_visit)->format('Y-m-d');
+            } else {
+                $start_date_visit = Carbon::createFromFormat('d/m/Y', $start_date_visit)->format('Y-m-d');
+            }
+        }else{
+            $start_date_visit = null;
+        }
+
+        $end_date_visit = $row['date_fin_visite'] ?? null;
+        if ($end_date_visit) {
+            if (is_numeric($end_date_visit)) {
+                $end_date_visit = Date::excelToDateTimeObject($end_date_visit)->format('Y-m-d');
+            } else {
+                $end_date_visit = Carbon::createFromFormat('d/m/Y', $end_date_visit)->format('Y-m-d');
+            }
+        }else{
+            $end_date_visit = null;
+        }
         if (!empty($Companies)) {
             $visits = Visits::updateOrCreate([
                 'student_id' => $student->id,
                 'company_id' => $Companies ? $Companies->id : null,
+                'year_training_id' => $YearTraining->id,
                 'note' => $note,
-                'date' => $dates,
+                'visit_statu' => $visit_statu,
+                'start_date_visit' => $start_date_visit,
+                'end_date_visit' => $end_date_visit,
             ]);
         }else{
             $visits = null;
         }
+
 
         // Vérifier ou créer le status à l'étudiant
         $status = Statu::firstOrCreate(
@@ -173,6 +205,7 @@ class DataImport implements ToModel, WithHeadingRow
                     'start_date_status' => $startDateStatus,
                 ],
                 [
+                    'year_training_id' => $YearTraining->id,
                     'tutor_id' => $Tutors ? $Tutors->id : null,
                     'end_date_status' => $endDateStatus,
                     'teacher_id' =>$teacher ? $teacher->id : null,
@@ -185,9 +218,6 @@ class DataImport implements ToModel, WithHeadingRow
             $studentStatu = null;
         }
 
-        $YearTraining = Year_training::firstOrCreate(
-            ['training_title' => $row['code_diplome']]
-        );
 
         Training::updateOrCreate([
             'student_id' => $student->id,
@@ -210,11 +240,15 @@ class DataImport implements ToModel, WithHeadingRow
             $startDate = now();
         }
 
-        Course::updateOrCreate([
-            'student_id' => $student->id,
-            'training_courses_id' => $TrainingCourses->id,
-            'start_date' => $startDate
-        ]);
+        Course::updateOrCreate(
+            [
+                'year_training_id' => $YearTraining->id,
+            ],
+            [
+                'training_courses_id' => $TrainingCourses->id,
+                'student_id' => $student->id,
+                'start_date' => $startDate
+            ]);
 
         return $student;
     }

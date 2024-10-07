@@ -21,7 +21,7 @@
 <body class="font-sans antialiased bg-bg-primary-color flex h-screen ">
     <nav class=" w-80 py-7 flex flex-col space-y-20 text-white" x-data="{ showLogoutForm: false }">
         <div class="w-full px-4">
-            <a href="">
+            <a href="{{route('dashboard')}}">
                 <img class="w-72" src="/img/logo_iut_hauguenau.png" alt="">
             </a>
         </div>
@@ -181,7 +181,7 @@
                 </div>
             </div>
         @endif
-        <section class="px-5">
+        <section class="px-5 py-5">
             {{$slot}}
         </section>
     </main>
