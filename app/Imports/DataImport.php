@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Models\Actual_year;
 use App\Models\Company;
 use App\Models\Course;
+use App\Models\GroupTD;
+use App\Models\GroupTP;
 use App\Models\Statu;
 use App\Models\Student;
 use App\Models\Student_statu;
@@ -15,6 +17,7 @@ use App\Models\Tutor;
 use App\Models\Visits;
 use App\Models\Year_training;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -28,7 +31,13 @@ class DataImport implements ToModel, WithHeadingRow
         if (is_numeric($dateNaissance)) {
             $dateNaissance = Date::excelToDateTimeObject($dateNaissance)->format('Y-m-d');
         } else {
-            $dateNaissance = Carbon::createFromFormat('d/m/Y', $dateNaissance)->format('Y-m-d');
+            Log::info('Date de naissance: ' . $dateNaissance);
+            try {
+                $dateNaissance = Carbon::createFromFormat('d/m/Y', $dateNaissance)->format('Y-m-d');
+            } catch (\Exception $e) {
+                Log::error('Erreur lors du parsing de la date de naissance: ' . $e->getMessage());
+                return null;
+            }
         }
 
 
@@ -203,9 +212,9 @@ class DataImport implements ToModel, WithHeadingRow
                     'statut_id' => $status->id,
                     'actual_year_id' => $actualYearId,
                     'start_date_status' => $startDateStatus,
+                    'year_training_id' => $YearTraining->id,
                 ],
                 [
-                    'year_training_id' => $YearTraining->id,
                     'tutor_id' => $Tutors ? $Tutors->id : null,
                     'end_date_status' => $endDateStatus,
                     'teacher_id' =>$teacher ? $teacher->id : null,
@@ -240,14 +249,22 @@ class DataImport implements ToModel, WithHeadingRow
             $startDate = now();
         }
 
+        $groupTD = GroupTD::firstOrCreate(
+                ['group_td_name' => $row['groupe_td']
+            ]);
+
+        $groupTP = GroupTP::firstOrCreate(
+            ['group_tp_name' => $row['groupe_tp']
+            ]);
+
         Course::updateOrCreate(
             [
                 'year_training_id' => $YearTraining->id,
-            ],
-            [
                 'training_courses_id' => $TrainingCourses->id,
                 'student_id' => $student->id,
-                'start_date' => $startDate
+                'start_date' => $startDate,
+                'group_td_id' => $groupTD->id,
+                'group_tp_id' => $groupTP->id,
             ]);
 
         return $student;
