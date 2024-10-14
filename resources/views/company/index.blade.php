@@ -1,6 +1,6 @@
 <x-layout title="Toutes les entreprises">
     <div class="mb-8">
-        <a class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Ajouter une entreprise</a>
+        <a href="{{route('company.create')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Ajouter une entreprise</a>
     </div>
             <table id="tableCompany">
                 <thead>
@@ -22,7 +22,12 @@
                         <td>{{$company->company_city}}</td>
                         <td>{{$company->company_department}}</td>
                         <td>{{$company->company_country}}</td>
-                        <td><a href="#">Détails</a> / <a href="#">Supprimer</a></td>
+                        <td><a href="{{route('company.show', ['company' => $company])}}">Détails</a> /
+                            <form action="{{route('company.destroy', ['company' => $company])}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Supprimer</button>
+                            </form></td>
                     </tr>
                 @endforeach
                 </tbody>
