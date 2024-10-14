@@ -4,7 +4,7 @@
 @endphp
 <x-layout title="Mes Informations">
 
-    <div x-data="{ showBut: 'but2' }">
+    <div x-data="{ showBut: {{ $mmi3 ? "'but3'" : "'but2'" }} }">
             <div class="flex justify-center px-60 space-x-6 items-center">
                 <div>
                     <img class="w-72" src="/img/user_photo.png" alt="">
@@ -20,9 +20,12 @@
                                 @endforeach</p>
                         @endforeach
                     </div>
-                    <div class="flex p-2 space-x-10">
+                    <div class="flex p-2 space-x-20">
                         <p><span class="font-poppins font-semibold">Nom: </span> {{$student->lastname}}</p>
                         <p><span class="font-poppins font-semibold">Prénom: </span> {{$student->firstname}}</p>
+                        @foreach($coursesMMI2 as $course)
+                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->group_tp_name }} / {{ $course->group_td->group_td_name }}</p>
+                        @endforeach
                     </div>
                     <div class="flex p-2 space-x-10">
                         <p><span class="font-poppins font-semibold">Date de naissance: </span>{{Carbon::parse($student->date_birth)->format('d-m-Y')}}</p>
@@ -49,6 +52,9 @@
                     <div class="flex p-2 space-x-10">
                         <p><span class="font-poppins font-semibold">Nom: </span> {{$student->lastname}}</p>
                         <p><span class="font-poppins font-semibold">Prénom: </span> {{$student->firstname}}</p>
+                        @foreach($coursesMMI3 as $course)
+                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->group_tp_name }} / {{ $course->group_td->group_td_name }}</p>
+                        @endforeach
                     </div>
                     <div class="flex p-2 space-x-10">
                         <p><span class="font-poppins font-semibold">Date de naissance: </span>{{Carbon::parse($student->date_birth)->format('d-m-Y')}}</p>

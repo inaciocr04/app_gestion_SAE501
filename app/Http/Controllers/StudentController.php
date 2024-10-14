@@ -9,10 +9,60 @@ use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
+
+    public function index()
+    {
+        $student = Student::with([
+            'trainings.year_training',
+            'student_statu',
+            'visits.year_training'
+        ])->firstOrFail();
+
+        $mmi1 = $student->trainings->firstWhere('year_training.training_title', 'MMI1');
+        $mmi2 = $student->trainings->firstWhere('year_training.training_title', 'MMI2');
+        $mmi3 = $student->trainings->firstWhere('year_training.training_title', 'MMI3');
+
+        $visitsMMI1 = $student->visits->filter(function ($visit) use ($mmi1) {
+            return $visit->year_training_id === $mmi1->year_training_id;
+        });
+
+        $visitsMMI2 = $student->visits->filter(function ($visit) use ($mmi2) {
+            return $visit->year_training_id === $mmi2->year_training_id;
+        });
+
+        $visitsMMI3 = $student->visits->filter(function ($visit) use ($mmi3) {
+            return $visit->year_training_id === $mmi3->year_training_id;
+        });
+
+        $statusMMI1 = $student->student_statu->filter(function ($studentStatu) use ($mmi1){
+            return $studentStatu->year_training_id === $mmi1->year_training_id;
+        });
+
+        $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2){
+            return $studentStatu->year_training_id === $mmi2->year_training_id;
+        });
+        $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3){
+            return $studentStatu->year_training_id === $mmi3->year_training_id;
+        });
+
+        return view('student.index', [
+            'student' => $student,
+            'mmi1' => $mmi1,
+            'mmi2' => $mmi2,
+            'mmi3' => $mmi3,
+            'visitsMMI1' => $visitsMMI1,
+            'visitsMMI2' => $visitsMMI2,
+            'visitsMMI3' => $visitsMMI3,
+            'statusMMI1' => $statusMMI1,
+            'statusMMI2' => $statusMMI2,
+            'statusMMI3' => $statusMMI3,
+        ]);
+    }
     public function students()
     {
         $studentsMMI1 = Student::whereHas('trainings', function ($query) {
-            $query->whereHas('year_training', function ($subQuery) {
+            $query->whereHas(
+                'year_training', function ($subQuery) {
                 $subQuery->where('training_title', 'MMI1');
             });
         })->get()->filter(function($student) {

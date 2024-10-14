@@ -14,7 +14,7 @@ class DashboardController extends Controller
         } elseif (Auth::user()->isManager()) {
             return view('manager.index');
         } elseif (Auth::user()->isStudent()) {
-            return view('student.index');
+            return redirect()->route('student.index');
         } else {
             return redirect()->route('student.index')->withErrors(['role' => 'Accès non autorisé.']);
         }
