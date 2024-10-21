@@ -21,7 +21,7 @@ class CheckRole
         }
 
         if (!in_array(Auth::user()->role, $roles)) {
-            return redirect('/home')->withErrors(['role' => 'Accès non autorisé.']);
+            return redirect('/account')->withErrors(['role' => 'Accès non autorisé.']);
         }
 
         return $next($request);
