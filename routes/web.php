@@ -51,6 +51,7 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::get('/manager/user', [UserController::class, 'index'])->name('user.index');
     Route::get('teachers', [TeacherController::class, 'index'])->name('manager.teachers');
     Route::resource('company', CompanyController::class);
+    Route::resource('teacher', TeacherController::class);
 });
 
 

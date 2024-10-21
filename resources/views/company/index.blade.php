@@ -22,12 +22,14 @@
                         <td>{{$company->company_city}}</td>
                         <td>{{$company->company_department}}</td>
                         <td>{{$company->company_country}}</td>
-                        <td><a href="{{route('company.show', ['company' => $company])}}">Détails</a> /
+                        <td class="flex space-x-2">
+                            <x-link name="Détails" href="{{route('company.show', ['company' => $company])}}"/>
                             <form action="{{route('company.destroy', ['company' => $company])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">Supprimer</button>
-                            </form></td>
+                                <x-form.button name="Supprimer"/>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

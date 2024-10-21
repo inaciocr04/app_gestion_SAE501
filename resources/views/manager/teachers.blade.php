@@ -4,6 +4,7 @@
              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom</th>
              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Prénom</th>
              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+             <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
              </thead>
              <tbody>
              @foreach($teachers as $teacher)
@@ -11,6 +12,13 @@
                      <td> {{$teacher->lastname}}</td>
                      <td>{{ $teacher->firstname }}</td>
                      <td>{{ $teacher->unistra_email }}</td>
+                     <td>
+                         <form action="{{route('teacher.destroy', ['teacher' => $teacher])}}" method="POST">
+                             @csrf
+                             @method('DELETE')
+                             <x-form.button name="Supprimer"/>
+                         </form>
+                     </td>
                  </tr>
              @endforeach
              </tbody>
@@ -23,14 +31,14 @@
             paging: true,
             searching: true,
             ordering: true,
-            pageLength: 15,
-            lengthMenu: [15, 10, 5],
+            pageLength: 12,
+            lengthMenu: [12, 10, 5],
             language: {
                 "sEmptyTable": "Aucune donnée disponible dans le tableau",
-                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ enseignants",
+                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entreprises",
                 "sInfoEmpty": "Affichage de 0 à 0 sur 0 entrées",
                 "sInfoFiltered": "(filtré de _MAX_ entrées au total)",
-                "sLengthMenu": "Afficher _MENU_ enseignants",
+                "sLengthMenu": "Afficher _MENU_ entreprises",
                 "sLoadingRecords": "Chargement...",
                 "sProcessing": "Traitement...",
                 "sSearch": "Recherche:",

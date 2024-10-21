@@ -13,4 +13,11 @@ class TeacherController extends Controller
 
         return view('manager.teachers', ['teachers' => $teachers]);
     }
+
+    public function destroy(Teacher $teacher)
+    {
+        $teacher->delete();
+
+        return redirect()->route('manager.teachers');
+    }
 }
