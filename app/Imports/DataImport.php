@@ -250,11 +250,11 @@ class DataImport implements ToModel, WithHeadingRow
         }
 
         $groupTD = GroupTD::firstOrCreate(
-                ['group_td_name' => $row['groupe_td']
+                ['td_name' => $row['groupe_td']
             ]);
 
         $groupTP = GroupTP::firstOrCreate(
-            ['group_tp_name' => $row['groupe_tp']
+            ['tp_name' => $row['groupe_tp']
             ]);
 
         Course::updateOrCreate(

@@ -12,7 +12,7 @@ class GroupTP extends Model
     protected $table = 'tp_groups';
 
     protected $fillable = [
-      'group_tp_name'
+      'tp_name'
     ];
 
     public function courses()
