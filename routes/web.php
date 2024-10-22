@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GroupeAnneeController;
 use App\Http\Controllers\GroupTDController;
 use App\Http\Controllers\GroupTPController;
 use App\Http\Controllers\HomeController;
@@ -39,9 +40,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'someFunction'])->name('dashboard');
     Route::get('students', [StudentController::class, 'students'])->name('global.students');
-    Route::get('/groupes', function () {
-        return view('groupes.index');
-    })->name('groupes.index');
+    Route::get('/groupes', [GroupeAnneeController::class, 'index'])->name('groupes.index');
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
