@@ -48,7 +48,6 @@ class CompanyController extends Controller
 
         return redirect()->route('company.show', ['company' => $company]);
     }
-
     public function destroy(Company $company)
     {
         $company->delete();

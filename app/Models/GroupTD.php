@@ -12,7 +12,7 @@ class GroupTD extends Model
     protected $table = 'td_groups';
 
     protected $fillable = [
-        'group_td_name'
+        'td_name'
     ];
 
     public function courses()

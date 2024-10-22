@@ -42,8 +42,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'someFunction'])->name('dashboard');
     Route::get('students', [StudentController::class, 'students'])->name('global.students');
+<<<<<<< HEAD
     Route::resource('/user', UserController::class);
+=======
     Route::get('/groupes', [GroupeAnneeController::class, 'index'])->name('groupes.index');
+>>>>>>> feature/other_fonctionality
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
@@ -57,11 +60,14 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::get('/manager/user', [UserController::class, 'index'])->name('user.index');
     Route::get('teachers', [TeacherController::class, 'index'])->name('manager.teachers');
     Route::resource('company', CompanyController::class);
+<<<<<<< HEAD
     Route::resource('teacher', TeacherController::class);
+=======
     Route::resource('tp_group', GroupTPController::class);
     Route::resource('td_group', GroupTDController::class);
     Route::resource('actual_year', ActualYearController::class);
     Route::resource('year_training', YearTrainingController::class);
+>>>>>>> feature/other_fonctionality
 });
 
 
