@@ -61,4 +61,5 @@
                 <x-form.button name="Modifier votre mot de passe" class="font-bold"/>
             </div>
         </form>
-    </div></div>
+    </div>
+</div>
