@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,37 +13,39 @@ class StudentController extends Controller
 
     public function index()
     {
+        $user = auth()->user();
+
         $student = Student::with([
             'trainings.year_training',
             'student_statu',
             'visits.year_training'
-        ])->firstOrFail();
+        ])->where('user_id', $user->id)->firstOrFail();
 
         $mmi1 = $student->trainings->firstWhere('year_training.training_title', 'MMI1');
         $mmi2 = $student->trainings->firstWhere('year_training.training_title', 'MMI2');
         $mmi3 = $student->trainings->firstWhere('year_training.training_title', 'MMI3');
 
         $visitsMMI1 = $student->visits->filter(function ($visit) use ($mmi1) {
-            return $visit->year_training_id === $mmi1->year_training_id;
+            return $visit->year_training_id === optional($mmi1)->year_training_id;
         });
 
         $visitsMMI2 = $student->visits->filter(function ($visit) use ($mmi2) {
-            return $visit->year_training_id === $mmi2->year_training_id;
+            return $visit->year_training_id === optional($mmi2)->year_training_id;
         });
 
         $visitsMMI3 = $student->visits->filter(function ($visit) use ($mmi3) {
-            return $visit->year_training_id === $mmi3->year_training_id;
+            return $visit->year_training_id === optional($mmi3)->year_training_id;
         });
 
         $statusMMI1 = $student->student_statu->filter(function ($studentStatu) use ($mmi1){
-            return $studentStatu->year_training_id === $mmi1->year_training_id;
+            return $studentStatu->year_training_id === optional($mmi1)->year_training_id;
         });
 
         $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2){
-            return $studentStatu->year_training_id === $mmi2->year_training_id;
+            return $studentStatu->year_training_id === optional($mmi2)->year_training_id;
         });
         $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3){
-            return $studentStatu->year_training_id === $mmi3->year_training_id;
+            return $studentStatu->year_training_id === optional($mmi3)->year_training_id;
         });
 
         return view('student.index', [
@@ -94,28 +97,31 @@ class StudentController extends Controller
 
     public function show()
     {
+        $user = auth()->user();
+
         $student = Student::with([
             'trainings.year_training',
             'student_statu',
             'visits.year_training'
-        ])->firstOrFail();
+        ])->where('user_id', $user->id)->firstOrFail();
 
         $mmi2 = $student->trainings->firstWhere('year_training.training_title', 'MMI2');
         $mmi3 = $student->trainings->firstWhere('year_training.training_title', 'MMI3');
 
         $visitsMMI2 = $student->visits->filter(function ($visit) use ($mmi2) {
-            return $visit->year_training_id === $mmi2->year_training_id;
+            return $visit->year_training_id === optional($mmi2)->year_training_id;
         });
 
         $visitsMMI3 = $student->visits->filter(function ($visit) use ($mmi3) {
-            return $visit->year_training_id === $mmi3->year_training_id;
+            return $visit->year_training_id === optional($mmi3)->year_training_id;
         });
 
-        $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2){
-            return $studentStatu->year_training_id === $mmi2->year_training_id;
+        $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2) {
+            return $studentStatu->year_training_id === optional($mmi2)->year_training_id;
         });
-        $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3){
-            return $studentStatu->year_training_id === $mmi3->year_training_id;
+
+        $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3) {
+            return $studentStatu->year_training_id === optional($mmi3)->year_training_id;
         });
 
         $coursesMMI2 = $student->courses->where('year_training.training_title', 'MMI2');
@@ -132,5 +138,31 @@ class StudentController extends Controller
             'coursesMMI2' => $coursesMMI2,
             'coursesMMI3' => $coursesMMI3,
         ]);
+    }
+
+
+    public function create()
+    {
+        return view('student.create');
+    }
+
+    public function store(StudentRequest $request, Student $student)
+    {
+        $data = $request->validated();
+        $student->fill($data);
+        $student->save();
+
+        if ($request->has('trainings')) {
+            foreach ($request->trainings as $training) {
+                $student->trainings()->create($training);
+            }
+        }
+
+        // Cours (Courses)
+        if ($request->has('courses')) {
+            foreach ($request->courses as $course) {
+                $student->courses()->create($course);
+            }
+        }
     }
 }

@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(UserIsStudent::class)->group(function () {
     Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.index');
-    Route::get('student/{id}', [StudentController::class, 'show'])->name('student.show');
+    Route::get('/student', [StudentController::class, 'show'])->name('student.show');
 });
 
 Route::middleware(UserIsManager::class)->group(function () {

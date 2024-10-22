@@ -12,7 +12,7 @@
                 <div x-show="showBut === 'but2'" class=" flex flex-col space-y-2 w-full">
                     <div class="flex p-2 justify-between">
                         <p class="font-custom font-regular"><span class="font-poppins font-semibold">N° étudiant :</span> {{$student->student_number}}</p>
-                        <p><span class="font-poppins font-semibold">Parcours: </span>{{$mmi2->year_training->training_title}}</p>
+                        <p><span class="font-poppins font-semibold">Parcours: </span>{{$mmi2 ? $mmi2->year_training->training_title : 'Parcours non défini'}}</p>
                         @foreach($coursesMMI2 as $course)
                             <p><span class="font-poppins font-semibold">Status: </span>{{ $course->training_course->course_title }}  en
                                 @foreach ($statusMMI2 as $studentStatu)
@@ -41,12 +41,13 @@
                 <div x-show="showBut === 'but3'" class=" flex flex-col space-y-2 w-full">
                     <div class="flex p-2 justify-between">
                         <p class="font-custom font-regular"><span class="font-poppins font-semibold">N° étudiant :</span> {{$student->student_number}}</p>
-                        <p><span class="font-poppins font-semibold">Parcours: </span>{{$mmi3->year_training->training_title}}</p>
+                        <p><span class="font-poppins font-semibold">Parcours: </span>{{$mmi3 ? $mmi3->year_training->training_title : 'Parcours non défini'}}</p>
                         @foreach($coursesMMI3 as $course)
                             <p><span class="font-poppins font-semibold">Status: </span>{{ $course->training_course->course_title }}  en
                                 @foreach ($statusMMI3 as $studentStatu)
                                     {{ $studentStatu->statu ? $studentStatu->statu->statut_title : 'Statut non défini' }}
-                                @endforeach</p>
+                                @endforeach
+                            </p>
                         @endforeach
                     </div>
                     <div class="flex p-2 space-x-10">

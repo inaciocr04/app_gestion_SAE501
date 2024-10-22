@@ -1,4 +1,5 @@
 <x-layout title="Modifier votre compte">
-    <a href="{{route('account')}}">Retour</a>
+    <x-link.back href="{{route('account')}}"/>
+
     <livewire:user-profile />
 </x-layout>

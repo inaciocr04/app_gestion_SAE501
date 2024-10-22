@@ -1,4 +1,5 @@
 <x-layout title="Tous les étudiants">
+    <x-link.link name="Créer un étudiant" href="{{route('student.create')}}"/>
     <div x-data="{ showBut : 'but1' }" class="mt-6">
         <div class="flex space-x-28 m-auto items-center  justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
             <div @click="showBut = 'but1'" :class="{'bg-seventh-color text-black': showBut === 'but1', 'text-white': showBut !== 'but1'}"

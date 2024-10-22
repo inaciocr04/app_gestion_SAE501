@@ -1,15 +1,21 @@
 <x-layout title="Année de formation">
-    <a href="{{route('groupes.index')}}">Retour</a>
-    <a href="{{route('year_training.create')}}">Créer une année de formation</a>
-    <ul>
+    <div class="flex space-x-2">
+        <x-link.back href="{{route('groupes.index')}}"/>
+        <x-link.link name="Créer une année de formation" href="{{route('year_training.create')}}"/>
+    </div>
+    <ul class="flex flex-col space-y-7">
         @foreach($year_trainings as $year_training)
-            <li>{{$year_training->training_title}}
-                <a href="{{route('year_training.edit', ['year_training' => $year_training])}}">Modifier</a>
-                <form action="{{route('year_training.destroy', ['year_training' => $year_training])}}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button>Supprimer</button>
-                </form>
+            <li class="flex justify-between items-center">
+                {{$year_training->training_title}}
+                <div class="flex space-x-7">
+                    <x-link.link name="Modifier" href="{{route('year_training.edit', ['year_training' => $year_training])}}"/>
+
+                    <form action="{{route('year_training.destroy', ['year_training' => $year_training])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <x-form.button name="Supprimer" class="bg-red-600"/>
+                    </form>
+                </div>
             </li>
         @endforeach
     </ul>

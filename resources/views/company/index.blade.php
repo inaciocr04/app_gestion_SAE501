@@ -23,7 +23,7 @@
                         <td>{{$company->company_department}}</td>
                         <td>{{$company->company_country}}</td>
                         <td class="flex space-x-2">
-                            <x-link name="Détails" href="{{route('company.show', ['company' => $company])}}"/>
+                            <x-link.link name="Détails" href="{{route('company.show', ['company' => $company])}}"/>
                             <form action="{{route('company.destroy', ['company' => $company])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
