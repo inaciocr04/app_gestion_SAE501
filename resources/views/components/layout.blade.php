@@ -17,7 +17,8 @@
         @section('css')
         @endsection
     </style>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 </head>
 <body class="font-sans antialiased bg-bg-primary-color flex h-screen w-screen overflow-hidden">
     <nav class=" w-80 py-7 flex flex-col space-y-20 text-white" x-data="{ showLogoutForm: false }">
@@ -136,7 +137,7 @@
     <main class="bg-gray-50 w-full rounded-tl-3xl rounded-bl-3xl">
         <div class="bg-sixth-color px-5 flex justify-between items-center rounded-tl-3xl py-3">
             <h2 class="font-semibold text-lg">{{$title}}</h2>
-            <div x-data="{ open:false }" class="relative">
+            <div x-data="{ open:false }" class="relative" >
                 <div @click="open = !open" class="flex items-center space-x-2 cursor-pointer">
                     <div class="bg-fourth-color w-fit rounded-full p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-white w-6 h-6">
@@ -166,7 +167,7 @@
             </div>
         </div>
         @if (session('status'))
-            <div class="bg-secondary-color p-4">
+            <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 3000)" class="bg-secondary-color p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

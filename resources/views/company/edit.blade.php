@@ -36,6 +36,6 @@
             <x-form.input name_label="Email du manager" type="email" name="company_manager_email" :value="$company->company_manager_email"/>
         </div>
 
-        <button type="submit">Créer</button>
+        <x-form.button name="Modifier l'entreprise"/>
     </form>
 </x-layout>

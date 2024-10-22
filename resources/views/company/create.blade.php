@@ -1,5 +1,8 @@
 <x-layout title="Ajout d'une entreprise">
-    <a href="{{route('company.index')}}">Retour</a>
+    <a href="{{route('company.index')}}" class="flex items-center">
+        <x-heroicon-c-arrow-long-left class="w-6 h-auto" />
+        Retour
+    </a>
     <form action="{{route('company.store')}}" method="POST">
         @csrf
         <div>
@@ -31,6 +34,6 @@
             <x-form.input name_label="Email du manager" type="email" name="company_manager_email"/>
         </div>
 
-        <button type="submit">Créer</button>
+        <x-form.button name="Créer"/>
     </form>
 </x-layout>

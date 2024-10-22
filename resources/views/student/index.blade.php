@@ -43,13 +43,13 @@
                             <li><span class="font-poppins font-semibold">Email:</span> {{$studentStatu->tutor->email}}</li>
                             <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$studentStatu->tutor->telephone_number}}</li>
                         @else
-                            <p>Aucune visite enregistrée pour MMI1.</p>
+                            <p>Aucun tuteur enregistrée pour MMI1.</p>
                         @endif
                     @endforeach
                 </ul>
             @endif
             @if ($visitsMMI1->isEmpty())
-                <p>Aucune visite enregistrée pour MMI1.</p>
+                <p>Aucun manager enregistrée pour MMI1.</p>
             @else
                 <ul>
                     @foreach ($visitsMMI1 as $visit)

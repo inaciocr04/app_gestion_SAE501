@@ -21,6 +21,8 @@ Route::get('/', function () {
 Route::get('/account', [HomeController::class, 'show'])->name('account');
 Route::get('/account/modification', [HomeController::class, 'index'])->name('account_modif');
 Route::patch('/account/modification', [HomeController::class, 'updatePassword']);
+Route::put('/account/modifier', [HomeController::class, 'updateAccount'])->name('account.update');
+
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -35,6 +37,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'someFunction'])->name('dashboard');
     Route::get('students', [StudentController::class, 'students'])->name('global.students');
+    Route::resource('/user', UserController::class);
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
@@ -48,6 +51,7 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::get('/manager/user', [UserController::class, 'index'])->name('user.index');
     Route::get('teachers', [TeacherController::class, 'index'])->name('manager.teachers');
     Route::resource('company', CompanyController::class);
+    Route::resource('teacher', TeacherController::class);
 });
 
 
