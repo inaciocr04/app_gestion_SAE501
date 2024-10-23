@@ -24,7 +24,7 @@
                         <p><span class="font-poppins font-semibold">Nom: </span> {{$student->lastname}}</p>
                         <p><span class="font-poppins font-semibold">Prénom: </span> {{$student->firstname}}</p>
                         @foreach($coursesMMI2 as $course)
-                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->group_tp_name }} / {{ $course->group_td->group_td_name }}</p>
+                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->tp_name }} / {{ $course->group_td->td_name }}</p>
                         @endforeach
                     </div>
                     <div class="flex p-2 space-x-10">
@@ -54,7 +54,7 @@
                         <p><span class="font-poppins font-semibold">Nom: </span> {{$student->lastname}}</p>
                         <p><span class="font-poppins font-semibold">Prénom: </span> {{$student->firstname}}</p>
                         @foreach($coursesMMI3 as $course)
-                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->group_tp_name }} / {{ $course->group_td->group_td_name }}</p>
+                            <p><span class="font-poppins font-semibold">Groupes: </span>{{ $course->group_tp->tp_name }} / {{ $course->group_td->td_name }}</p>
                         @endforeach
                     </div>
                     <div class="flex p-2 space-x-10">

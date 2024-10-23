@@ -32,10 +32,17 @@ class StudentRequest extends FormRequest
             'postcode' => ['required'],
             'city' => ['required'],
             'personal_email' => ['required'],
-            'permanent_telephone_number' => ['required'],
-            'permanent_address' => ['required'],
-            'permanent_postcode' => ['required'],
-            'permanent_city' => ['required'],
+            'permanent_telephone_number' => ['nullable'],
+            'permanent_address' => ['nullable'],
+            'permanent_postcode' => ['nullable'],
+            'permanent_city' => ['nullable'],
+            'year_training_id' => 'required|exists:year_trainings,id',
+            'actual_year_id' => 'required|exists:actual_years,id',
+            'group_td_id' => 'required|exists:td_groups,id',
+            'group_tp_id' => 'required|exists:tp_groups,id',
+            'statut_id' => 'required|exists:statuts,id',
+            'teacher_id' => 'nullable|exists:teachers,id',
+            'tutor_id' => 'nullable|exists:tutors,id',
         ];
     }
 }

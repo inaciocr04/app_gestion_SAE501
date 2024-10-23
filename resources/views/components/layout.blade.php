@@ -192,7 +192,7 @@
     </main>
     @section('script')
     @endsection
-
+    @livewireScriptConfig
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
 

@@ -62,6 +62,7 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::resource('td_group', GroupTDController::class);
     Route::resource('actual_year', ActualYearController::class);
     Route::resource('year_training', YearTrainingController::class);
+    Route::resource('student', StudentController::class);
 });
 
 

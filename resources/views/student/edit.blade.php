@@ -8,7 +8,7 @@
             <div x-show="step === 1" class="step">
                 <h2>Informations personnelles</h2>
                 <div class="flex">
-                    <x-form.input name_label="Nom" name="lastname" value="{{ old('lastname', isset($student) ? $student->lastname : '') }}"/>
+                    <x-form.input name_label="Nom" name="lastname" value="{{ old('lastname', $student->lastname) }}"/>
                     <x-form.input name_label="Prénom" name="firstname" value="{{ old('firstname', isset($student) ? $student->firstname : '') }}"/>
                     <x-form.input name_label="Date de naissance" name="date_birth" type="date" value="{{ old('date_birth', isset($student) ? $student->date_birth : '') }}"/>
                     <x-form.input name_label="Numéro étudiant" name="student_number" value="{{ old('student_number', isset($student) ? $student->student_number : '') }}"/>
@@ -28,10 +28,10 @@
                 <h2>Informations de formation</h2>
                 <div class="flex">
                     <label for="year_training">Formation :</label>
-                    <select name="year_training_id" id="year_training" required>
-                        <option value="">-- Sélectionner une formation --</option>
+                    <select name="year_training_id" id="year_training_id">
                         @foreach($year_trainings as $year_training)
-                            <option value="{{ $year_training->id }}">
+                            <option value="{{ $year_training->id }}"
+                                    @if($year_training->id == $year_training_id) selected @endif>
                                 {{ $year_training->training_title }}
                             </option>
                         @endforeach
@@ -40,12 +40,12 @@
                 <div class="flex">
                     <label for="actual_year">Année :</label>
                     <select name="actual_year_id" id="actual_year" required>
-                        <option value="">-- Sélectionner une année --</option>
-                        @foreach($actual_years as $actual_year)
-                            <option value="{{ $actual_year->id }}" {{ (old('actual_year_id') == $actual_year->id) ? 'selected' : '' }}>
-                                {{ $actual_year->year_title }}
-                            </option>
-                        @endforeach
+                            <option value="">-- Sélectionner une année --</option>
+                            @foreach($actual_years as $actual_year)
+                                <option value="{{ $actual_year->id }}" {{ (old('actual_year_id') == $actual_year->id) ? 'selected' : '' }}>
+                                    {{ $actual_year->year_title }}
+                                </option>
+                            @endforeach
                     </select>
                 </div>
                 <div class="flex">
@@ -92,9 +92,9 @@
                         @endforeach
                     </select>
                 </div>
-                <x-form.input type="date" name_label="Date de début parcours" name="start_date" value="{{ old('start_date', isset($student) ? $student->courses->start_date : '') }}"/>
-                <x-form.input type="date" name_label="Date de début du status" name="start_date_status" value="{{ old('start_date_status', isset($student) ? $student->student_statu->start_date_status : '') }}"/>
-                <x-form.input type="date" name_label="Date de fin du status" name="end_date_status" value="{{ old('end_date_status', isset($student) ? $student->student_statu->end_date_status : '') }}"/>
+                <x-form.input type="date" name_label="Date de début parcours" name="start_date" value="{{ old('start_date', isset($student) && $student->courses->isNotEmpty() ? $student->courses->first()->start_date : '') }}"/>
+                <x-form.input type="date" name_label="Date de début du status" name="start_date_status" value="{{ old('start_date_status', isset($student) && $student->student_statu->isNotEmpty() ? $student->student_statu->first()->start_date_status : '') }}"/>
+                <x-form.input type="date" name_label="Date de fin du status" name="end_date_status" value="{{ old('end_date_status', isset($student) && $student->student_statu->isNotEmpty() ? $student->student_statu->first()->end_date_status : '') }}"/>
                 <div class="flex space-x-7">
                     <button class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</button>
                     <button class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step++">Suivant <x-heroicon-c-arrow-long-right class="w-6 h-auto" /></button>
@@ -137,8 +137,8 @@
                         @endforeach
                     </select>
                 </div>
-                <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value="{{ old('start_date_company', isset($student) ? $student->student_statu->start_date_company : '') }}"/>
-                <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value="{{ old('end_date_company', isset($student) ? $student->student_statu->end_date_company : '') }}"/>
+                <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value="{{ old('start_date_company', isset($student) && $student->student_statu->isNotEmpty() ? $student->student_statu->first()->start_date_company : '') }}"/>
+                <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value="{{ old('end_date_company', isset($student) && $student->student_statu->isNotEmpty() ? $student->student_statu->first()->end_date_company : '') }}"/>
 
                 <div class="flex space-x-7">
                     <button class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</button>
@@ -166,8 +166,8 @@
                         <label for="note" class="block text-sm font-medium text-gray-700">Notes :</label>
                         <textarea name="note" id="note" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('note') }}</textarea>
                     </div>
-                    <x-form.input type="date" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', isset($student) ? $student->visits->start_date_visit : '') }}"/>
-                    <x-form.input type="date" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', isset($student) ? $student->visits->end_date_visit : '') }}"/>
+                    <x-form.input type="date" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', isset($student) && $student->visits->isNotEmpty() ? $student->visits->first()->start_date_visit : '') }}"/>
+                    <x-form.input type="date" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', isset($student) && $student->visits->isNotEmpty() ? $student->visits->first()->end_date_visit : '') }}"/>
                 </div>
                 <button class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</button>
                 <x-form.button name="Créer"/>
