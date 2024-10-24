@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Company extends Model
 {
@@ -26,5 +27,14 @@ class Company extends Model
     public function tutors()
     {
         return $this->hasMany(Tutor::class);
+    }
+    public function students_status(): HasMany
+    {
+        return $this->hasMany(Student_statu::class);
+    }
+
+    public function visits(): HasMany
+    {
+        return $this->hasMany(Visits::class);
     }
 }

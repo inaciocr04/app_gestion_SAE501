@@ -177,7 +177,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                Update
+                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete

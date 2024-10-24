@@ -244,10 +244,24 @@ class StudentController extends Controller
         $companies = Company::all();
 
         $trainings = $student->trainings;
+        $courses = $student->courses;
+        $student_status = $student->student_statu;
+        $visits = $student->visits;
 
-        $training = $trainings->last();
+        $training = $student->trainings()->latest()->first();
+        $course = $student->courses()->latest()->first();
+        $student_statu = $student->student_statu()->latest()->first();
+        $visit = $student->visits()->latest()->first();
 
         $year_training_id = $training ? $training->year_training_id : null;
+        $actual_year_id = $training ? $training->actual_year_id : null;
+        $group_td_id = $course ? $course->group_td_id : null;
+        $group_tp_id = $course ? $course->group_tp_id : null;
+        $training_courses_id = $course ? $course->training_courses_id : null;
+        $statuts_id = $student_statu ? $student_statu->statut_id : null;
+        $tutors_id = $student_statu ? $student_statu->tutor_id : null;
+        $companies_id = $student_statu ? $student_statu->company_id : null;
+        $teachers_id = $student_statu ? $student_statu->teacher_id : null;
 
 
         return view('student.edit', compact(
@@ -262,6 +276,17 @@ class StudentController extends Controller
             'statuts',
             'companies',
             'year_training_id',
+            'actual_year_id',
+            'group_td_id',
+            'group_tp_id',
+            'training_courses_id',
+            'statuts_id',
+            'tutors_id',
+            'companies_id',
+            'course',
+            'student_statu',
+            'visit',
+            'teachers_id'
         ));
     }
     public function update(StudentRequest $request, Student $student)
@@ -269,47 +294,55 @@ class StudentController extends Controller
         $data = $request->validated();
 
         $student->fill($data);
-
         $student->save();
 
-        Training::update([
-            'student_id' => $student->id,
-            'year_training_id' => $request->input('year_training_id'),
-            'actual_year_id' => $request->input('actual_year_id'),
-        ]);
+        $training = $student->trainings()->latest()->first();
+        if ($training) {
+            $training->update([
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),
+            ]);
+        }
 
-        Course::update([
-            'student_id' => $student->id,
-            'year_training_id' => $request->input('year_training_id'),
-            'training_courses_id' => $request->input('training_courses_id'),
-            'group_td_id' => $request->input('group_td_id'),
-            'group_tp_id' => $request->input('group_tp_id'),
-            'start_date' => $request->input('start_date'),
-        ]);
+        $course = $student->courses()->latest()->first();
+        if ($course) {
+            $course->update([
+                'year_training_id' => $request->input('year_training_id'),
+                'training_courses_id' => $request->input('training_courses_id'),
+                'group_td_id' => $request->input('group_td_id'),
+                'group_tp_id' => $request->input('group_tp_id'),
+                'start_date' => $request->input('start_date'),
+            ]);
+        }
 
-        Student_statu::update([
-            'student_id' => $student->id,
-            'tutor_id' => $request->input('tutor_id'),
-            'teacher_id' => $request->input('teacher_id'),
-            'year_training_id' => $request->input('year_training_id'),
-            'actual_year_id' => $request->input('actual_year_id'),
-            'statut_id' => $request->input('statut_id'),
-            'start_date_status' => $request->input('start_date_status'),
-            'end_date_status' => $request->input('end_date_status'),
-            'start_date_company' => $request->input('start_date_company'),
-            'end_date_company' => $request->input('end_date_company'),
-        ]);
+        $studentStatus = $student->student_statu()->latest()->first();
+        if ($studentStatus) {
+            $studentStatus->update([
+                'tutor_id' => $request->input('tutor_id'),
+                'teacher_id' => $request->input('teacher_id'),
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),
+                'statuts_id' => $request->input('statut_id'),
+                'start_date_status' => $request->input('start_date_status'),
+                'end_date_status' => $request->input('end_date_status'),
+                'start_date_company' => $request->input('start_date_company'),
+                'end_date_company' => $request->input('end_date_company'),
+            ]);
+        }
 
-        Visits::update([
-            'student_id' => $student->id,
-            'company_id' => $request->input('company_id'),
-            'year_training_id' => $request->input('year_training_id'),
-            'note' => $request->input('note'),
-            'visit_statu' => $request->input('visit_statu'),
-            'start_date_visit' => $request->input('start_date_visit'),
-            'end_date_visit' => $request->input('end_date_visit'),
-        ]);
+        $visit = $student->visits()->latest()->first();
+        if ($visit) {
+            $visit->update([
+                'company_id' => $request->input('company_id'),
+                'year_training_id' => $request->input('year_training_id'),
+                'note' => $request->input('note'),
+                'visit_statu' => $request->input('visit_statu'),
+                'start_date_visit' => $request->input('start_date_visit'),
+                'end_date_visit' => $request->input('end_date_visit'),
+            ]);
+        }
 
-        return redirect()->route('global.students')->with('success', 'Étudiant créé avec succès.');
+        return redirect()->route('global.students')->with('success', 'Étudiant mis à jour avec succès.');
     }
+
 }
