@@ -13,9 +13,11 @@ use App\Http\Controllers\ImportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\YearTrainingController;
 use App\Http\Middleware\UserIsManager;
 use App\Http\Middleware\UserIsStudent;
+use App\Http\Middleware\UserIsTeacher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,13 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(UserIsStudent::class)->group(function () {
     Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.index');
     Route::get('/student', [StudentController::class, 'show'])->name('student.show');
+});
+
+Route::middleware(UserIsTeacher::class)->group(function () {
+    Route::get('/teacher/student', [TeacherController::class, 'showStudents'])->name('teacher.student');
+    Route::get('/teacher/visit', [TeacherController::class, 'showVisits'])->name('teacher.visit');
+    Route::get('/visits', [VisitsController::class, 'index'])->name('teacher.visit');
+    Route::get('/visits/data', [VisitsController::class, 'fetchData']);
 });
 
 Route::middleware(UserIsManager::class)->group(function () {

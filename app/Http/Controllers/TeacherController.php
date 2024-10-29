@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Visits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
@@ -20,4 +22,18 @@ class TeacherController extends Controller
 
         return redirect()->route('manager.teachers');
     }
+
+    public function showStudents()
+    {
+        $teacher = Auth::user()->teacher;
+
+        $students = $teacher->students_status->map(function ($studentStatu) {
+            return $studentStatu->student;
+        });
+
+
+        return view('teacher.student', compact('students'));
+    }
+
+
 }

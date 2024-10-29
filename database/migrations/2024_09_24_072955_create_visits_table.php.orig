@@ -18,8 +18,13 @@ return new class extends Migration
             $table->foreignId('year_training_id');
             $table->text('note')->nullable();
             $table->string('visit_statu')->nullable();
+<<<<<<< HEAD
+            $table->date('start_date_visit')->nullable();
+            $table->date('end_date_visit')->nullable();
+=======
             $table->dateTime('start_date_visit')->nullable();
             $table->dateTime('end_date_visit')->nullable();
+>>>>>>> feature/teacher
             $table->timestamps();
         });
     }
