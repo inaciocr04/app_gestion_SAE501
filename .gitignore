@@ -17,5 +17,4 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-database/migrations/*.php
 public/build
