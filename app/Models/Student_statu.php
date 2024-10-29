@@ -22,6 +22,7 @@ class Student_statu extends Model
         'end_date_company',
         'status_company',
         'year_training_id',
+        'company_id'
     ];
 
     public function teacher(): BelongsTo
@@ -51,5 +52,9 @@ class Student_statu extends Model
     public function year_training()
     {
         return $this->belongsTo(Year_training::class, 'year_training_id', 'id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

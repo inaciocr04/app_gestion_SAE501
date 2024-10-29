@@ -172,27 +172,39 @@
                 </div>
             </div>
         </div>
-        @if (session('status'))
-            <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 3000)" class="bg-secondary-color p-4">
+        @if (session('status') || session('success'))
+            <div x-data="{ show: true }"
+                 x-show="show"
+                 x-transition:enter="transition transform ease-out duration-300"
+                 x-transition:enter-start="translate-y-[-100%] opacity-0"
+                 x-transition:enter-end="translate-y-0 opacity-100"
+                 x-transition:leave="transition transform ease-in duration-300"
+                 x-transition:leave-start="translate-y-0 opacity-100"
+                 x-transition:leave-end="translate-y-[-100%] opacity-0"
+                 x-init="setTimeout(() => show = false, 3000)"
+                 class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 bg-secondary-color p-2 rounded shadow-md">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <svg class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                         </svg>
                     </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-white">{{ session('status') }}</p>
+                    <div class="ml-2">
+                        <p class="text-sm font-medium text-white">
+                            {{ session('status') ?? session('success') }}
+                        </p>
                     </div>
                 </div>
             </div>
         @endif
+
         <section class="px-5 py-5">
             {{$slot}}
         </section>
     </main>
     @section('script')
     @endsection
-
+    @livewireScriptConfig
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
 

@@ -45,7 +45,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($student->courses->isNotEmpty() && $student->courses->last()->group_td && $student->courses->last()->group_tp)
-                                {{$student->courses->last()->group_td->group_td_name}} / {{$student->courses->last()->group_tp->group_tp_name}}
+                                {{$student->courses->last()->group_td->td_name}} / {{$student->courses->last()->group_tp->tp_name}}
                             @else
                                 N/A
                             @endif
@@ -61,7 +61,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    Update
+                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete
@@ -103,7 +103,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($student->courses->isNotEmpty() && $student->courses->last()->group_td && $student->courses->last()->group_tp)
-                                {{$student->courses->last()->group_td->group_td_name}} / {{$student->courses->last()->group_tp->group_tp_name}}
+                                {{$student->courses->last()->group_td->td_name}} / {{$student->courses->last()->group_tp->tp_name}}
                             @else
                                 N/A
                             @endif
@@ -119,7 +119,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    Update
+                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete
@@ -161,7 +161,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($student->courses->isNotEmpty() && $student->courses->last()->group_td && $student->courses->last()->group_tp)
-                                {{$student->courses->last()->group_td->group_td_name}} / {{$student->courses->last()->group_tp->group_tp_name}}
+                                {{$student->courses->last()->group_td->td_name}} / {{$student->courses->last()->group_tp->tp_name}}
                             @else
                                 N/A
                             @endif
@@ -177,7 +177,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                Update
+                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete

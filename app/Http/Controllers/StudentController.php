@@ -3,7 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
+use App\Models\Actual_year;
+use App\Models\Company;
+use App\Models\Course;
+use App\Models\GroupTD;
+use App\Models\GroupTP;
+use App\Models\Statu;
 use App\Models\Student;
+use App\Models\Student_statu;
+use App\Models\Teacher;
+use App\Models\Training;
+use App\Models\Training_course;
+use App\Models\Tutor;
+use App\Models\Visits;
+use App\Models\Year_training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -143,26 +156,193 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('student.create');
+        $year_trainings = Year_Training::all();
+        $actual_years = Actual_year::all();
+        $training_courses = Training_course::all();
+        $td_groups = GroupTD::all();
+        $tp_groups = GroupTP::all();
+        $tutors = Tutor::all();
+        $teachers = Teacher::all();
+        $statuts = Statu::all();
+        $companies = Company::all();
+
+
+        return view('student.create', compact(
+            'year_trainings',
+            'actual_years',
+            'training_courses',
+            'td_groups',
+            'tp_groups',
+            'tutors',
+            'teachers',
+            'statuts',
+            'companies',
+        ));
     }
 
-    public function store(StudentRequest $request, Student $student)
+    public function store(StudentRequest $request)
     {
         $data = $request->validated();
+
+        $student = new Student();
+
+        $student->fill($data);
+
+        $student->save();
+
+        Training::create([
+            'student_id' => $student->id,
+            'year_training_id' => $request->input('year_training_id'),
+            'actual_year_id' => $request->input('actual_year_id'),
+        ]);
+
+        Course::create([
+            'student_id' => $student->id,
+            'year_training_id' => $request->input('year_training_id'),
+            'training_courses_id' => $request->input('training_courses_id'),
+            'group_td_id' => $request->input('group_td_id'),
+            'group_tp_id' => $request->input('group_tp_id'),
+            'start_date' => $request->input('start_date'),
+        ]);
+
+        Student_statu::create([
+            'student_id' => $student->id,
+            'tutor_id' => $request->input('tutor_id'),
+            'teacher_id' => $request->input('teacher_id'),
+            'year_training_id' => $request->input('year_training_id'),
+            'actual_year_id' => $request->input('actual_year_id'),
+            'statut_id' => $request->input('statut_id'),
+            'start_date_status' => $request->input('start_date_status'),
+            'end_date_status' => $request->input('end_date_status'),
+            'start_date_company' => $request->input('start_date_company'),
+            'end_date_company' => $request->input('end_date_company'),
+        ]);
+
+        Visits::create([
+            'student_id' => $student->id,
+            'company_id' => $request->input('company_id'),
+            'year_training_id' => $request->input('year_training_id'),
+            'note' => $request->input('note'),
+            'visit_statu' => $request->input('visit_statu'),
+            'start_date_visit' => $request->input('start_date_visit'),
+            'end_date_visit' => $request->input('end_date_visit'),
+        ]);
+
+        return redirect()->route('global.students')->with('success', 'Étudiant créé avec succès.');
+    }
+
+    public function edit(Student $student)
+    {
+        $year_trainings = Year_Training::all();
+        $actual_years = Actual_year::all();
+        $training_courses = Training_course::all();
+        $td_groups = GroupTD::all();
+        $tp_groups = GroupTP::all();
+        $tutors = Tutor::all();
+        $teachers = Teacher::all();
+        $statuts = Statu::all();
+        $companies = Company::all();
+
+        $trainings = $student->trainings;
+        $courses = $student->courses;
+        $student_status = $student->student_statu;
+        $visits = $student->visits;
+
+        $training = $student->trainings()->latest()->first();
+        $course = $student->courses()->latest()->first();
+        $student_statu = $student->student_statu()->latest()->first();
+        $visit = $student->visits()->latest()->first();
+
+        $year_training_id = $training ? $training->year_training_id : null;
+        $actual_year_id = $training ? $training->actual_year_id : null;
+        $group_td_id = $course ? $course->group_td_id : null;
+        $group_tp_id = $course ? $course->group_tp_id : null;
+        $training_courses_id = $course ? $course->training_courses_id : null;
+        $statuts_id = $student_statu ? $student_statu->statut_id : null;
+        $tutors_id = $student_statu ? $student_statu->tutor_id : null;
+        $companies_id = $student_statu ? $student_statu->company_id : null;
+        $teachers_id = $student_statu ? $student_statu->teacher_id : null;
+
+
+        return view('student.edit', compact(
+            'student',
+            'year_trainings',
+            'actual_years',
+            'training_courses',
+            'td_groups',
+            'tp_groups',
+            'tutors',
+            'teachers',
+            'statuts',
+            'companies',
+            'year_training_id',
+            'actual_year_id',
+            'group_td_id',
+            'group_tp_id',
+            'training_courses_id',
+            'statuts_id',
+            'tutors_id',
+            'companies_id',
+            'course',
+            'student_statu',
+            'visit',
+            'teachers_id'
+        ));
+    }
+    public function update(StudentRequest $request, Student $student)
+    {
+        $data = $request->validated();
+
         $student->fill($data);
         $student->save();
 
-        if ($request->has('trainings')) {
-            foreach ($request->trainings as $training) {
-                $student->trainings()->create($training);
-            }
+        $training = $student->trainings()->latest()->first();
+        if ($training) {
+            $training->update([
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),
+            ]);
         }
 
-        // Cours (Courses)
-        if ($request->has('courses')) {
-            foreach ($request->courses as $course) {
-                $student->courses()->create($course);
-            }
+        $course = $student->courses()->latest()->first();
+        if ($course) {
+            $course->update([
+                'year_training_id' => $request->input('year_training_id'),
+                'training_courses_id' => $request->input('training_courses_id'),
+                'group_td_id' => $request->input('group_td_id'),
+                'group_tp_id' => $request->input('group_tp_id'),
+                'start_date' => $request->input('start_date'),
+            ]);
         }
+
+        $studentStatus = $student->student_statu()->latest()->first();
+        if ($studentStatus) {
+            $studentStatus->update([
+                'tutor_id' => $request->input('tutor_id'),
+                'teacher_id' => $request->input('teacher_id'),
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),
+                'statuts_id' => $request->input('statut_id'),
+                'start_date_status' => $request->input('start_date_status'),
+                'end_date_status' => $request->input('end_date_status'),
+                'start_date_company' => $request->input('start_date_company'),
+                'end_date_company' => $request->input('end_date_company'),
+            ]);
+        }
+
+        $visit = $student->visits()->latest()->first();
+        if ($visit) {
+            $visit->update([
+                'company_id' => $request->input('company_id'),
+                'year_training_id' => $request->input('year_training_id'),
+                'note' => $request->input('note'),
+                'visit_statu' => $request->input('visit_statu'),
+                'start_date_visit' => $request->input('start_date_visit'),
+                'end_date_visit' => $request->input('end_date_visit'),
+            ]);
+        }
+
+        return redirect()->route('global.students')->with('success', 'Étudiant mis à jour avec succès.');
     }
+
 }

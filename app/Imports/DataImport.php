@@ -125,19 +125,16 @@ class DataImport implements ToModel, WithHeadingRow
         }else{
             $end_date_visit = null;
         }
-        if (!empty($Companies)) {
-            $visits = Visits::updateOrCreate([
+            $visits = Visits::updateOrCreate(
+                [
                 'student_id' => $student->id,
                 'company_id' => $Companies ? $Companies->id : null,
-                'year_training_id' => $YearTraining->id,
                 'note' => $note,
-                'visit_statu' => $visit_statu,
+                    'year_training_id' => $YearTraining->id,
+                    'visit_statu' => $visit_statu,
                 'start_date_visit' => $start_date_visit,
                 'end_date_visit' => $end_date_visit,
             ]);
-        }else{
-            $visits = null;
-        }
 
 
         // Vérifier ou créer le status à l'étudiant
@@ -220,7 +217,8 @@ class DataImport implements ToModel, WithHeadingRow
                     'teacher_id' =>$teacher ? $teacher->id : null,
                     'start_date_company' => $startDateCompany,
                     'end_date_company' => $endDateCompany,
-                    'status_company' => $statusCompany
+                    'status_company' => $statusCompany,
+                    'company_id' => $Companies ? $Companies->id : null,
                 ]
             );
         }else{
