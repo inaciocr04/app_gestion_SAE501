@@ -144,10 +144,10 @@
             </ul>
         </div>
     </nav>
-    <main class="bg-gray-50 w-full rounded-tl-3xl rounded-bl-3xl">
+    <main class="bg-gray-50 w-full h-screen rounded-tl-3xl rounded-bl-3xl flex flex-col overflow-hidden">
         <div class="bg-sixth-color px-5 flex justify-between items-center rounded-tl-3xl py-3">
             <h2 class="font-semibold text-lg">{{$title}}</h2>
-            <div x-data="{ open:false }" class="relative" >
+            <div x-data="{ open:false }" class="relative">
                 <div @click="open = !open" class="flex items-center space-x-2 cursor-pointer">
                     <div class="bg-fourth-color w-fit rounded-full p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-white w-6 h-6">
@@ -176,6 +176,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Notifications -->
         @if (session('status') || session('success'))
             <div x-data="{ show: true }"
                  x-show="show"
@@ -202,7 +204,8 @@
             </div>
         @endif
 
-        <section class="px-5 py-5">
+        <!-- Section principale -->
+        <section class="px-5 py-5 border-2 border-black flex-1 overflow-hidden flex flex-col">
             {{$slot}}
         </section>
     </main>

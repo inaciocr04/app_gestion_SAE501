@@ -107,9 +107,9 @@ class DataImport implements ToModel, WithHeadingRow
         $start_date_visit = $row['date_debut_visite'] ?? null;
         if ($start_date_visit) {
             if (is_numeric($start_date_visit)) {
-                $start_date_visit = Date::excelToDateTimeObject($start_date_visit)->format('Y-m-d');
+                $start_date_visit = Date::excelToDateTimeObject($start_date_visit)->format('Y-m-d H:i:s');
             } else {
-                $start_date_visit = Carbon::createFromFormat('d/m/Y', $start_date_visit)->format('Y-m-d');
+                $start_date_visit = Carbon::createFromFormat('d/m/Y H:i', $start_date_visit)->format('Y-m-d H:i:s');
             }
         }else{
             $start_date_visit = null;
@@ -118,9 +118,9 @@ class DataImport implements ToModel, WithHeadingRow
         $end_date_visit = $row['date_fin_visite'] ?? null;
         if ($end_date_visit) {
             if (is_numeric($end_date_visit)) {
-                $end_date_visit = Date::excelToDateTimeObject($end_date_visit)->format('Y-m-d');
+                $end_date_visit = Date::excelToDateTimeObject($end_date_visit)->format('Y-m-d H:i:s');
             } else {
-                $end_date_visit = Carbon::createFromFormat('d/m/Y', $end_date_visit)->format('Y-m-d');
+                $end_date_visit = Carbon::createFromFormat('d/m/Y H:i', $end_date_visit)->format('Y-m-d H:i:s');
             }
         }else{
             $end_date_visit = null;

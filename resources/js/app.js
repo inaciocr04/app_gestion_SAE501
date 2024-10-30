@@ -11,40 +11,49 @@ Alpine.plugin(Clipboard)
 
 Livewire.start()
 
-let calendarEl = document.getElementById('calendar');
-let calendar = new Calendar(calendarEl, {
-    plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-    },
-    events: '/visits/data', // Endpoint pour récupérer les événements
-    eventClick: function(info) {
-        // Construction des détails à afficher
-        const eventDetails = `
+document.addEventListener('DOMContentLoaded', function() {
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+        initialView: window.innerWidth < 1024 ? 'listWeek' : 'timeGridWeek',
+        locale: 'fr',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
+        buttonText: {
+            today: 'Aujourd\'hui',
+            month: 'Mois',
+            week: 'Semaine',
+            list: 'Jour',
+        },
+        events: '/visits/data',
+        eventClick: function(info) {
+            const eventDetails = `
                 <strong>${info.event.title}</strong><br>
                 <strong>Date de début:</strong> ${info.event.start.toISOString().split('T')[0]}<br>
-                <strong>Date de fin:</strong> ${info.event.end.toISOString().split('T')[0]}<br>
+                <strong>Date de fin:</strong> ${info.event.end ? info.event.end.toISOString().split('T')[0] : 'N/A'}<br>
                 <strong>Nom de l'entreprise:</strong> ${info.event.extendedProps.company_name || 'N/A'}<br>
                 <strong>Adresse:</strong> ${info.event.extendedProps.address || 'N/A'},
                     ${info.event.extendedProps.postcode || 'N/A'},
                     ${info.event.extendedProps.city || 'N/A'}
             `;
 
-        // Afficher les détails dans la modale
-        document.getElementById('eventDetails').innerHTML = eventDetails;
+            document.getElementById('eventDetails').innerHTML = eventDetails;
 
-        // Ouvrir la modale
-        document.getElementById('eventModal').classList.remove('hidden');
-    }
+            document.getElementById('eventModal').classList.remove('hidden');
+        }
+    });
 
+    calendar.render();
+
+    document.querySelectorAll('.fc-button').forEach(button => {
+        button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded', 'hover:bg-blue-600');
+    });
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('eventModal').classList.add('hidden');
+    });
 });
 
-calendar.render();
 
-// Gérer la fermeture de la modale
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('eventModal').classList.add('hidden');
-});

@@ -3,11 +3,6 @@
     <p>Ceci est la page réservée aux gestionnaire.</p>
 
     <h2>Importer des données</h2>
-    @if(session('success'))
-        <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 3000)" class="bg-secondary-color">
-            <p class="text-white">{{ session('success') }}</p>
-        </div>
-    @endif
 
     <form action="{{Route('manager.import')}}" method="POST" enctype="multipart/form-data">
         @csrf

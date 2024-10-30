@@ -58,6 +58,10 @@ Route::middleware(UserIsTeacher::class)->group(function () {
     Route::get('/teacher/visit', [TeacherController::class, 'showVisits'])->name('teacher.visit');
     Route::get('/visits', [VisitsController::class, 'index'])->name('teacher.visit');
     Route::get('/visits/data', [VisitsController::class, 'fetchData']);
+    Route::get('/visit/create/{studentId}', [VisitsController::class, 'create'])->name('visit.create');
+    Route::resource('visit', VisitsController::class);
+
+
 });
 
 Route::middleware(UserIsManager::class)->group(function () {

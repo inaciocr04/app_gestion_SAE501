@@ -1,5 +1,5 @@
 <x-layout title="Calendrier des visites">
-    <div id="calendar" class="h-screen"></div>
+    <div id="calendar" class="h-full"></div>
 
     <!-- Modale pour afficher les détails de l'événement -->
     <div id="eventModal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VisitRequest;
+use App\Models\Company;
+use App\Models\Student;
 use App\Models\Visits;
+use App\Models\Year_training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,63 +19,52 @@ class VisitsController extends Controller
 
     public function fetchData()
     {
-        // Récupérer l'enseignant connecté
         $teacher = Auth::user()->teacher;
 
-        // Récupérer tous les étudiants associés à l'enseignant
-        $students = $teacher->students_status->map(function ($studentStatu) {
+        $students = $teacher->students_status->unique('student_id')->map(function ($studentStatu) {
             return $studentStatu->student;
         });
 
-        // Tableau pour stocker les événements
         $events = [];
 
-        // Parcourir chaque étudiant
         foreach ($students as $student) {
-            // Récupérer les visites pour cet étudiant avec une date remplie
-            $visits = Visits::where('student_id', $student->id)
-                ->whereNotNull('start_date_visit') // Ignorer les visites sans date
-                ->orderBy('start_date_visit', 'desc') // Tri par date pour obtenir la dernière visite
-                ->get(); // Récupérer toutes les visites
+            $lastVisit = Visits::where('student_id', $student->id)
+                ->where('visit_statu', 'NON')
+                ->orderBy('start_date_visit', 'desc')
+                ->first();
 
-            if ($visits->isNotEmpty()) {
-                // On prend uniquement la dernière visite
-                $lastVisit = $visits->first();
+            if ($lastVisit) {
+                $isPastVisit = $lastVisit->start_date_visit < now();
 
-                // Vérifier si la date de la visite est dans le passé ou dans le futur
-                $isPastVisit = $lastVisit->start_date_visit < now(); // Compare avec la date actuelle
-
-                // Définir la couleur et le titre selon la date de la visite
                 $eventColor = $isPastVisit ? 'red' : 'green';
-                $eventTitle = $isPastVisit ? 'Visit déjà effectuer avec ' . $student->firstname .' '. $student->lastname .' en '. $lastVisit->year_training->training_title : 'Visit à éffectué avec ' . $student->firstname;
+                $eventTitle = $isPastVisit ? 'Visit déjà effectuée avec ' . $student->firstname : 'Visit à effectuer avec ' . $student->firstname;
 
                 $events[] = [
-                    'student_id' => $student->id, // ID de l'étudiant
-                    'visit_id' => $lastVisit->id, // ID de la visite
-                    'title' => $eventTitle, // Titre de la visite
-                    'start' => $lastVisit->start_date_visit, // Date de la visite
-                    'end' => $lastVisit->end_date_visit, // Date de la visite
-                    'details' => $lastVisit->note ?? '', // Détails de la visite (note)
+                    'student_id' => $student->id,
+                    'visit_id' => $lastVisit->id,
+                    'title' => $eventTitle,
+                    'start' => $lastVisit->start_date_visit,
+                    'end' => $lastVisit->end_date_visit,
+                    'details' => $lastVisit->note ?? '',
                     'company_name' => $lastVisit->company->company_name ?? 'Non spécifié',
                     'address' => $lastVisit->company->company_address ?? 'Non spécifié',
                     'postcode' => $lastVisit->company->company_postcode ?? 'Non spécifié',
                     'city' => $lastVisit->company->company_city ?? 'Non spécifié',
-                    'color' => $eventColor, // Couleur de l'événement
+                    'color' => $eventColor,
                 ];
             } else {
-                // Aucune visite trouvée, mais on inclut l'étudiant
                 $events[] = [
-                    'student_id' => $student->id, // ID de l'étudiant
-                    'visit_id' => null, // Aucune visite trouvée
+                    'student_id' => $student->id,
+                    'visit_id' => null,
                     'title' => 'No visit yet for ' . $student->firstname,
-                    'start' => null, // Pas de date
-                    'end' => null, // Pas de date
-                    'details' => 'No visits recorded', // Détails indiquant qu'il n'y a pas de visite
-                    'company_name' => $lastVisit->company->company_name ?? 'Non spécifié',
-                    'address' => $lastVisit->company->company_address ?? 'Non spécifié',
-                    'postcode' => $lastVisit->company->company_postcode ?? 'Non spécifié',
-                    'city' => $lastVisit->company->company_city ?? 'Non spécifié',
-                    'color' => 'grey', // Couleur pour les étudiants sans visites
+                    'start' => null,
+                    'end' => null,
+                    'details' => 'No visits recorded',
+                    'company_name' => 'Non spécifié',
+                    'address' => 'Non spécifié',
+                    'postcode' => 'Non spécifié',
+                    'city' => 'Non spécifié',
+                    'color' => 'grey',
                 ];
             }
         }
@@ -79,7 +72,25 @@ class VisitsController extends Controller
         return response()->json($events);
     }
 
+    public function create($studentId)
+    {
+        $student = Student::findOrFail($studentId);
+        $companies = Company::all();
+        $yearTrainings = Year_training::all();
 
+        return view('visit.create', compact('student', 'companies', 'yearTrainings'));
+    }
 
+    public function store(VisitRequest $request, $studentId)
+    {
+        $data = $request->validated();
+        $data['student_id'] = $studentId;
+
+        $visit = new Visits();
+        $visit->fill($data);
+        $visit->save();
+
+        return redirect()->route('teacher.student')->with('success', 'Visite programmée avec succès.');
+    }
 
 }
