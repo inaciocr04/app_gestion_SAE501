@@ -207,11 +207,11 @@ class StudentController extends Controller
 
         Student_statu::create([
             'student_id' => $student->id,
-            'tutor_id' => $request->input('tutor_id'),
-            'teacher_id' => $request->input('teacher_id'),
+            'tutor_id' => $request->input('tutors_id'),
+            'teacher_id' => $request->input('teachers_id'),
             'year_training_id' => $request->input('year_training_id'),
             'actual_year_id' => $request->input('actual_year_id'),
-            'statut_id' => $request->input('statut_id'),
+            'statut_id' => $request->input('statuts_id'),
             'start_date_status' => $request->input('start_date_status'),
             'end_date_status' => $request->input('end_date_status'),
             'start_date_company' => $request->input('start_date_company'),
@@ -220,7 +220,7 @@ class StudentController extends Controller
 
         Visits::create([
             'student_id' => $student->id,
-            'company_id' => $request->input('company_id'),
+            'company_id' => $request->input('companies_id'),
             'year_training_id' => $request->input('year_training_id'),
             'note' => $request->input('note'),
             'visit_statu' => $request->input('visit_statu'),
@@ -296,51 +296,62 @@ class StudentController extends Controller
         $student->fill($data);
         $student->save();
 
-        $training = $student->trainings()->latest()->first();
-        if ($training) {
-            $training->update([
+        $student->trainings()->updateOrCreate(
+            [
+                'student_id' => $student->id,
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),],
+            [
                 'year_training_id' => $request->input('year_training_id'),
                 'actual_year_id' => $request->input('actual_year_id'),
-            ]);
-        }
+            ]
+        );
 
-        $course = $student->courses()->latest()->first();
-        if ($course) {
-            $course->update([
+        $student->courses()->updateOrCreate(
+            ['id' => $request->input('course_id')],
+            [
                 'year_training_id' => $request->input('year_training_id'),
                 'training_courses_id' => $request->input('training_courses_id'),
                 'group_td_id' => $request->input('group_td_id'),
                 'group_tp_id' => $request->input('group_tp_id'),
                 'start_date' => $request->input('start_date'),
-            ]);
-        }
+            ]
+        );
 
-        $studentStatus = $student->student_statu()->latest()->first();
-        if ($studentStatus) {
-            $studentStatus->update([
-                'tutor_id' => $request->input('tutor_id'),
-                'teacher_id' => $request->input('teacher_id'),
+        $student->student_statu()->updateOrCreate(
+            [
+                'id' => $request->input('statut_id'),
+                'student_id' => $student->id,
                 'year_training_id' => $request->input('year_training_id'),
                 'actual_year_id' => $request->input('actual_year_id'),
-                'statuts_id' => $request->input('statut_id'),
+                'company_id' => $request->input('companies_id'),
+                'start_date_status' => $request->input('start_date_status'),
+            ],
+            [
+                'tutor_id' => $request->input('tutors_id'),
+                'teacher_id' => $request->input('teachers_id'),
+                'year_training_id' => $request->input('year_training_id'),
+                'actual_year_id' => $request->input('actual_year_id'),
+                'statut_id' => $request->input('statuts_id'),
+                'company_id' => $request->input('companies_id'),
                 'start_date_status' => $request->input('start_date_status'),
                 'end_date_status' => $request->input('end_date_status'),
                 'start_date_company' => $request->input('start_date_company'),
                 'end_date_company' => $request->input('end_date_company'),
-            ]);
-        }
+            ]
+        );
 
-        $visit = $student->visits()->latest()->first();
-        if ($visit) {
-            $visit->update([
-                'company_id' => $request->input('company_id'),
+        $student->visits()->updateOrCreate(
+            ['id' => $request->input('visit_id')],
+            [
+                'company_id' => $request->input('companies_id'),
                 'year_training_id' => $request->input('year_training_id'),
                 'note' => $request->input('note'),
                 'visit_statu' => $request->input('visit_statu'),
                 'start_date_visit' => $request->input('start_date_visit'),
                 'end_date_visit' => $request->input('end_date_visit'),
-            ]);
-        }
+            ]
+        );
 
         return redirect()->route('global.students')->with('success', 'Étudiant mis à jour avec succès.');
     }
