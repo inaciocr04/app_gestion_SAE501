@@ -200,8 +200,8 @@
                         <label for="note" class="block text-sm font-medium text-gray-700">Notes :</label>
                         <textarea name="note" id="note" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('note') }}</textarea>
                     </div>
-                    <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', isset($visit) && $visit->start_date_visit ? Carbon::parse($visit->start_date_visit)->format('Y-m-d') : '') }}"/>
-                    <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', isset($visit) && $visit->end_date_visit ? Carbon::parse($visit->end_date_visit)->format('Y-m-d') : '') }}"/>
+                    <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', isset($visit) && $visit->start_date_visit ? Carbon::parse($visit->start_date_visit)->format('Y-m-d H:i:s') : '') }}"/>
+                    <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', isset($visit) && $visit->end_date_visit ? Carbon::parse($visit->end_date_visit)->format('Y-m-d H:i:s') : '') }}"/>
                 </div>
                 <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit cursor-pointer" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>
                 <x-form.button name="Modifier"/>

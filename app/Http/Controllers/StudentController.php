@@ -82,7 +82,8 @@ class StudentController extends Controller
                 $subQuery->where('training_title', 'MMI1');
             });
         })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI1';
+            return $student->trainings->last()->year_training->training_title === 'MMI1' &&
+                $student->student_statu->isNotEmpty();
         });
 
         $studentsMMI2 = Student::whereHas('trainings', function ($query) {
@@ -90,7 +91,8 @@ class StudentController extends Controller
                 $subQuery->where('training_title', 'MMI2');
             });
         })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI2';
+            return $student->trainings->last()->year_training->training_title === 'MMI2' &&
+                $student->student_statu->isNotEmpty();
         });
 
         $studentsMMI3 = Student::whereHas('trainings', function ($query) {
@@ -98,7 +100,8 @@ class StudentController extends Controller
                 $subQuery->where('training_title', 'MMI3');
             });
         })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI3';
+            return $student->trainings->last()->year_training->training_title === 'MMI3' &&
+                $student->student_statu->isNotEmpty();
         });
 
         return view('global.students', [

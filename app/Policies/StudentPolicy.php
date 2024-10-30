@@ -58,6 +58,10 @@ class StudentPolicy
         return $user->role == 'manager';
     }
 
+    public function viewTutor(User $user)
+    {
+        return in_array($user->role, ['manager', 'teacher']);
+    }
 
     /**
      * Determine whether the user can restore the model.

@@ -15,7 +15,7 @@
                 <p>Etudiant BUT3</p>
             </div>
         </div>
-        <div x-show="showBut === 'but1'" class="mt-16">
+        <div x-show="showBut === 'but1'" class="mt-6">
             <table id="tableBut1" class="display">
                 <thead>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N°étudiant</th>
@@ -25,6 +25,9 @@
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Parcours</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Groupes</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date de début</th>
+                    @canany(['viewTutor'], \App\Models\Student::class)
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">tuteur enseignant</th>
+                    @endcanany
                     @canany(['updateAny', 'deleteAny'], \App\Models\Student::class)
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                     @endcanany
@@ -58,6 +61,15 @@
                                 N/A
                             @endif
                         </td>
+                        @canany(['viewTutor'], \App\Models\Student::class)
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($student->student_statu->isNotEmpty())
+                                    {{$student->student_statu->last()->teacher ? $student->student_statu->last()->teacher->firstname .' '. $student->student_statu->last()->teacher->lastname : 'N/A'}}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                        @endcanany
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
@@ -73,7 +85,7 @@
                 </tbody>
             </table>
         </div>
-        <div x-show="showBut === 'but2'" class="mt-16">
+        <div x-show="showBut === 'but2'" class="mt-6">
             <table id="tableBut2" class="display">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N°étudiant</th>
@@ -83,6 +95,9 @@
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Parcours</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Groupes</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date de début</th>
+                @canany(['viewTutor'], \App\Models\Student::class)
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">tuteur enseignant</th>
+                @endcanany
                 @canany(['updateAny', 'deleteAny'], \App\Models\Student::class)
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                 @endcanany
@@ -116,6 +131,15 @@
                                 N/A
                             @endif
                         </td>
+                        @canany(['viewTutor'], \App\Models\Student::class)
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($student->student_statu->isNotEmpty())
+                                    {{$student->student_statu->last()->teacher ? $student->student_statu->last()->teacher->firstname .' '. $student->student_statu->last()->teacher->lastname : 'N/A'}}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                        @endcanany
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
@@ -131,7 +155,7 @@
                 </tbody>
             </table>
         </div>
-        <div x-show="showBut === 'but3'" class="mt-16">
+        <div x-show="showBut === 'but3'" class="mt-6">
             <table id="tableBut3" class="display">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N°étudiant</th>
@@ -141,6 +165,9 @@
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Parcours</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Groupes</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date de début</th>
+                @canany(['viewTutor'], \App\Models\Student::class)
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">tuteur enseignant</th>
+                @endcanany
                 @canany(['updateAny', 'deleteAny'], \App\Models\Student::class)
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                 @endcanany
@@ -174,6 +201,15 @@
                                 N/A
                             @endif
                         </td>
+                        @canany(['viewTutor'], \App\Models\Student::class)
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($student->student_statu->isNotEmpty())
+                                    {{$student->student_statu->last()->teacher ? $student->student_statu->last()->teacher->firstname .' '. $student->student_statu->last()->teacher->lastname : 'N/A'}}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                        @endcanany
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
