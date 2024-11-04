@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\YearTrainingController;
@@ -59,8 +60,9 @@ Route::middleware(UserIsTeacher::class)->group(function () {
     Route::get('/visits', [VisitsController::class, 'index'])->name('teacher.visit');
     Route::get('/visits/data', [VisitsController::class, 'fetchData']);
     Route::get('/visit/create/{studentId}', [VisitsController::class, 'create'])->name('visit.create');
-    Route::resource('visit', VisitsController::class);
-
+    Route::post('/visit/store', [VisitsController::class, 'store'])->name('visit.store');
+    Route::get('/visit/edit/{id}', [VisitsController::class, 'edit'])->name('visit.edit');
+    Route::put('/visit/update/{id}', [VisitsController::class, 'update'])->name('visit.update');
 
 });
 
@@ -76,6 +78,7 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::resource('actual_year', ActualYearController::class);
     Route::resource('year_training', YearTrainingController::class);
     Route::resource('student', StudentController::class);
+    Route::resource('tutor', TutorController::class);
 });
 
 

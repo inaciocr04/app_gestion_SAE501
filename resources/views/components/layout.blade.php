@@ -205,7 +205,7 @@
         @endif
 
         <!-- Section principale -->
-        <section class="px-5 py-5 border-2 border-black flex-1 overflow-hidden flex flex-col">
+        <section class="px-5 py-5 flex-1 overflow-hidden flex flex-col">
             {{$slot}}
         </section>
     </main>

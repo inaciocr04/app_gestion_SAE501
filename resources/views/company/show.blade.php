@@ -20,4 +20,17 @@
         <li>Numéro de téléphone: {{$company->company_manager_tel_number}}</li>
         <li>Adresse email: {{$company->company_manager_email}}</li>
     </ul>
+
+    <h2>Tuteurs</h2>
+    <ul>
+        @forelse($company->tutors as $tutor)
+            <li>Civilité: {{ $tutor->civility }}</li>
+            <li>Nom: {{ $tutor->lastname }}</li>
+            <li>Prénom: {{ $tutor->firstname }}</li>
+            <li>Numéro de téléphone: {{ $tutor->telephone_number }}</li>
+            <li>Adresse email: {{ $tutor->email }}</li>
+        @empty
+            <li>Aucun tuteur trouvé pour cette entreprise.</li>
+        @endforelse
+    </ul>
 </x-layout>
