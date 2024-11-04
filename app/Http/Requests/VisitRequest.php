@@ -26,9 +26,9 @@ class VisitRequest extends FormRequest
             'company_id' => 'nullable',
             'year_training_id' => 'required',
             'note' => 'nullable',
-            'visit_statu' => 'NON',
-            'start_date_visit' => 'nullable|dateTime',
-            'end_date_visit' => 'nullable|dateTime',
+            'visit_statu' => 'required|in:NON,OUI',
+            'start_date_visit' => 'nullable|date_format:Y-m-d\TH:i',
+            'end_date_visit' => 'nullable|date_format:Y-m-d\TH:i|after:start_date_visit',
         ];
     }
 }

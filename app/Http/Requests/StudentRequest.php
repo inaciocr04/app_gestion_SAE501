@@ -44,15 +44,15 @@ class StudentRequest extends FormRequest
             'teacher_id' => 'nullable|exists:teachers,id',
             'tutor_id' => 'nullable|exists:tutors,id',
             'training_courses_id' => 'nullable|exists:training_courses,id',
-            'start_date_status' => 'nullable|date',
-            'end_date_status' => 'nullable|date',
-            'start_date_company' => 'nullable|date',
-            'end_date_company' => 'nullable|date',
+            'start_date_status' => ['nullable', 'date'],
+            'end_date_status' => ['nullable', 'date'],
+            'start_date_company' => ['required', 'date'],
+            'end_date_company' => ['required', 'date'],
             'company_id' => 'nullable|exists:companies,id',
             'note' => 'nullable|string',
             'visit_statu' => 'nullable|string',
-            'start_date_visit' => 'nullable|date',
-            'end_date_visit' => 'nullable|date',
+            'start_date_visit' => ['nullable', 'date'],
+            'end_date_visit' => ['nullable', 'date'],
         ];
     }
 }

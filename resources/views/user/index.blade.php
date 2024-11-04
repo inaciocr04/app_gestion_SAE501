@@ -1,5 +1,5 @@
 <x-layout title="Tous les utilisateurs">
-    <!--    <ul class="space-y-4">
+    <ul class="space-y-4">
         @foreach($users as $user)
             <li class="bg-sixth-color px-8 py-6">{{$user->name}} / {{$user->email}}
                 <form action="{{ route('user.update', $user) }}" method="POST" class="inline">
@@ -15,6 +15,5 @@
                 </form>
             </li>
         @endforeach
-    </ul>-->
-    <livewire:user-role />
+    </ul>
 </x-layout>

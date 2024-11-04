@@ -27,7 +27,7 @@ class TutorRequest extends FormRequest
             'firstname' => 'required|string|max:50',
             'telephone_number' => 'required|string|max:15',
             'email' => 'required|email|unique:tutors,email',
-            'company_id' => 'required|exists:companies,id',
+            'company_id' => 'nullable|exists:companies,id',
         ];
     }
 }

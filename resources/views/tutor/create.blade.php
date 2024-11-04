@@ -26,7 +26,7 @@
         </div>
 
         <label for="company_id">Entreprise :
-            <select id="company_id" name="company_id" class="form-select" required>
+            <select id="company_id" name="company_id" class="form-select">
                 <option value="">-- Sélectionner une entreprise --</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->company_name }}</option>

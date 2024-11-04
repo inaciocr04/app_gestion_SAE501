@@ -7,18 +7,19 @@
         <h1>Modifier les donnée de {{$student->lastname}} {{$student->firstname}}</h1>
         <x-link.back href="{{route('global.students')}}"/>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('student.update', $student->id) }}" method="POST">
             @csrf
             @method('PUT')
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             <div x-show="step === 1" class="step">
                 <h2>Informations personnelles</h2>
@@ -169,8 +170,12 @@
 
                     </select>
                 </div>
-                <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value="{{ old('start_date_company', isset($student_statu) && $student_statu->start_date_company ? Carbon::parse($student_statu->start_date_company)->format('Y-m-d') : '') }}"/>
-                <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value="{{ old('end_date_company', isset($student_statu) && $student_statu->end_date_company ? Carbon::parse($student_statu->end_date_company)->format('Y-m-d') : '') }}"/>
+                <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company"
+                              value="{{ old('start_date_company', $student_statu->start_date_company ? Carbon::parse($student_statu->start_date_company)->format('Y-m-d') : '') }}"/>
+
+                <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company"
+                              value="{{ old('end_date_company', $student_statu->end_date_company ? Carbon::parse($student_statu->end_date_company)->format('Y-m-d') : '') }}"/>
+
 
                 <div class="flex space-x-7">
                     <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit cursor-pointer" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>

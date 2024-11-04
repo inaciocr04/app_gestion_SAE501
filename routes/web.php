@@ -79,6 +79,9 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::resource('year_training', YearTrainingController::class);
     Route::resource('student', StudentController::class);
     Route::resource('tutor', TutorController::class);
+    Route::get('/manager/visits', [VisitsController::class, 'showManagerVisits'])->name('manager.visit');
+    Route::get('/manager/visits/data', [VisitsController::class, 'fetchDataManager'])->name('fetchDataManager');
+
 });
 
 
