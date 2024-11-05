@@ -1,7 +1,7 @@
 <x-layout title="Toutes les entreprises">
     <div class="mb-8">
-        <a href="{{route('company.create')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Ajouter une entreprise</a>
-        <a href="{{route('tutor.index')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Liste des tuteurs</a>
+        <x-link.link name="Ajouter une entreprise" href="{{route('company.create')}}" class="mb-5"/>
+        <x-link.link name="Liste des tuteurs" href="{{route('tutor.index')}}" class="mb-5"/>
     </div>
             <table id="tableCompany">
                 <thead>

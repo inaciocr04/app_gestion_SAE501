@@ -3,9 +3,9 @@
     'name_label',
     'type' => 'test',
     'value' => '',
-    'class' => 'form-input w-full',
+    'class' => 'form-input',
     ])
-    <label for="{{$name}}">
+    <label for="{{$name}}" class="flex flex-col">
         {{$name_label}}
         <input type="{{$type}}" name="{{$name}}" value="{{old($name, $value)}}" class="{{$class}}">
         @error($name)

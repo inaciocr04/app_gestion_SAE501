@@ -1,6 +1,8 @@
 <x-layout title="Liste des tuteurs">
-    <x-link.back href="{{route('company.index')}}"/>
-    <x-link.link name="Créer un tuteur" href="{{route('tutor.create')}}" class="mb-5"/>
+    <div class="flex items-center space-x-7 mb-6">
+        <x-link.back href="{{route('company.index')}}"/>
+        <x-link.link name="Créer un tuteur" href="{{route('tutor.create')}}" class="mb-5"/>
+    </div>
     <table id="tableTeacher">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Civilité</th>
