@@ -1,6 +1,6 @@
 <x-layout title="Modification | {{$company->company_name}}">
-    <a href="{{route('company.show', ['company' => $company])}}">Retour</a>
-    <form action="{{route('company.update', ['company' => $company])}}" method="POST">
+    <a href="{{route('manager.company.show', ['company' => $company])}}">Retour</a>
+    <form action="{{route('manager.company.update', ['company' => $company])}}" method="POST">
         @csrf
         @method('PUT')
         <div>

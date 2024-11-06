@@ -1,7 +1,7 @@
 <x-layout title="Toutes les entreprises">
     <div class="mb-8">
-        <a href="{{route('company.create')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Ajouter une entreprise</a>
-        <a href="{{route('tutor.index')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Liste des tuteurs</a>
+        <a href="{{route('manager.company.create')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Ajouter une entreprise</a>
+        <a href="{{route('manager.tutor.index')}}" class="bg-fourth-color text-white py-3 px-4 rounded-2xl">Liste des tuteurs</a>
     </div>
             <table id="tableCompany">
                 <thead>
@@ -24,8 +24,8 @@
                         <td>{{$company->company_department}}</td>
                         <td>{{$company->company_country}}</td>
                         <td class="flex space-x-2">
-                            <x-link.link name="Détails" href="{{route('company.show', ['company' => $company])}}"/>
-                            <form action="{{route('company.destroy', ['company' => $company])}}" method="POST">
+                            <x-link.link name="Détails" href="{{route('manager.company.show', ['company' => $company])}}"/>
+                            <form action="{{route('manager.company.destroy', ['company' => $company])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <x-form.button name="Supprimer"/>

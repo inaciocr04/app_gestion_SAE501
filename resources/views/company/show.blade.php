@@ -1,7 +1,7 @@
 <x-layout title="Détails sur {{$company->company_name}}">
     <div class="flex items-center space-x-7">
-        <x-link.back href="{{route('company.index')}}"/>
-        <x-link.link name="Modifier" href="{{route('company.edit', ['company' => $company])}}"/>
+        <x-link.back href="{{route('manager.company.index')}}"/>
+        <x-link.link name="Modifier" href="{{route('manager.company.edit', ['company' => $company])}}"/>
     </div>
 
     <ul>

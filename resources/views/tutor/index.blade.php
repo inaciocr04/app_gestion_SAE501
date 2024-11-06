@@ -1,6 +1,6 @@
 <x-layout title="Liste des tuteurs">
-    <x-link.back href="{{route('company.index')}}"/>
-    <x-link.link name="Créer un tuteur" href="{{route('tutor.create')}}" class="mb-5"/>
+    <x-link.back href="{{route('manager.company.index')}}"/>
+    <x-link.link name="Créer un tuteur" href="{{route('manager.tutor.create')}}" class="mb-5"/>
     <table id="tableTeacher">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Civilité</th>
@@ -19,8 +19,8 @@
                         <td>{{ $tutor->telephone_number }}</td>
                         <td>{{ $tutor->email }}</td>
                         <td class="flex space-x-2">
-                            <x-link.link name="Modifier" href="{{route('tutor.edit', ['tutor' => $tutor])}}"/>
-                            <form action="{{route('tutor.destroy', ['tutor' => $tutor])}}" method="POST">
+                            <x-link.link name="Modifier" href="{{route('manager.tutor.edit', ['tutor' => $tutor])}}"/>
+                            <form action="{{route('manager.tutor.destroy', ['tutor' => $tutor])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <x-form.button name="Supprimer"/>

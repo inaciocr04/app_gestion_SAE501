@@ -8,8 +8,8 @@
             </ul>
         </div>
     @endif
-        <x-link.back href="{{route('tutor.index')}}"/>
-        <form action="{{ route('tutor.store') }}" method="POST">
+        <x-link.back href="{{route('manager.tutor.index')}}"/>
+        <form action="{{ route('manager.tutor.store') }}" method="POST">
         @csrf
         <label>
             Civilité du tuteur/tuteuse :

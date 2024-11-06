@@ -69,8 +69,9 @@ Route::name('manager.')
     ->group(function () {
         Route::get('/manager', [ImportController::class, 'showImporForm'])->name('index');
         Route::post('/manager/import', [ImportController::class, 'import'])->name('import');
-        Route::get('/manager/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
         Route::get('teachers', [TeacherController::class, 'index'])->name('teachers');
+        Route::get('/groupes', [GroupeAnneeController::class, 'index'])->name('groupes.index');
         Route::resource('company', CompanyController::class);
         Route::resource('teacher', TeacherController::class);
         Route::resource('tp_group', GroupTPController::class);
@@ -79,6 +80,6 @@ Route::name('manager.')
         Route::resource('year_training', YearTrainingController::class);
         Route::resource('student', StudentController::class);
         Route::resource('tutor', TutorController::class);
-        Route::get('/manager/visits', [VisitsController::class, 'showManagerVisits'])->name('visit');
+        Route::get('/visits', [VisitsController::class, 'showManagerVisits'])->name('visit');
         Route::get('/manager/visits/data', [VisitsController::class, 'fetchDataManager'])->name('fetchDataManager');
     });
