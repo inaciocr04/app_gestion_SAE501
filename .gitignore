@@ -19,3 +19,4 @@ yarn-error.log
 /.zed
 # database/migrations/*.php
 public/build
+public/hot
