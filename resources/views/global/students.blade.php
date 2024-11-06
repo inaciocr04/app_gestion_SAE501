@@ -1,6 +1,6 @@
 <x-layout title="Tous les étudiants">
     @canany(['create'], \App\Models\Student::class)
-        <x-link.link name="Créer un étudiant" href="{{route('student.create')}}"/>
+        <x-link.link name="Créer un étudiant" href="{{route('manager.student.create')}}"/>
     @endcanany
     <div x-data="{ showBut : 'but1' }" class="mt-6">
         <div class="flex space-x-28 m-auto items-center  justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
@@ -75,7 +75,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
+                                    <a href="{{route('manager.student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete
@@ -145,7 +145,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
+                                    <a href="{{route('manager.student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete
@@ -215,7 +215,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    <a href="{{route('student.edit', ['student' => $student])}}">update</a>
+                                    <a href="{{route('manager.student.edit', ['student' => $student])}}">update</a>
                                 @endcan
                                 @can('delete', $student)
                                     Delete

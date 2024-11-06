@@ -2,7 +2,7 @@
     <div x-data="{ step: 1 }">
         <h1>Créer un étudiant</h1>
 
-        <form action="{{ route('student.store') }}" method="POST">
+        <form action="{{ route('manager.student.store') }}" method="POST">
             @csrf
 
             <div x-show="step === 1" class="step">
