@@ -74,40 +74,26 @@ class StudentController extends Controller
             'statusMMI3' => $statusMMI3,
         ]);
     }
+
     public function students()
     {
-        $studentsMMI1 = Student::whereHas('trainings', function ($query) {
-            $query->whereHas(
-                'year_training', function ($subQuery) {
-                $subQuery->where('training_title', 'MMI1');
-            });
-        })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI1' &&
-                $student->student_statu->isNotEmpty();
-        });
 
-        $studentsMMI2 = Student::whereHas('trainings', function ($query) {
-            $query->whereHas('year_training', function ($subQuery) {
-                $subQuery->where('training_title', 'MMI2');
-            });
-        })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI2' &&
-                $student->student_statu->isNotEmpty();
-        });
-
-        $studentsMMI3 = Student::whereHas('trainings', function ($query) {
-            $query->whereHas('year_training', function ($subQuery) {
-                $subQuery->where('training_title', 'MMI3');
-            });
-        })->get()->filter(function($student) {
-            return $student->trainings->last()->year_training->training_title === 'MMI3' &&
-                $student->student_statu->isNotEmpty();
-        });
-
+        $students = Student::query()
+            ->whereHas('student_statu')
+            ->whereHas('trainings.year_training')
+            ->with([
+                'student_statu.teacher',
+                'trainings.year_training',
+                'courses.training_course',
+                'courses.group_td',
+                'courses.group_tp',
+            ])
+            ->get()
+            ->groupBy(
+                fn($student) => $student->trainings->last()->year_training->training_title
+            );
         return view('global.students', [
-            'studentsMMI1' => $studentsMMI1,
-            'studentsMMI2' => $studentsMMI2,
-            'studentsMMI3' => $studentsMMI3,
+            'students' => $students,
         ]);
     }
 

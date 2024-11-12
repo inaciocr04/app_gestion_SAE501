@@ -2,7 +2,7 @@
     <div x-data="{ step: 1 }">
         <h1>Créer un étudiant</h1>
 
-        <form action="{{ route('student.store') }}" method="POST">
+        <form action="{{ route('manager.student.store') }}" method="POST">
             @csrf
 
             <div x-show="step === 1" class="step">
@@ -30,7 +30,7 @@
                     <x-form.input name_label="Code postal" name="postcode" value=""/>
                     <x-form.input name_label="Ville" name="city" value=""/>
                 </div>
-                <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step++">Suivant <x-heroicon-c-arrow-long-right class="w-6 h-auto" /></p>
+                <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit" @click="step++">Suivant <x-heroicon-c-arrow-long-right class="w-6 h-auto" /></p>
             </div>
 
             <div x-show="step === 2" class="step">
@@ -113,17 +113,8 @@
             <div x-show="step === 3" class="step">
                 <h2>Informations entreprises</h2>
 
-                <div class="flex">
-                    <label for="tutor">Tuteur :</label>
-                    <select name="tutors_id" id="tutors_id">
-                        <option value="">-- Sélectionner un tuteur --</option>
-                        @foreach($tutors as $tutor)
-                            <option value="{{ $tutor->id }}">
-                                {{ $tutor->firstname }} {{ $tutor->lastname }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+
+                <livewire:tutor-select/>
                 <div class="flex">
                     <label for="teacher">Professeur :</label>
                     <select name="teachers_id" id="teachers_id">
@@ -135,17 +126,8 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex">
-                    <label for="teacher">Entreprise :</label>
-                    <select name="companies_id" id="companies_id">
-                        <option value="">-- Sélectionner une entreprise --</option>
-                        @foreach($companies as $company)
-                            <option value="{{ $company->id }}">
-                                {{ $company->company_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                <livewire:company-select/>
+
                 <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value=""/>
                 <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value=""/>
 
@@ -178,7 +160,7 @@
                     <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value=""/>
                     <x-form.input type="c" name_label="Date de fin de la visite" name="end_date_visit" value=""/>
                 </div>
-                <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>
+                <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>
                 <x-form.button name="Créer"/>
             </div>
 
