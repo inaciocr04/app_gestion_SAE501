@@ -11,7 +11,7 @@
                 @endforeach
             </select>
         </div>
-        <button @click="$dispatch('open-tutor-modal', true)" class=" bg-primary-color text-white p-2 rounded">
+        <button type="button" @click="$dispatch('open-tutor-modal', true)" class="!bg-fourth-color text-white p-2 rounded">
             <x-vaadin-plus class="text-white size-4" />
         </button>
     </div>
@@ -21,7 +21,6 @@
     @teleport('body')
     <div x-data="{ open: false, successMessageTutor: '' }"
          @open-tutor-modal.window="open = $event.detail; console.log('Modale ouverte :', open)"
-         @tutor-added.window="successMessageTutor = 'Tuteur ajouté avec succès.'; setTimeout(() => successMessageTutor = '', 3000)"
          x-show="open"
          class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
          x-transition
@@ -31,9 +30,11 @@
         <div class="bg-white p-6 rounded-lg shadow-lg z-10 w-2/3" @click.stop>
             <h2 class="text-lg font-bold mb-4">Créer une Entreprise et un Tuteur</h2>
 
-            <template x-if="successMessageTutor">
-                <div class="bg-green-500 text-white p-2 rounded mb-3" x-text="successMessageTutor"></div>
-            </template>
+            @if (session()->has('success'))
+                <div class="bg-green-500 text-white p-2 rounded mb-3">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             <form wire:submit.prevent="addTutor" class="space-y-4">
                 <div class="mb-4">
@@ -71,10 +72,8 @@
                 </div>
 
                 <div class="flex justify-end mt-4">
-                    <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded">
-                        Créer
-                    </button>
-                    <button type="button" @click="open = false; console.log('Modale fermée :', open)" class="bg-gray-500 text-black px-4 py-2 rounded ml-2">
+                    <x-form.button name="Créer" type="submit"/>
+                    <button type="button" @click="open = false; console.log('Modale fermée :', open)" class="!bg-gray-500 text-white px-4 py-2 rounded-lg ml-2">
                         Annuler
                     </button>
                 </div>

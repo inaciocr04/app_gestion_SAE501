@@ -11,7 +11,7 @@
                 @endforeach
             </select>
         </div>
-        <button @click="$dispatch('open-company-modal', true)" class=" bg-primary-color text-white p-2 rounded">
+        <button type="button" @click="$dispatch('open-company-modal', true)" class=" !bg-fourth-color text-white p-2 rounded">
             <x-vaadin-plus class="text-white size-4" />
         </button>
     </div>
@@ -66,7 +66,7 @@
                     <input type="text" id="company_country" wire:model="company_country" class="form-control w-full p-2 border border-gray-300 rounded">
                     @error('company_country') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
-
+                    <h2>Manager</h2>
                 <div class="mb-4">
                     <label for="company_manager_civility" class="block text-sm font-medium text-gray-700">Civilité</label>
                     <select id="company_manager_civility" wire:model="company_manager_civility" class="form-control w-full p-2 border border-gray-300 rounded">
@@ -102,10 +102,8 @@
                 </div>
 
                 <div class="flex justify-end mt-4">
-                    <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded">
-                        Créer
-                    </button>
-                    <button type="button" @click="open = false; console.log('Modale fermée :', open)" class="bg-gray-500 text-black px-4 py-2 rounded ml-2">
+                    <x-form.button name="Créer" type="submit"/>
+                    <button type="button" @click="open = false; console.log('Modale fermée :', open)" class="!bg-gray-500 text-white px-4 py-2 rounded-lg ml-2">
                         Annuler
                     </button>
                 </div>

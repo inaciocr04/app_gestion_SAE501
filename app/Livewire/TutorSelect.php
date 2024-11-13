@@ -31,8 +31,10 @@ class TutorSelect extends Component
             'company_id' => null,
         ]);
 
-        session()->flash('success', 'Tuteur créé avec succès!');
         $this->reset();
+
+        session()->flash('success', 'Tuteur créé avec succès!');
+
 
     }
     public function render()

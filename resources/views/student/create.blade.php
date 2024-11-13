@@ -158,7 +158,7 @@
                         <textarea name="note" id="note" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
                     </div>
                     <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value=""/>
-                    <x-form.input type="c" name_label="Date de fin de la visite" name="end_date_visit" value=""/>
+                    <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value=""/>
                 </div>
                 <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>
                 <x-form.button name="Créer"/>
