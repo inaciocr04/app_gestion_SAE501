@@ -101,11 +101,6 @@ class StudentController extends Controller
     {
         $user = auth()->user();
 
-        if (!$user) {
-            \Log::warning('Aucun utilisateur authentifié'); // Log si l'utilisateur n'est pas authentifié
-            return redirect()->route('login'); // Redirection vers la page de connexion si non authentifié
-        }
-
         $student = Student::with([
             'trainings.year_training',
             'student_statu',
