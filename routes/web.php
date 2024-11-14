@@ -81,5 +81,5 @@ Route::name('manager.')
         Route::resource('student', StudentController::class);
         Route::resource('tutor', TutorController::class);
         Route::get('/visits', [VisitsController::class, 'showManagerVisits'])->name('visit');
-        Route::get('/manager/visits/data', [VisitsController::class, 'fetchDataManager'])->name('fetchDataManager');
+        Route::get('/visits/data', [VisitsController::class, 'fetchDataManager']);
     });

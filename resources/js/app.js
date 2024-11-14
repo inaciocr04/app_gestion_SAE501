@@ -1,5 +1,4 @@
 import './bootstrap';
-
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import Clipboard from '@ryangjchandler/alpine-clipboard';
 import { Calendar } from '@fullcalendar/core';
@@ -54,10 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Initialisation du calendrier manager
+    // Configuration pour le calendrier `managerCalendar`
     let managerCalendarEl = document.getElementById('managerCalendar');
     if (managerCalendarEl) {
-        console.log('Initializing managerCalendar'); // Log pour vérifier l'initialisation
+        console.log('Initializing managerCalendar');
         let managerCalendar = new Calendar(managerCalendarEl, {
             plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
             initialView: window.innerWidth < 1024 ? 'listWeek' : 'timeGridWeek',
@@ -74,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 list: 'Jour',
             },
             events: function (fetchInfo, successCallback, failureCallback) {
-                fetch('/visits/data') // Vérifie que l'URL est correcte
+                const teacherId = document.getElementById('teacherSelect').value;
+                fetch(`/manager/visits/data?teacher_id=${teacherId}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -82,17 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         return response.json();
                     })
                     .then(data => {
-                        console.log('Manager events data:', data); // Log des données pour déboguer
-                        successCallback(data); // Passer les données au calendrier
+                        successCallback(data);
                     })
                     .catch(error => {
                         console.error('Error fetching manager events:', error);
-                        failureCallback(error); // Gérer les erreurs
+                        failureCallback(error);
                     });
             },
             eventClick: function (info) {
                 const eventDetails = `
                     <strong>${info.event.title}</strong><br>
+                    <strong>Professeur:</strong> ${info.event.extendedProps.teacher || 'N/A'}<br>
                     <strong>Date de début:</strong> ${info.event.start.toISOString().split('T')[0]}<br>
                     <strong>Date de fin:</strong> ${info.event.end ? info.event.end.toISOString().split('T')[0] : 'N/A'}<br>
                     <strong>Nom de l'entreprise:</strong> ${info.event.extendedProps.company_name || 'N/A'}<br>
@@ -105,7 +105,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        managerCalendar.render(); // Rendu du calendrier manager
+        managerCalendar.render();
+
+        window.addEventListener('updatedEvents', function(event) {
+            managerCalendar.removeAllEvents();
+            managerCalendar.addEventSource(event.detail.events);
+        });
+
+        document.querySelectorAll('.fc-button').forEach(button => {
+            button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded', 'hover:bg-blue-600');
+        });
     }
 
     document.getElementById('closeModal').addEventListener('click', function () {

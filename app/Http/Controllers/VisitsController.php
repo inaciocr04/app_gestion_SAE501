@@ -85,32 +85,12 @@ class VisitsController extends Controller
 
     public function showManagerVisits()
     {
-        return view('manager.visit');
+        $teachers = Teacher::all();
+
+        return view('manager.visit', ['teachers' => $teachers]);
     }
 
-    public function fetchDataManager()
-    {
-        // Récupérer les visites depuis la base de données
-        $visits = Visit::where('visit_statu', 'NON')->orderBy('start_date_visit', 'desc')->get();
 
-        // Formater les données pour renvoyer un tableau d'événements
-        $events = [];
-        foreach ($visits as $visit) {
-            $events[] = [
-                'id' => $visit->id, // Ajoute un identifiant unique
-                'title' => $visit->title, // Remplace par le titre de l'événement
-                'start' => $visit->start_date_visit,
-                'end' => $visit->end_date_visit,
-                'company_name' => $visit->company->company_name ?? 'Non spécifié',
-                'address' => $visit->company->company_address ?? 'Non spécifié',
-                'postcode' => $visit->company->company_postcode ?? 'Non spécifié',
-                'city' => $visit->company->company_city ?? 'Non spécifié',
-            ];
-        }
-
-        // Retourner les données au format JSON
-        return response()->json($events);
-    }
 
 
     public function create($studentId)
