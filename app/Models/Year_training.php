@@ -26,4 +26,9 @@ class Year_training extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    public function depots()
+    {
+        return $this->hasMany(Depot::class, 'year_training_id','id');
+    }
 }

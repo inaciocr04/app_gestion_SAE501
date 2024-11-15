@@ -21,4 +21,9 @@ class Actual_year extends Model
     {
         return $this->hasMany(Training::class, 'actual_year_id','id');
     }
+
+    public function depots()
+    {
+        return $this->hasMany(Depot::class, 'actual_year_id','id');
+    }
 }

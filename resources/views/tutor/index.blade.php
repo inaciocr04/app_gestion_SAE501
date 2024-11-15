@@ -10,6 +10,7 @@
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Prénom</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Numéro de téléphone</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Adresse email</th>
+                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom de l'entreprise</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                 </thead>
                 <tbody>
@@ -20,6 +21,13 @@
                         <td>{{ $tutor->firstname }}</td>
                         <td>{{ $tutor->telephone_number }}</td>
                         <td>{{ $tutor->email }}</td>
+                        @if($tutor->company)
+                            <td>
+                                <a href="{{route('company.show', ['company' => $tutor->company])}}" class="border-b border-primary-color">{{ $tutor->company->company_name }}</a>
+                            </td>
+                        @else
+                            <td>Aucune entreprise associé</td>
+                        @endif
                         <td class="flex space-x-2">
                             <x-link.link name="Modifier" href="{{route('tutor.edit', ['tutor' => $tutor])}}"/>
                             <form action="{{route('tutor.destroy', ['tutor' => $tutor])}}" method="POST">

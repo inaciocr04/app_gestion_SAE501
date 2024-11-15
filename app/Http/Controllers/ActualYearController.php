@@ -9,8 +9,7 @@ class ActualYearController extends Controller
 {
     public function index()
     {
-        $actual_years = Actual_year::orderBy('year_title')->get();
-
+        $actual_years = Actual_year::orderBy('year_title', 'desc')->get();
         return view('actual_year.index', ['actual_years' => $actual_years]);
     }
 

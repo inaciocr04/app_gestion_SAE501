@@ -5,11 +5,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepotController;
 use App\Http\Controllers\GroupeAnneeController;
 use App\Http\Controllers\GroupTDController;
 use App\Http\Controllers\GroupTPController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\SeafileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TutorController;
@@ -46,12 +48,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'someFunction'])->name('dashboard');
     Route::get('students', [StudentController::class, 'students'])->name('global.students');
     Route::resource('/user', UserController::class);
-    Route::get('/groupes', [GroupeAnneeController::class, 'index'])->name('groupes.index');
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
     Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.index');
     Route::get('/student', [StudentController::class, 'show'])->name('student.show');
+    Route::post('/upload-file', [SeafileController::class, 'uploadFile'])->name('seafile.upload');
+
 });
 
 Route::middleware(UserIsTeacher::class)->group(function () {
@@ -79,6 +82,10 @@ Route::middleware(UserIsManager::class)->group(function () {
     Route::resource('year_training', YearTrainingController::class);
     Route::resource('student', StudentController::class);
     Route::resource('tutor', TutorController::class);
+    Route::get('/groupes', [GroupeAnneeController::class, 'index'])->name('groupes.index');
+    Route::resource('depot', DepotController::class);
+    Route::get('/upload', [SeafileController::class, 'upload'])->name('depot.upload');
+    Route::post('/upload-file', [SeafileController::class, 'uploadFile'])->name('seafile.upload');
 });
 
 

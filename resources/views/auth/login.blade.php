@@ -1,6 +1,6 @@
 <x-auth-layout title="Connexion" :action="route('login')" submitMessage="Connexion" titleForm="Connectez-vous" infoForm="Si vous avez un compte connectez-vous avec le formulaire a côté.">
-    <x-input name="email" label="Adresse e-mail" type="email" />
-    <x-input name="password" label="Mot de passe" type="password" />
+    <x-form.input name_label="Email" name="email" label="Adresse e-mail" type="email" />
+    <x-form.input name_label="Mot de passe" name="password" label="Mot de passe" type="password" />
     <div class="flex items-center justify-between">
         <div class="flex items-center">
             <input id="remember" name="remember" type="checkbox" class="form-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
