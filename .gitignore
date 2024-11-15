@@ -18,4 +18,5 @@ yarn-error.log
 /.vscode
 /.zed
 # database/migrations/*.php
-public/build
+/public/hot
+
