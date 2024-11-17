@@ -48,23 +48,19 @@
                     @endforeach
                 </ul>
             @endif
-                @if($visit && $visit->company)
-                <p>Aucun manager enregistrée pour MMI1.</p>
-            @else
-                <ul>
-                    @foreach ($visitsMMI1 as $visit)
-                        @if($visit && $visit->company)
-                        <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                        <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                        <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                        <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                        <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
-                        @else
-                            <p>Aucune manager enregistrée pour MMI1.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
+                    <ul>
+                        @foreach ($visitsMMI1 as $visit)
+                            @if($visit && $visit->company)
+                                <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
+                                <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
+                                <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
+                                <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
+                                <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                            @else
+                                <p>Aucune manager enregistrée pour MMI1.</p>
+                            @endif
+                        @endforeach
+                    </ul>
             <h4>Remarque</h4>
             @foreach ($visitsMMI1 as $visit)
                 @if($visit->note = null)

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepotController;
 use App\Http\Controllers\GroupeAnneeController;
 use App\Http\Controllers\GroupTDController;
 use App\Http\Controllers\GroupTPController;
@@ -80,6 +81,7 @@ Route::name('manager.')
         Route::resource('year_training', YearTrainingController::class);
         Route::resource('student', StudentController::class);
         Route::resource('tutor', TutorController::class);
+        Route::resource('depot', DepotController::class);
         Route::get('/visits', [VisitsController::class, 'showManagerVisits'])->name('visit');
         Route::get('/visits/data', [VisitsController::class, 'fetchDataManager']);
     });
