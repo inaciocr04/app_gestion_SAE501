@@ -9,5 +9,4 @@
         <input type="file" name="file" required>
         <button type="submit">Importer</button>
     </form>
-    <a href="">Dépots</a>
 </x-layout>

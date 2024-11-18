@@ -52,4 +52,11 @@ class TutorController extends Controller
         return redirect()->route('tutor.index')->with('success', 'Tuteur mis à jour avec succès.');
     }
 
+    public function destroy(Tutor $tutor)
+    {
+        $tutor->delete();
+
+        return redirect()->route('tutor.index')->with('success', 'Tuteur supprimer avec succès.');
+    }
+
 }

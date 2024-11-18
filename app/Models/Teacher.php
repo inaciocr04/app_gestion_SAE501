@@ -25,4 +25,8 @@ class Teacher extends Model
     {
         return $this->hasMany(Student_statu::class);
     }
+    public function visits()
+    {
+        return $this->hasMany(Visits::class);
+    }
 }

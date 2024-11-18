@@ -125,17 +125,6 @@ class DataImport implements ToModel, WithHeadingRow
         }else{
             $end_date_visit = null;
         }
-            $visits = Visits::updateOrCreate(
-                [
-                'student_id' => $student->id,
-                'company_id' => $Companies ? $Companies->id : null,
-                'note' => $note,
-                    'year_training_id' => $YearTraining->id,
-                    'visit_statu' => $visit_statu,
-                'start_date_visit' => $start_date_visit,
-                'end_date_visit' => $end_date_visit,
-            ]);
-
 
         // Vérifier ou créer le status à l'étudiant
         $status = Statu::firstOrCreate(
@@ -156,6 +145,18 @@ class DataImport implements ToModel, WithHeadingRow
         }else{
             $teacher = null;
         }
+
+        $visits = Visits::updateOrCreate(
+            [
+                'student_id' => $student->id,
+                'company_id' => $Companies ? $Companies->id : null,
+                'teacher_id' =>$teacher ? $teacher->id : null,
+                'note' => $note,
+                'year_training_id' => $YearTraining->id,
+                'visit_statu' => $visit_statu,
+                'start_date_visit' => $start_date_visit,
+                'end_date_visit' => $end_date_visit,
+            ]);
 
         $startDateStatus = $row['date_de_debut_status'] ?? null;
         if ($startDateStatus) {

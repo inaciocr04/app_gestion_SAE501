@@ -12,6 +12,7 @@ class Visits extends Model
     protected $fillable = [
         'student_id',
         'company_id',
+        'teacher_id',
         'year_training_id',
         'note',
         'visit_statu',
@@ -30,5 +31,10 @@ class Visits extends Model
     public function year_training()
     {
         return $this->belongsTo(Year_training::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
     }
 }

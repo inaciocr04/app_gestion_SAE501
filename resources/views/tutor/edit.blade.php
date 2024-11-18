@@ -9,9 +9,9 @@
         </div>
     @endif
 
-    <x-link.back href="{{ route('tutor.index') }}"/>
+    <x-link.back href="{{ route('manager.tutor.index') }}"/>
     <div class="flex flex-col justify-center items-center">
-        <form action="{{ route('tutor.update', $tutor->id) }}" method="POST" class="flex flex-col space-y-7">
+        <form action="{{ route('manager.tutor.update', $tutor->id) }}" method="POST" class="flex flex-col space-y-7">
             @csrf
             @method('PUT')
 

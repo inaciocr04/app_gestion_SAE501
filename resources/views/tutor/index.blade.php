@@ -1,8 +1,8 @@
 <x-layout title="Liste des tuteurs">
-    <div class="flex items-center space-x-7 mb-6">
-        <x-link.back href="{{route('company.index')}}"/>
-        <x-link.link name="Créer un tuteur" href="{{route('tutor.create')}}" class="mb-5"/>
-    </div>
+<div class="flex items-center space-x-7 mb-6">
+    <x-link.back href="{{route('manager.company.index')}}"/>
+    <x-link.link name="Créer un tuteur" href="{{route('manager.tutor.create')}}" class="mb-5"/>
+</div>
     <table id="tableTeacher">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Civilité</th>
@@ -23,14 +23,14 @@
                         <td>{{ $tutor->email }}</td>
                         @if($tutor->company)
                             <td>
-                                <a href="{{route('company.show', ['company' => $tutor->company])}}" class="border-b border-primary-color">{{ $tutor->company->company_name }}</a>
+                                <a href="{{route('manager.company.show', ['company' => $tutor->company])}}" class="border-b border-primary-color">{{ $tutor->company->company_name }}</a>
                             </td>
                         @else
                             <td>Aucune entreprise associé</td>
                         @endif
                         <td class="flex space-x-2">
-                            <x-link.link name="Modifier" href="{{route('tutor.edit', ['tutor' => $tutor])}}"/>
-                            <form action="{{route('tutor.destroy', ['tutor' => $tutor])}}" method="POST">
+                            <x-link.link name="Modifier" href="{{route('manager.tutor.edit', ['tutor' => $tutor])}}"/>
+                            <form action="{{route('manager.tutor.destroy', ['tutor' => $tutor])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <x-form.button name="Supprimer"/>

@@ -13,7 +13,7 @@
                      <td>{{ $teacher->firstname }}</td>
                      <td>{{ $teacher->unistra_email }}</td>
                      <td>
-                         <form action="{{route('teacher.destroy', ['teacher' => $teacher])}}" method="POST">
+                         <form action="{{route('manager.teacher.destroy', ['teacher' => $teacher])}}" method="POST">
                              @csrf
                              @method('DELETE')
                              <x-form.button name="Supprimer"/>

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('end_date_company')->nullable();
             $table->timestamps();
 
-            $table->primary(['statut_id', 'student_id','actual_year_id','year_training_id','company_id','start_date_status']);
+            $table->primary(['statut_id', 'student_id','actual_year_id','year_training_id','start_date_status']);
         });
     }
 

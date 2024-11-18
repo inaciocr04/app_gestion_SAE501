@@ -12,8 +12,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('name')->get();
-        return view('user.index', ['users' => $users]);
+        $users = User::orderBy('name')->get()->groupBy('role');
+
+        return view('user.index', [
+            'managers' => $users->get('manager', collect()),
+            'teachers' => $users->get('teacher', collect()),
+            'students' => $users->get('student', collect()),
+        ]);
     }
 
     public function edit(User $user)

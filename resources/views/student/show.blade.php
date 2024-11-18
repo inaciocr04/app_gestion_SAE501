@@ -115,11 +115,15 @@
                         @else
                             <ul>
                                 @foreach ($statusMMI2 as $studentStatu)
-                                    <li><span class="font-poppins font-semibold">Civilité:</span> {{$studentStatu->tutor->civility}}</li>
-                                    <li><span class="font-poppins font-semibold">Nom:</span> {{$studentStatu->tutor->lastname}}</li>
-                                    <li><span class="font-poppins font-semibold">Prénom:</span> {{$studentStatu->tutor->firstname}}</li>
-                                    <li><span class="font-poppins font-semibold">Email:</span> {{$studentStatu->tutor->email}}</li>
-                                    <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$studentStatu->tutor->telephone_number}}</li>
+                                    @if($studentStatu->tutor)
+                                        <li><span class="font-poppins font-semibold">Civilité:</span> {{ $studentStatu->tutor->civility }}</li>
+                                        <li><span class="font-poppins font-semibold">Nom:</span> {{ $studentStatu->tutor->lastname }}</li>
+                                        <li><span class="font-poppins font-semibold">Prénom:</span> {{ $studentStatu->tutor->firstname }}</li>
+                                        <li><span class="font-poppins font-semibold">Email:</span> {{ $studentStatu->tutor->email }}</li>
+                                        <li><span class="font-poppins font-semibold">N° téléphone:</span> {{ $studentStatu->tutor->telephone_number }}</li>
+                                    @else
+                                        <p>Aucun tuteur enregistrée pour MMI2.</p>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
@@ -132,11 +136,15 @@
                         @else
                             <ul>
                                 @foreach ($visitsMMI2 as $visit)
-                                    <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                                    <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                                    <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                                    <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                                    <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                                    @if($visit && $visit->company)
+                                        <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
+                                        <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
+                                        <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
+                                        <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
+                                        <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                                    @else
+                                        <p>Aucune manager enregistrée pour MMI2.</p>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
@@ -149,10 +157,14 @@
                         @else
                             <ul>
                                 @foreach ($visitsMMI2 as $visit)
-                                    <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
-                                    <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
-                                    <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
-                                    <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
+                                    @if($visit && $visit->company)
+                                        <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
+                                        <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
+                                        <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
+                                        <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
+                                    @else
+                                        <p>Aucune d'entreprise enregistrée pour MMI2.</p>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
@@ -175,27 +187,23 @@
 
         <!-- BUT3 Information Section -->
         <div x-show="showBut === 'but3'" class="space-y-8">
-            <div class="mt-8"><span class="font-poppins font-semibold">Tuteur enseignant:</span>
-                <div>
+            <p class="mt-8"><span class="font-poppins font-semibold">Tuteur enseignant:</span>
                 @foreach ($statusMMI3 as $studentStatu)
-                    @if($studentStatu->teacher)
-                            <p>{{$studentStatu->teacher->firstname}} {{$studentStatu->teacher->lastname}} à contacté à " {{$studentStatu->teacher->unistra_email}} ",</p>
-                    @else
-                        <p>Aucune information disponible</p>
-                    @endif
+                    {{$studentStatu->teacher->firstname}}
+                    {{$studentStatu->teacher->lastname}}
+                    à contacté à " {{$studentStatu->teacher->unistra_email}} ",
                     @foreach($visitsMMI3 as $visit)
                         @if($visit->visit_statu === 'OUI')
                             @if($visit->start_date_visit >= now())
-                                    <p>une visite est a effectué le {{ Carbon::parse($visit->start_date_visit)->isoFormat('DD MMMM YYYY') }} au {{ Carbon::parse($visit->end_date_visit)->isoFormat('DD MMMM YYYY') }}</p>
+                                une visite est a effectué le {{ Carbon::parse($visit->start_date_visit)->isoFormat('DD MMMM YYYY') }} au {{ Carbon::parse($visit->end_date_visit)->isoFormat('DD MMMM YYYY') }}
                             @else
-                                    <p>une visite à été effectué le {{ Carbon::parse($visit->start_date_visit)->isoFormat('DD MMMM YYYY') }} au {{ Carbon::parse($visit->end_date_visit)->isoFormat('DD MMMM YYYY') }}</p>
+                                une visite à été effectué le {{ Carbon::parse($visit->start_date_visit)->isoFormat('DD MMMM YYYY') }} au {{ Carbon::parse($visit->end_date_visit)->isoFormat('DD MMMM YYYY') }}
                             @endif
                         @elseif($visit->visit_statu === 'NON')
-                            <p>aucune date n'est prévu</p>
+                            aucune date n'est prévu
                         @endif
                     @endforeach
                 @endforeach
-            </div>
             </p>
             @if($mmi3)
                 <div class="flex w-full justify-evenly">
@@ -213,7 +221,7 @@
                                         <li><span class="font-poppins font-semibold">Email:</span> {{ $studentStatu->tutor->email }}</li>
                                         <li><span class="font-poppins font-semibold">N° téléphone:</span> {{ $studentStatu->tutor->telephone_number }}</li>
                                     @else
-                                        <li><span class="font-poppins font-semibold"></span> Aucune information disponible</li>
+                                        <p>Aucun tuteur enregistrée pour MMI3.</p>
                                     @endif
                                 @endforeach
                             </ul>
@@ -227,11 +235,15 @@
                         @else
                             <ul>
                                 @foreach ($visitsMMI3 as $visit)
-                                    <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                                    <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                                    <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                                    <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                                    <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                                    @if($visit && $visit->company)
+                                        <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
+                                        <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
+                                        <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
+                                        <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
+                                        <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                                    @else
+                                        <p>Aucune manager enregistrée pour MMI3.</p>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
@@ -244,10 +256,14 @@
                         @else
                             <ul>
                                 @foreach ($visitsMMI3 as $visit)
-                                    <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
-                                    <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
-                                    <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
-                                    <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
+                                    @if($visit && $visit->company)
+                                        <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
+                                        <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
+                                        <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
+                                        <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
+                                    @else
+                                        <p>Aucune d'entreprise enregistrée pour MMI3.</p>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif

@@ -1,7 +1,7 @@
 <x-layout title="Année scolaire">
     <div class="flex space-x-2">
-        <x-link.back href="{{route('groupes.index')}}"/>
-        <x-link.link name="Créer une année" href="{{route('actual_year.create')}}"/>
+        <x-link.back href="{{route('manager.groupes.index')}}"/>
+        <x-link.link name="Créer une année" href="{{route('manager.actual_year.create')}}"/>
     </div>
     <table id="tableYear">
         <thead>
@@ -10,15 +10,16 @@
         </thead>
         <tbody>
         @foreach($actual_years as $actual_year)
-            <tr>
+            <tr class="flex justify-between items-center">
                 <td>{{$actual_year->year_title}}</td>
-                <td class="flex space-x-2">
-                    <x-link.link name="Modifier" href="{{route('actual_year.edit', ['actual_year' => $actual_year])}}"/>
-                    <form action="{{route('actual_year.destroy', ['actual_year' => $actual_year])}}" method="POST">
+                <td class="flex space-x-7">
+                    <x-link.link name="Modifier" href="{{route('manager.actual_year.edit', ['actual_year' => $actual_year])}}"/>
+                    <form action="{{route('manager.actual_year.destroy', ['actual_year' => $actual_year])}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <x-form.button name="Supprimer" class="bg-red-600"/>
-                    </form></td>
+                    </form>
+                </td>
             </tr>
         @endforeach
 
