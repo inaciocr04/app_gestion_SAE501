@@ -8,44 +8,37 @@ use Livewire\Component;
 
 class ManagerCalendar extends Component
 {
-    public $selectedTeacherId;
-    public $events = [];
+    public $teacherId = null;
+    public $teachers;
+    public $visits = [];
 
-    public function updatedSelectedTeacherId($teacherId)
+    public function mount()
     {
-        $this->loadTeacherEvents($teacherId);
+        $this->teachers = Teacher::all();
+        $this->loadVisits();
     }
 
-    public function loadTeacherEvents($teacherId)
+    public function loadVisits()
     {
-        // Récupérer les événements pour un professeur spécifique
-        $this->events = Visits::where('visit_statu', 'NON')
-            ->when($teacherId, function ($query) use ($teacherId) {
-                $query->where('teacher_id', $teacherId);
-            })
-            ->orderBy('start_date_visit', 'desc')
-            ->get()
-            ->map(function ($visit) {
-                return [
-                    'id' => $visit->id,
-                    'title' => $visit->student->firstname .' '. $visit->student->lastname,
-                    'start' => $visit->start_date_visit,
-                    'end' => $visit->end_date_visit,
-                    'company_name' => $visit->company->company_name ?? 'Non spécifié',
-                    'address' => $visit->company->company_address ?? 'Non spécifié',
-                    'postcode' => $visit->company->company_postcode ?? 'Non spécifié',
-                    'city' => $visit->company->company_city ?? 'Non spécifié',
-                ];
-            })
-            ->toArray();
+        // Si un professeur est sélectionné, récupérer ses visites
+        if ($this->teacherId) {
+            $this->visits = Visits::where('teacher_id', $this->teacherId)->get();
+        } else {
+            // Sinon récupérer toutes les visites
+            $this->visits = Visits::all();
+        }
 
-        // Émettre un événement pour mettre à jour le calendrier côté frontend
-        $this->dispatchBrowserEvent('updatedEvents', ['events' => $this->events]);
     }
+
+    public function updatedTeacherId()
+    {
+        // Recharger les visites lorsqu'un professeur est sélectionné
+        $this->loadVisits();
+    }
+
 
     public function render()
     {
-        $teachers = Teacher::all();
-        return view('livewire.manager-calendar', ['events' => $this->events, 'teachers' => $teachers]);
+        return view('livewire.manager-calendar');
     }
 }

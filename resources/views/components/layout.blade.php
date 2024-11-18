@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css">
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/main.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.8/main.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/core@6/main.min.css" />
+
     @vite(['resources/js/app.js', 'resources/css/app.css'])
 
     <style>
@@ -20,10 +20,6 @@
     </style>
 
     @stack('styles')
-
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js'></script>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css' rel='stylesheet' />
-
 
 </head>
 <body class="font-sans antialiased bg-bg-primary-color flex h-screen w-screen overflow-hidden">
@@ -225,7 +221,7 @@
         </section>
     </main>
     @livewireScriptConfig
-    @stack('scripts')
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
 </body>
