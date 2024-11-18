@@ -7,7 +7,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="depot_link">Lien ou ID du dépôt Seafile</label>
+                <label for="depot_link">Lien du dépôt Seafile</label>
                 <x-form.input
                     name="depot_link"
                     name_label="Lien du dépôt"
@@ -61,7 +61,7 @@
             <x-form.input name_label="Date de fin de dépôt" name="end_date_depot" type="date" value="{{ old('end_date_depot', $depot->end_date_depot) }}"/>
 
 
-            <div class="flex justify-center items-center" x-data="{ toggle: {{ $depot->actif }} }">
+            <div class="flex" x-data="{ toggle: {{ $depot->actif }} }">
                 <div class="relative rounded-full w-12 h-6 transition duration-200 ease-linear"
                      :class="[toggle === 1 ? 'bg-green-400' : 'bg-gray-400']">
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DepotRequest;
 use App\Models\Actual_year;
 use App\Models\Depot;
 use App\Models\Year_training;
@@ -22,22 +23,13 @@ class DepotController extends Controller
         return view('depot.create', ['actual_years' => $actual_years, 'year_trainings' => $year_trainings]);
     }
 
-    public function store(Request $request)
+    public function store(DepotRequest $request)
     {
-        $request->validate([
-            'depot_link' => 'required|string',
-            'actual_year_id' => 'required|exists:actual_years,id',
-            'year_training_id' => 'required|exists:year_trainings,id',
-            'end_date_depot' => 'nullable|date',
-        ]);
-
-        Depot::create([
-            'depot_link' => $request->depot_link,
-            'actual_year_id' => $request->actual_year_id,
-            'year_training_id' => $request->year_training_id,
-            'actif' => false,
-            'end_date_depot' => $request->end_date_depot,
-        ]);
+        $data = $request->validated();
+        $data['actif'] = false;
+        $depot = new Depot();
+        $depot->fill($data);
+        $depot->save();
 
         return redirect()->route('manager.depot.index')->with('success', 'Dépôt ajouté avec succès.');
     }

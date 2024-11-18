@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('depots', function (Blueprint $table) {
             $table->id();
+            $table->string('name_depot');
             $table->foreignId('actual_year_id')->constrained()->cascadeOnDelete();
             $table->foreignId('year_training_id')->constrained()->cascadeOnDelete();
             $table->string('depot_link');

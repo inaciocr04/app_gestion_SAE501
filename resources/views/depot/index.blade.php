@@ -3,15 +3,23 @@
     <table id="tableDepot">
         <thead>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom du dépôt</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Lien du dépôt</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status du dépôt</th>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
 
         </thead>
         <tbody>
         @foreach($depots as $depot)
             <tr>
+                <td>{{$depot->name_depot}}</td>
                 <td>
-                    <a href="{{$depot->depot_link}}">Dépot des {{$depot->actual_year->year_title}} pour l'année {{$depot->year_training->training_title}}</a>
+                    <a href="{{$depot->depot_link}}">{{$depot->depot_link}}</a>
                 </td>
+                @if($depot->actif === 0)
+                    <td>Dépôt inactif</td>
+                @else
+                    <td>Dépôt actif</td>
+                @endif
 
                 <td class="flex space-x-2">
                     <x-link.link href="{{route('manager.depot.edit', ['depot' => $depot])}}" name="Modifier"/>
