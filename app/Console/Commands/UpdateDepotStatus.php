@@ -21,7 +21,7 @@ class UpdateDepotStatus extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Met à jour les statuts des dépôts dont la date de fin est passée';
 
     /**
      * Execute the console command.

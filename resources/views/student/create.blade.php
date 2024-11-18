@@ -113,7 +113,6 @@
             <div x-show="step === 3" class="step">
                 <h2>Informations entreprises</h2>
 
-
                 <livewire:tutor-select/>
                 <div class="flex">
                     <label for="teacher">Professeur :</label>
@@ -144,11 +143,11 @@
                         <label class="block text-sm font-medium text-gray-700">Statut de la visite :</label>
                         <div class="mt-2">
                             <label class="inline-flex items-center">
-                                <input type="radio" name="visit_statu" value="oui" class="form-radio">
+                                <input type="radio" name="visit_statu" value="OUI" class="form-radio">
                                 <span class="ml-2">Oui</span>
                             </label>
                             <label class="inline-flex items-center ml-4">
-                                <input type="radio" name="visit_statu" value="non" class="form-radio">
+                                <input type="radio" name="visit_statu" value="NON" class="form-radio">
                                 <span class="ml-2">Non</span>
                             </label>
                         </div>

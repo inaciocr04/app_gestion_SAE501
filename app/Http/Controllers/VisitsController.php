@@ -33,7 +33,7 @@ class VisitsController extends Controller
         $teacher = Auth::user()->teacher;
 
         $visits = Visits::where('teacher_id', $teacher->id)
-            ->where('visit_statu', 'NON')
+            ->where('visit_statu', 'non')
             ->orderBy('start_date_visit', 'desc')
             ->get();
 
@@ -85,9 +85,66 @@ class VisitsController extends Controller
 
     public function showManagerVisits()
     {
-        $teachers = Teacher::all();
+        $visit = Visits::all();
+        return view('manager.visit');
+    }
 
-        return view('manager.visit', ['teachers' => $teachers]);
+    public function fetchDataManager()
+    {
+
+        $visits = Visits::where('visit_statu', 'non')
+            ->orderBy('start_date_visit', 'desc')
+            ->get();
+
+        $events = [];
+
+        foreach ($visits as $visit) {
+            $student = $visit->student;
+            $teacher = $visit->teacher;
+
+            if ($visit->start_date_visit) {
+                $isPastVisit = $visit->start_date_visit < now();
+
+                $eventColor = $isPastVisit ? 'red' : 'green';
+                $eventTitle = $isPastVisit
+                    ? 'Visite déjà effectuée avec ' . $student->firstname .' '. $student->lastname
+                    : 'Visite à effectuer avec ' . $student->firstname .' '. $student->lastname;
+
+                $events[] = [
+                    'teacher_firstname' => $teacher->firstname,
+                    'teacher_lastname' => $teacher->lastname,
+                    'student_id' => $student->id,
+                    'visit_id' => $visit->id,
+                    'title' => $eventTitle,
+                    'start' => $visit->start_date_visit,
+                    'end' => $visit->end_date_visit,
+                    'details' => $visit->note ?? '',
+                    'company_name' => $visit->company->company_name ?? 'Non spécifié',
+                    'address' => $visit->company->company_address ?? 'Non spécifié',
+                    'postcode' => $visit->company->company_postcode ?? 'Non spécifié',
+                    'city' => $visit->company->company_city ?? 'Non spécifié',
+                    'color' => $eventColor,
+                ];
+            } else {
+                $events[] = [
+                    'teacher_firstname' => $teacher->firstname,
+                    'teacher_lastname' => $teacher->lastname,
+                    'student_id' => $student->id,
+                    'visit_id' => $visit->id,
+                    'title' => 'No visit yet for ' . $student->firstname,
+                    'start' => null,
+                    'end' => null,
+                    'details' => 'No visits recorded',
+                    'company_name' => 'Non spécifié',
+                    'address' => 'Non spécifié',
+                    'postcode' => 'Non spécifié',
+                    'city' => 'Non spécifié',
+                    'color' => 'grey',
+                ];
+            }
+        }
+
+        return response()->json($events);
     }
 
 

@@ -24,6 +24,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date de début</th>
                     @canany(['viewTutor'], \App\Models\Student::class)
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">tuteur enseignant</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Visits</th>
                     @endcanany
                     @canany(['updateAny', 'deleteAny'], \App\Models\Student::class)
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
@@ -66,6 +67,14 @@
                                     N/A
                                 @endif
                             </td>
+                            <td>
+                                @if($student->visits->last()->start_date_visit >= now())
+                                    Visite prévu le
+                                    ({{$student->visits->last()->start_date_visit ? $student->visits->last()->start_date_visit : 'N/A'}})
+                                @else
+                                    Visite déjà éffectuer
+                                @endif
+                            </td>
                         @endcanany
                         @canany(['update', 'delete'], $student)
                             <td>
@@ -89,8 +98,8 @@
                     paging: true,
                     searching: true,
                     ordering: true,
-                    pageLength: 15,
-                    lengthMenu: [15, 10, 5],
+                    pageLength: 8,
+                    lengthMenu: [5,8,10, 15],
                     language: {
                         "sEmptyTable": "Aucune donnée disponible dans le tableau",
                         "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",

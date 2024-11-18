@@ -80,8 +80,8 @@
 
                 <!-- Texte à côté du toggle -->
                 <span class="ml-2 text-lg" :class="[toggle === 1 ? 'text-green-500' : 'text-gray-500']">
-            <span x-text="toggle === 1 ? 'Dépôt Actif' : 'Dépôt Inactif'"></span>
-        </span>
+                    <span x-text="toggle === 1 ? 'Dépôt Actif' : 'Dépôt Inactif'"></span>
+                </span>
             </div>
 
 

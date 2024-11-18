@@ -6,6 +6,7 @@ use App\Models\Depot;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Observers\DepotObserver;
 use App\Observers\StudentObserver;
 use App\Observers\TeacherObserver;
 use App\Observers\UserObserver;
@@ -31,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Student::observe(StudentObserver::class);
         Teacher::observe(TeacherObserver::class);
+        Depot::observe(DepotObserver::class);
 
         View::composer('*', function ($view) {
             $user = Auth::user();

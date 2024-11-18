@@ -50,7 +50,6 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(UserIsStudent::class)->group(function () {
     Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.index');
     Route::get('/student', [StudentController::class, 'show'])->name('student.show');
-    Route::post('/upload-file', [SeafileController::class, 'uploadFile'])->name('seafile.upload');
 
 });
 

@@ -19,7 +19,7 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'between:5,255'],
-            'email' => ['required', 'email', 'unique:users','regex:/^[a-zA-Z0-9._%+-]+@(etu\.unistra\.fr|unistra\.fr)$/'],
+            'email' => ['required', 'email', 'unique:users','regex:/^[a-zA-Z0-9._%+-]+@(etu\.unistra\.fr|unistra\.fr|[a-zA-Z0-9._%+-])$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
