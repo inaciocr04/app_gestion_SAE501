@@ -18,18 +18,6 @@
             <!-- Student ID (champ caché) -->
             <input type="hidden" name="student_id" value="{{ $student->id }}">
 
-            <!-- Company ID -->
-            <div class="mb-4">
-                <label for="company_id" class="block text-gray-700 font-bold">Entreprise (facultatif)</label>
-                <select name="company_id" id="company_id" class="w-full px-4 py-2 border rounded">
-                    <option value="">Sélectionnez une entreprise</option>
-                    @foreach ($companies as $company)
-                        <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
-                            {{ $company->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
 
             <!-- Year Training ID -->
             <div class="mb-4">
@@ -45,11 +33,20 @@
             </div>
 
             <!-- Note -->
-            <div class="mb-4">
-                <label for="note" class="block text-gray-700 font-bold">Note (facultatif)</label>
-                <textarea name="note" id="note" rows="3" class="w-full px-4 py-2 border rounded">{{ old('note') }}</textarea>
-            </div>
 
+            <div class="mb-4">
+                <label>Visit effectuer ?</label>
+                <div class="mt-2">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="visit_statu" value="oui" class="form-radio">
+                        <span class="ml-2">Oui</span>
+                    </label>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="radio" name="visit_statu" value="non" class="form-radio">
+                        <span class="ml-2">Non</span>
+                    </label>
+                </div>
+            </div>
             <!-- Visit Status -->
             <div class="mb-4">
                 <label for="visit_statu" class="block text-gray-700 font-bold">Statut de la visite</label>
@@ -59,16 +56,13 @@
                 </select>
             </div>
 
-            <!-- Start Date Visit -->
-            <div class="mb-4">
-                <label for="start_date_visit" class="block text-gray-700 font-bold">Date de début de la visite</label>
-                <input type="datetime-local" name="start_date_visit" id="start_date_visit" class="w-full px-4 py-2 border rounded" value="{{ old('start_date_visit') }}">
+            <div class="flex space-x-20">
+                <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit') }}"/>
+                <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit') }}"/>
             </div>
-
-            <!-- End Date Visit -->
             <div class="mb-4">
-                <label for="end_date_visit" class="block text-gray-700 font-bold">Date de fin de la visite</label>
-                <input type="datetime-local" name="end_date_visit" id="end_date_visit" class="w-full px-4 py-2 border rounded" value="{{ old('end_date_visit') }}">
+                <label for="note" class="text-gray-700 font-bold">Notes (Facultatif)</label>
+                <textarea name="note" id="note" rows="4" class="form-textarea mt-1 block w-full rounded shadow-sm resize-none h-32"></textarea>
             </div>
 
             <!-- Submit Button -->

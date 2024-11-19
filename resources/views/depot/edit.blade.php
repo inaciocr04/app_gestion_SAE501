@@ -1,30 +1,18 @@
-<x-layout title="Modifier le dépôt">
-    <div class="container">
-        <h1>Modifier le dépôt</h1>
-
-        <form action="{{ route('manager.depot.update', $depot->id) }}" method="POST" x-data="{ actif: {{ $depot->actif }} }">
+<x-layout title="Modifier le dépôt {{$depot->name_depot}}">
+    <x-link.back href="{{route('manager.depot.index')}}"/>
+    <div class="flex flex-col justify-center items-center">
+        <form action="{{ route('manager.depot.update', $depot->id) }}" method="POST" x-data="{ actif: {{ $depot->actif }} }" class="flex flex-col space-y-7">
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-                <label for="depot_link">Lien du dépôt Seafile</label>
-                <x-form.input
-                    name="depot_link"
-                    name_label="Lien du dépôt"
-                    :value="old('depot_link', $depot->depot_link)"
-                />
+            <x-form.input name="name_depot" name_label="Nom du dépot" :value="old('name_depot', $depot->name_depot)"/>
+            <x-form.input name="depot_link" name_label="Lien du dépôt" :value="old('depot_link', $depot->depot_link)"/>
 
-                @error('depot_link')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="actual_year_id">Année actuelle</label>
+            <label for="actual_year_id" class="w-full">Année actuelle
                 <select
                     id="actual_year_id"
                     name="actual_year_id"
-                    class="form-control @error('actual_year_id') is-invalid @enderror"
+                    class="form-select rounded w-full"
                     required>
                     <option value="" disabled>-- Sélectionnez une année --</option>
                     @foreach ($actual_years as $actual_year)
@@ -34,17 +22,13 @@
                         </option>
                     @endforeach
                 </select>
-                @error('actual_year_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+            </label>
 
-            <div class="form-group">
-                <label for="year_training_id">Année de formation</label>
+            <label for="year_training_id" class="w-full">Année de formation
                 <select
                     id="year_training_id"
                     name="year_training_id"
-                    class="form-control @error('year_training_id') is-invalid @enderror"
+                    class="form-select rounded w-full"
                     required>
                     <option value="" disabled>-- Sélectionnez une année de formation --</option>
                     @foreach ($year_trainings as $year_training)
@@ -54,10 +38,7 @@
                         </option>
                     @endforeach
                 </select>
-                @error('year_training_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+            </label>
             <x-form.input name_label="Date de fin de dépôt" name="end_date_depot" type="date" value="{{ old('end_date_depot', $depot->end_date_depot) }}"/>
 
 
@@ -75,10 +56,8 @@
                            @click="toggle = toggle === 0 ? 1 : 0; $dispatch('input', toggle)" />
                 </div>
 
-                <!-- Champ caché qui contient la valeur de 'actif' -->
                 <input type="hidden" name="actif" :value="toggle" />
 
-                <!-- Texte à côté du toggle -->
                 <span class="ml-2 text-lg" :class="[toggle === 1 ? 'text-green-500' : 'text-gray-500']">
                     <span x-text="toggle === 1 ? 'Dépôt Actif' : 'Dépôt Inactif'"></span>
                 </span>

@@ -219,9 +219,6 @@
                      x-transition:leave-start="opacity-100 transform scale-100"
                      x-transition:leave-end="opacity-0 transform scale-95"
                      class="absolute right-0 mt-2 w-48 bg-sixth-color rounded-lg shadow-lg z-50">
-                    <a href="{{route('account')}}" class="block px-4 py-2 text-gray-800 hover:bg-fourth-color hover:text-white transition-colors rounded-t-lg">
-                        Mon compte
-                    </a>
                     <a href="{{route('account_modif')}}" class="block px-4 py-2 text-gray-800 hover:bg-fourth-color hover:text-white transition-colors">
                         Modifier mon mot de passe
                     </a>

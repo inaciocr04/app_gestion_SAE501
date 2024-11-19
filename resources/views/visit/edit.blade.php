@@ -12,52 +12,41 @@
             </div>
         @endif
 
-        <form action="{{ route('visit.update', $visit->id) }}" method="POST">
+        <form action="{{ route('visit.update', $visit->id) }}" method="POST" class="space-y-7">
             @csrf
             @method('PUT')
 
             <!-- Student ID (champ caché) -->
             <input type="hidden" name="student_id" value="{{ $visit->student_id }}">
 
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold">Année de formation actuelle</label>
-                <p class="border p-2 rounded">{{ $visit->student->firstname .' '. $visit->student->lastname ?? 'N/A' }}</p>
-                <input type="hidden" name="year_training_id" value="{{ $visit->student_id }}">
-            </div>
+            <div class="flex space-x-20">
+                <div class="mb-4 w-full">
+                    <label class="block text-gray-700 font-bold w-full">Nom de l'étudiant</label>
+                    <p class="border p-2 rounded w-full">{{ $visit->student->firstname .' '. $visit->student->lastname ?? 'N/A' }}</p>
+                    <input type="hidden" name="year_training_id" value="{{ $visit->student_id }}">
+                </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold">Année de formation actuelle</label>
-                <p class="border p-2 rounded">{{ $visit->year_training->training_title ?? 'N/A' }}</p>
-                <input type="hidden" name="year_training_id" value="{{ $visit->year_training_id }}">
+                <div class="mb-4 w-full">
+                    <label class="block text-gray-700 font-bold w-full">Année de formation actuelle</label>
+                    <p class="border p-2 rounded w-full">{{ $visit->year_training->training_title ?? 'N/A' }}</p>
+                    <input type="hidden" name="year_training_id" value="{{ $visit->year_training_id }}">
+                </div>
             </div>
-
-            <!-- Note -->
-            <div class="mb-4">
-                <label for="note" class="block text-gray-700 font-bold">Note (facultatif)</label>
-                <textarea name="note" id="note" rows="3" class="w-full px-4 py-2 border rounded">{{ old('note', $visit->note) }}</textarea>
+            <div class="flex space-x-20">
+                <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', $visit->start_date_visit) }}"/>
+                <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', $visit->end_date_visit) }}"/>
             </div>
-
-            <!-- Visit Status -->
             <div class="mb-4">
                 <label for="visit_statu" class="block text-gray-700 font-bold">Statut de la visite</label>
                 <select name="visit_statu" id="visit_statu" class="w-full px-4 py-2 border rounded">
-                    <option value="NON" {{ old('visit_statu', $visit->visit_statu) === 'NON' ? 'selected' : '' }}>NON</option>
-                    <option value="OUI" {{ old('visit_statu', $visit->visit_statu) === 'OUI' ? 'selected' : '' }}>OUI</option>
+                    <option value="NON" {{ old('visit_statu', 'non') === 'non' ? 'selected' : '' }}>Non</option>
+                    <option value="OUI" {{ old('visit_statu') === 'oui' ? 'selected' : '' }}>Oui</option>
                 </select>
             </div>
-
-            <!-- Start Date Visit -->
             <div class="mb-4">
-                <label for="start_date_visit" class="block text-gray-700 font-bold">Date de début de la visite</label>
-                <input type="datetime-local" name="start_date_visit" id="start_date_visit" class="w-full px-4 py-2 border rounded" value="{{ old('start_date_visit', $visit->start_date_visit) }}">
+                <label for="note" class="text-gray-700 font-bold">Notes (Facultatif)</label>
+                <textarea name="note" id="note" rows="4" class=" form-textarea mt-1 block w-full rounded border resize-none h-32">{{ old('note', $visit->note ) }}</textarea>
             </div>
-
-            <!-- End Date Visit -->
-            <div class="mb-4">
-                <label for="end_date_visit" class="block text-gray-700 font-bold">Date de fin de la visite</label>
-                <input type="datetime-local" name="end_date_visit" id="end_date_visit" class="w-full px-4 py-2 border rounded" value="{{ old('end_date_visit', $visit->end_date_visit) }}">
-            </div>
-
             <!-- Submit Button -->
             <div class="mt-6">
                 <x-form.button name="Mettre à jour la visite"/>

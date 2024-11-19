@@ -1,5 +1,5 @@
 <x-layout title="Dépot">
-    <x-link.link href="{{route('manager.depot.create')}}" name="Créer un nouveau dépot"/>
+    <x-link.link href="{{route('manager.depot.create')}}" name="Créer un nouveau dépot" class="mb-6"/>
     <table id="tableDepot">
         <thead>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom du dépôt</th>

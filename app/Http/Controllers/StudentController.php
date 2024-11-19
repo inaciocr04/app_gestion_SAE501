@@ -31,49 +31,45 @@ class StudentController extends Controller
         $student = Student::with([
             'trainings.year_training',
             'student_statu',
-            'visits.year_training'
+            'visits.year_training',
+            'visits.company', // Charger la relation 'company' pour avoir accès aux managers
         ])->where('user_id', $user->id)->firstOrFail();
 
-        $mmi1 = $student->trainings->firstWhere('year_training.training_title', 'MMI1');
-        $mmi2 = $student->trainings->firstWhere('year_training.training_title', 'MMI2');
-        $mmi3 = $student->trainings->firstWhere('year_training.training_title', 'MMI3');
+        // Préparer les visites, statuts, et managers par année de formation
+        $visitsByTraining = [];
+        $statusByTraining = [];
+        $managersByTraining = [];
 
-        $visitsMMI1 = $student->visits->filter(function ($visit) use ($mmi1) {
-            return $visit->year_training_id === optional($mmi1)->year_training_id;
-        });
+        foreach (['MMI1', 'MMI2', 'MMI3'] as $trainingTitle) {
+            $mmi = $student->trainings->firstWhere('year_training.training_title', $trainingTitle);
+            if ($mmi) {
+                // Récupérer les visites pour l'année de formation
+                $visitsByTraining[$trainingTitle] = $student->visits->filter(function ($visit) use ($mmi) {
+                    return $visit->year_training_id === $mmi->year_training_id;
+                });
 
-        $visitsMMI2 = $student->visits->filter(function ($visit) use ($mmi2) {
-            return $visit->year_training_id === optional($mmi2)->year_training_id;
-        });
+                // Récupérer les statuts pour l'année de formation
+                $statusByTraining[$trainingTitle] = $student->student_statu->filter(function ($status) use ($mmi) {
+                    return $status->year_training_id === $mmi->year_training_id;
+                });
 
-        $visitsMMI3 = $student->visits->filter(function ($visit) use ($mmi3) {
-            return $visit->year_training_id === optional($mmi3)->year_training_id;
-        });
-
-        $statusMMI1 = $student->student_statu->filter(function ($studentStatu) use ($mmi1){
-            return $studentStatu->year_training_id === optional($mmi1)->year_training_id;
-        });
-
-        $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2){
-            return $studentStatu->year_training_id === optional($mmi2)->year_training_id;
-        });
-        $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3){
-            return $studentStatu->year_training_id === optional($mmi3)->year_training_id;
-        });
+                // Récupérer les informations des managers depuis la relation 'company' des visites
+                $managersByTraining[$trainingTitle] = $visitsByTraining[$trainingTitle]->map(function ($visit) {
+                    return $visit->company; // Récupérer l'objet company associé à chaque visite
+                });
+            }
+        }
 
         return view('student.index', [
             'student' => $student,
-            'mmi1' => $mmi1,
-            'mmi2' => $mmi2,
-            'mmi3' => $mmi3,
-            'visitsMMI1' => $visitsMMI1,
-            'visitsMMI2' => $visitsMMI2,
-            'visitsMMI3' => $visitsMMI3,
-            'statusMMI1' => $statusMMI1,
-            'statusMMI2' => $statusMMI2,
-            'statusMMI3' => $statusMMI3,
+            'visitsByTraining' => $visitsByTraining,
+            'statusByTraining' => $statusByTraining,
+            'managersByTraining' => $managersByTraining,
         ]);
     }
+
+
+
 
     public function students()
     {

@@ -1,8 +1,7 @@
 <div>
-    <div class="flex items-center space-x-7">
-        <div>
-            <label for="teacher">Entreprise :</label>
-            <select name="companies_id" id="companies_id">
+    <div class="flex items-end space-x-7">
+        <label for="teacher" class="text-gray-700 font-bold">Entreprise
+            <select name="companies_id" id="companies_id" class="form-select w-full rounded">
                 <option value="">-- Sélectionner une entreprise --</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}">
@@ -10,8 +9,8 @@
                     </option>
                 @endforeach
             </select>
-        </div>
-        <button type="button" @click="$dispatch('open-company-modal', true)" class=" !bg-fourth-color text-white p-2 rounded">
+        </label>
+        <button type="button" @click="$dispatch('open-company-modal', true)" class=" !bg-fourth-color text-white p-2 rounded mb-1">
             <x-vaadin-plus class="text-white size-4" />
         </button>
     </div>

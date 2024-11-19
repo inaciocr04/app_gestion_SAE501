@@ -1,189 +1,94 @@
 <x-layout title="Tableau de Bord Etudiant">
     <div x-data="{ showBut : 'but1' }" class="mt-6">
-        <div class="flex space-x-28 m-auto items-center  justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
-            <div @click="showBut = 'but1'" :class="{'bg-seventh-color text-black': showBut === 'but1', 'text-white': showBut !== 'but1'}"
-                 class="px-6 py-2 rounded-2xl cursor-pointer">
-                <p>Etudiant BUT1</p>
-            </div>
-            <div @click="showBut = 'but2'" :class="{'bg-seventh-color text-black': showBut === 'but2', 'text-white': showBut !== 'but2'}"
-                 class="px-6 py-2 rounded-3xl cursor-pointer">
-                <p>Etudiant BUT2</p>
-            </div>
-            <div @click="showBut = 'but3'" :class="{'bg-seventh-color text-black': showBut === 'but3', 'text-white': showBut !== 'but3'}"
-                 class="px-6 py-2 rounded-3xl cursor-pointer">
-                <p>Etudiant BUT3</p>
-            </div>
+        <div class="flex space-x-28 m-auto items-center justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
+            @foreach (['but1' => 'BUT1', 'but2' => 'BUT2', 'but3' => 'BUT3'] as $but => $label)
+                <div @click="showBut = '{{ $but }}'"
+                     :class="{'bg-seventh-color text-black': showBut === '{{ $but }}', 'text-white': showBut !== '{{ $but }}'}"
+                     class="px-6 py-2 rounded-2xl cursor-pointer">
+                    <p>Etudiant {{ $label }}</p>
+                </div>
+            @endforeach
         </div>
-        <div x-show="showBut === 'but1'" class="bg-sixth-color h-full mb-4">
-            @if ($visitsMMI1->isEmpty())
-                <p>Aucune visite enregistrée pour MMI1.</p>
-            @else
-                <ul>
-                    @foreach ($visitsMMI1 as $visit)
-                        @if($visit && $visit->company)
-                        <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
-                        <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
-                        <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
-                        <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
-                        @else
-                            <p>Aucune visite enregistrée pour MMI1.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-            @if ($statusMMI1->isEmpty())
-                <p>Aucune visite enregistrée pour MMI1.</p>
-            @else
-                <ul>
-                    @foreach ($statusMMI1 as $studentStatu)
-                        @if($studentStatu->tutor)
-                            <li><span class="font-poppins font-semibold">Civilité:</span> {{$studentStatu->tutor->civility}}</li>
-                            <li><span class="font-poppins font-semibold">Nom:</span> {{$studentStatu->tutor->lastname}}</li>
-                            <li><span class="font-poppins font-semibold">Prénom:</span> {{$studentStatu->tutor->firstname}}</li>
-                            <li><span class="font-poppins font-semibold">Email:</span> {{$studentStatu->tutor->email}}</li>
-                            <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$studentStatu->tutor->telephone_number}}</li>
-                        @else
-                            <p>Aucun tuteur enregistrée pour MMI1.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-                    <ul>
-                        @foreach ($visitsMMI1 as $visit)
+
+        @foreach (['but1' => 'MMI1', 'but2' => 'MMI2', 'but3' => 'MMI3'] as $but => $groupKey)
+            <div x-show="showBut === '{{ $but }}'" class="bg-sixth-color h-full rounded mt-6 px-8 py-6">
+                {{-- Vérification et affichage des visites --}}
+                <h3 class="text-lg font-bold mb-4 mt-4">Information de l'entreprise</h3>
+                @if (isset($visitsByTraining[$groupKey]) && $visitsByTraining[$groupKey]->isEmpty())
+                    <p>Aucune visite enregistrée pour {{ $groupKey }}.</p>
+                @else
+                    <div>
+                        @foreach ($visitsByTraining[$groupKey] as $visit)
                             @if($visit && $visit->company)
-                                <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                                <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                                <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                                <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                                <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
+                                <div class="flex justify-evenly">
+                                    <p><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{ $visit->company->company_name }}</p>
+                                    <p><span class="font-poppins font-semibold">Adresse:</span> {{ $visit->company->company_address }}, {{ $visit->company->company_city }}, {{ $visit->company->company_postcode }}</p>
+                                    <p><span class="font-poppins font-semibold">Pays:</span> {{ $visit->company->company_country }}</p>
+                                    <p><span class="font-poppins font-semibold">Département:</span> {{ $visit->company->company_department }}</p>
+                                </div>
                             @else
-                                <p>Aucune manager enregistrée pour MMI1.</p>
+                                <p>Aucune entreprise enregistrée pour {{ $groupKey }}.</p>
                             @endif
                         @endforeach
-                    </ul>
-            <h4>Remarque</h4>
-            @foreach ($visitsMMI1 as $visit)
-                @if($visit->note = null)
-                    <p>Aucune remarque n'a été renseigné</p>
-                @else
-                    <p>{{$visit->note}}</p>
+                    </div>
                 @endif
-            @endforeach
-        </div>
-    <div x-show="showBut === 'but2'" class="bg-sixth-color h-full mb-4">
-        @if ($visitsMMI2->isEmpty())
-            <p>Aucune visite enregistrée pour MMI2.</p>
-        @else
-            <ul>
-                @foreach ($visitsMMI2 as $visit)
-                    @if($visit && $visit->company)
-                        <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
-                        <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
-                        <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
-                        <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
-                    @else
-                        <p>Aucune visite enregistrée pour MMI2.</p>
-                    @endif
+
+                {{-- Vérification et affichage des tuteurs --}}
+                <h3 class="text-lg font-bold mb-4 mt-4">Information sur le tuteur</h3>
+            @if (isset($statusByTraining[$groupKey]) && $statusByTraining[$groupKey]->isEmpty())
+                    <p>Aucun tuteur enregistré pour {{ $groupKey }}.</p>
+                @else
+                    <div class="space-y-2">
+                        @foreach ($statusByTraining[$groupKey] as $status)
+                            @if($status->tutor)
+                                <div class="flex justify-evenly">
+                                    <p><span class="font-poppins font-semibold">Civilité:</span> {{ $status->tutor->civility }}</p>
+                                    <p><span class="font-poppins font-semibold">Nom:</span> {{ $status->tutor->lastname }}</p>
+                                    <p><span class="font-poppins font-semibold">Prénom:</span> {{ $status->tutor->firstname }}</p>
+                                    <p><span class="font-poppins font-semibold">Email:</span> {{ $status->tutor->email }}</p>
+                                    <p><span class="font-poppins font-semibold">N°téléphone:</span> {{ $status->tutor->telephone_number }}</p>
+                                </div>
+                                <div class="flex justify-evenly">
+
+                                </div>
+                            @else
+                                <p>Aucun tuteur enregistré pour {{ $groupKey }}.</p>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- Vérification et affichage des managers --}}
+                <h3 class="text-lg font-bold mb-4 mt-4">Information sur le manager</h3>
+            @if (isset($managersByTraining[$groupKey]) && $managersByTraining[$groupKey]->isEmpty())
+                    <p>Aucun manager enregistré pour {{ $groupKey }}.</p>
+                @else
+                    <div class="space-y-2">
+                        @foreach ($managersByTraining[$groupKey] as $manager)
+                            @if($manager)
+                                <div class="flex justify-evenly">
+                                    <p><span class="font-poppins font-semibold">Civilité:</span> {{ $manager->company_manager_civility }}</p>
+                                    <p><span class="font-poppins font-semibold">Nom:</span> {{ $manager->company_manager_lastname }}</p>
+                                    <p><span class="font-poppins font-semibold">Prénom:</span> {{ $manager->company_manager_firstname }}</p>
+                                    <p><span class="font-poppins font-semibold">Email:</span> {{ $manager->company_manager_email }}</p>
+                                    <p><span class="font-poppins font-semibold">N°téléphone:</span> {{ $manager->company_manager_tel_number }}</p>
+                                </div>
+                                <div class="flex justify-evenly">
+
+                                </div>
+                                @else
+                                <p>Aucun manager enregistré pour {{ $groupKey }}.</p>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- Section remarques --}}
+                <h3 class="text-lg font-bold mb-4 mt-4">Remarque</h3>
+                @foreach ($visitsByTraining[$groupKey] as $visit)
+                    <p>{{ $visit->note ?? "Aucune remarque n'a été renseignée" }}</p>
                 @endforeach
-            </ul>
-        @endif
-        @if ($statusMMI2->isEmpty())
-            <p>Aucune visite enregistrée pour MMI2.</p>
-        @else
-            <ul>
-                @foreach ($statusMMI2 as $studentStatu)
-                    <li><span class="font-poppins font-semibold">Civilité:</span> {{$studentStatu->tutor->civility}}</li>
-                    <li><span class="font-poppins font-semibold">Nom:</span> {{$studentStatu->tutor->lastname}}</li>
-                    <li><span class="font-poppins font-semibold">Prénom:</span> {{$studentStatu->tutor->firstname}}</li>
-                    <li><span class="font-poppins font-semibold">Email:</span> {{$studentStatu->tutor->email}}</li>
-                    <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$studentStatu->tutor->telephone_number}}</li>
-                @endforeach
-            </ul>
-        @endif
-        @if ($visitsMMI2->isEmpty())
-            <p>Aucune visite enregistrée pour MMI2.</p>
-        @else
-            <ul>
-                @foreach ($visitsMMI2 as $visit)
-                    @if($visit && $visit->company)
-                        <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                        <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                        <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                        <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                        <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
-                    @else
-                        <p>Aucune manager enregistrée pour MMI1.</p>
-                    @endif
-                @endforeach
-            </ul>
-        @endif
-        <h4>Remarque</h4>
-        @foreach ($visitsMMI2 as $visit)
-            @if($visit->note = null)
-                <p>Aucune remarque n'a été renseigné</p>
-            @else
-                <p>{{$visit->note}}</p>
-            @endif
+            </div>
         @endforeach
     </div>
-        <div x-show="showBut === 'but3'" class="bg-sixth-color h-full mb-4">
-            @if ($visitsMMI3->isEmpty())
-                <p>Aucune visite enregistrée pour MMI3.</p>
-            @else
-                <ul>
-                    @foreach ($visitsMMI3 as $visit)
-                        @if($visit && $visit->company)
-                            <li><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{$visit->company->company_name}}</li>
-                            <li><span class="font-poppins font-semibold">Adresse:</span> {{$visit->company->company_address}}, {{$visit->company->company_city}}, {{$visit->company->company_postcode}} </li>
-                            <li><span class="font-poppins font-semibold">Département:</span> {{$visit->company->company_departement}}</li>
-                            <li><span class="font-poppins font-semibold">Pays:</span> {{$visit->company->company_country}}</li>
-                        @else
-                            <p>Aucune visite enregistrée pour MMI3.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-            @if ($statusMMI3->isEmpty())
-                <p>Aucune visite enregistrée pour MMI3.</p>
-            @else
-                <ul>
-                    @foreach ($statusMMI3 as $studentStatu)
-                        @if($studentStatu->tutor)
-                            <li><span class="font-poppins font-semibold">Civilité:</span> {{$studentStatu->tutor->civility}}</li>
-                            <li><span class="font-poppins font-semibold">Nom:</span> {{$studentStatu->tutor->lastname}}</li>
-                            <li><span class="font-poppins font-semibold">Prénom:</span> {{$studentStatu->tutor->firstname}}</li>
-                            <li><span class="font-poppins font-semibold">Email:</span> {{$studentStatu->tutor->email}}</li>
-                            <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$studentStatu->tutor->telephone_number}}</li>
-                        @else
-                            <p>Aucune visite enregistrée pour MMI3.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-            @if ($visitsMMI3->isEmpty())
-                <p>Aucune visite enregistrée pour MMI3.</p>
-            @else
-                <ul>
-                    @foreach ($visitsMMI3 as $visit)
-                        @if($visit && $visit->company)
-                            <li><span class="font-poppins font-semibold">Civilité:</span> {{$visit->company->company_manager_civility}}</li>
-                            <li><span class="font-poppins font-semibold">Nom:</span> {{$visit->company->company_manager_lastname}}</li>
-                            <li><span class="font-poppins font-semibold">Prénom:</span> {{$visit->company->company_manager_firstname}}</li>
-                            <li><span class="font-poppins font-semibold">Email:</span> {{$visit->company->company_manager_email}}</li>
-                            <li><span class="font-poppins font-semibold">N°téléphone:</span> {{$visit->company->company_manager_tel_number}}</li>
-                        @else
-                            <p>Aucune manager enregistrée pour MMI1.</p>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-            <h4>Remarque</h4>
-            @foreach ($visitsMMI3 as $visit)
-                @if($visit->note = null)
-                    <p>Aucune remarque n'a été renseigné</p>
-                @else
-                    <p>{{$visit->note}}</p>
-                @endif
-            @endforeach
-        </div>
 </x-layout>

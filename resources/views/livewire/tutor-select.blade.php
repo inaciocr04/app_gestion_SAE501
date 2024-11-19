@@ -1,8 +1,7 @@
 <div>
-    <div class="flex items-center space-x-7">
-        <div>
-            <label for="tutor">Tuteur :</label>
-            <select name="tutors_id" id="tutors_id">
+    <div class="flex items-end space-x-7">
+        <label for="tutor" class="text-gray-700 font-bold">Tuteur
+            <select name="tutors_id" id="tutors_id" class="form-select w-full rounded">
                 <option value="">-- Sélectionner un tuteur --</option>
                 @foreach($tutors as $tutor)
                     <option value="{{ $tutor->id }}">
@@ -10,8 +9,8 @@
                     </option>
                 @endforeach
             </select>
-        </div>
-        <button type="button" @click="$dispatch('open-tutor-modal', true)" class="!bg-fourth-color text-white p-2 rounded">
+        </label>
+        <button type="button" @click="$dispatch('open-tutor-modal', true)" class="!bg-fourth-color text-white p-2 rounded mb-1">
             <x-vaadin-plus class="text-white size-4" />
         </button>
     </div>

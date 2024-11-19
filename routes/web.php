@@ -27,7 +27,6 @@ Route::get('/', function () {
     return Auth::check() ? redirect('dashboard') : redirect('login');
 });
 
-Route::get('/account', [HomeController::class, 'show'])->name('account');
 Route::get('/account/modification', [HomeController::class, 'index'])->name('account_modif');
 Route::patch('/account/modification', [HomeController::class, 'updatePassword']);
 Route::put('/account/modifier', [HomeController::class, 'updateAccount'])->name('account.update');

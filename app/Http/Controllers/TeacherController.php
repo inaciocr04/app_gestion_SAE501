@@ -29,14 +29,13 @@ class TeacherController extends Controller
     public function showStudents()
     {
         $teacher = Auth::user()->teacher;
-
         $currentYear = Actual_year::orderBy('id', 'desc')->first();
 
-        // Récupérer les étudiants associés à ce professeur et à l'année actuelle
+        // Récupérer tous les étudiants liés au professeur connecté
         $students = Student::with([
             'trainings.year_training',
             'student_statu',
-            'visits'  // Juste récupérons les visites, pas besoin de year_training ici
+            'visits'
         ])->whereHas('student_statu', function ($query) use ($teacher, $currentYear) {
             $query->where('teacher_id', $teacher->id)
                 ->where('actual_year_id', $currentYear->id);
@@ -44,16 +43,17 @@ class TeacherController extends Controller
 
         $students = $students->filter(function ($student) {
             return $student->visits->contains(function ($visit) {
-                return $visit->company_id !== null;
+                return $visit->company_id !== null || $visit->start_date_visit !== null || $visit->company_id == null;
             });
         });
 
+        // Filtrer les étudiants de MMI2
         $studentsMMI2 = $students->filter(function ($student) {
             $lastTraining = $student->trainings->last();
 
             if ($lastTraining && $lastTraining->year_training->training_title === 'MMI2') {
                 $lastVisitMMI2 = $student->visits
-                    ->filter(fn($visit) => $visit->year_training_id === $lastTraining->year_training_id && is_null($visit->start_date_visit)) // Vérifier si la date de visite est nulle
+                    ->filter(fn($visit) => $visit->year_training_id === $lastTraining->year_training_id)
                     ->sortByDesc('start_date_visit')
                     ->first();
                 if ($lastVisitMMI2) {
@@ -64,12 +64,13 @@ class TeacherController extends Controller
             return false;
         });
 
+        // Filtrer les étudiants de MMI3
         $studentsMMI3 = $students->filter(function ($student) {
             $lastTraining = $student->trainings->last();
 
             if ($lastTraining && $lastTraining->year_training->training_title === 'MMI3') {
                 $lastVisitMMI3 = $student->visits
-                    ->filter(fn($visit) => $visit->year_training_id === $lastTraining->year_training_id && is_null($visit->start_date_visit)) // Vérifier si la date de visite est nulle
+                    ->filter(fn($visit) => $visit->year_training_id === $lastTraining->year_training_id)
                     ->sortByDesc('start_date_visit')
                     ->first();
                 if ($lastVisitMMI3) {
@@ -81,6 +82,7 @@ class TeacherController extends Controller
         });
 
         return view('teacher.student', compact('studentsMMI2', 'studentsMMI3'));
+
     }
 
 
