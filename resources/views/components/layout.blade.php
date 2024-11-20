@@ -208,7 +208,7 @@
             </div>
         </nav>
     </div>
-    <main class="bg-gray-50 w-full h-screen rounded-tl-3xl rounded-bl-3xl flex flex-col overflow-hidden flex-1">
+    <main class="bg-gray-50 w-full h-screen rounded-tl-3xl rounded-bl-3xl flex flex-col overflow-y-scroll overflow-x-hidden lg:overflow-hidden flex-1">
         <div class="bg-sixth-color px-5 flex justify-between items-center rounded-tl-3xl py-3">
             <div class="flex items-center space-x-4">
                 <div class="relative lg:hidden" x-data="{show: false}">
@@ -275,7 +275,7 @@
         @endif
 
         <!-- Section principale -->
-        <section class="px-5 py-5 flex-1 overflow-y-scroll overflow-x-hidden lg:overflow-hidden flex flex-col">
+        <section class="px-5 py-5 flex-1 overflow-y-scroll overflow-x-hidden lg:overflow-hidden flex flex-col mb-12">
             {{$slot}}
         </section>
     </main>

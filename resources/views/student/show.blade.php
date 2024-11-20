@@ -72,32 +72,26 @@
             @endforeach
         </div>
 
-        <div class="bg-secondary-color mt-8 lg:mx-60 py-3 px-8 rounded-2xl h-16 w-96 flex justify-between">
+        <div class="bg-secondary-color mt-8 lg:mx-60 py-3 px-3 lg:px-8 rounded-2xl h-16 w-auto lg:w-96 flex justify-between">
             @if (array_key_exists('MMI2', $dataByTraining))
-                <button
-                    @click="showBut = 'but2'"
-                    :class="{'bg-seventh-color text-white': showBut === 'but2', 'text-white': showBut !== 'but2'}"
-                    class="px-4 py-2 rounded-xl font-bold"
-                >
-                    Parcours BUT 2
-                </button>
+                <div @click="showBut = 'but2'" :class="{'bg-seventh-color text-black': showBut === 'but2', 'text-white': showBut !== 'but2'}"
+                     class="px-6 py-2 rounded-2xl cursor-pointer">
+                    <p>Parcours BUT2</p>
+                </div>
             @endif
             @if (array_key_exists('MMI3', $dataByTraining))
-                <button
-                    @click="showBut = 'but3'"
-                    :class="{'bg-seventh-color text-white': showBut === 'but3', ' text-white': showBut !== 'but3'}"
-                    class="px-4 py-2 rounded-xl font-bold"
-                >
-                    Parcours BUT 3
-                </button>
+                    <div @click="showBut = 'but3'" :class="{'bg-seventh-color text-black': showBut === 'but3', 'text-white': showBut !== 'but3'}"
+                         class="px-6 py-2 rounded-2xl cursor-pointer">
+                        <p>Parcours BUT 3</p>
+                    </div>
             @endif
         </div>
 
         <!-- Information sur le tuteur et l'entreprise -->
         <div class="space-y-8">
-            <h4 class="text-center font-poppins font-semibold text-base">Tuteur et Entreprise</h4>
+            <h4 class="font-bold text-lg mt-4 mb-4 text-center">Tuteur et Entreprise</h4>
 
-            @foreach (['MMI2' => 'but2', 'MMI3' => 'but3'] as $trainingTitle => $buttonKey)
+        @foreach (['MMI2' => 'but2', 'MMI3' => 'but3'] as $trainingTitle => $buttonKey)
                 @if (array_key_exists($trainingTitle, $dataByTraining))
                     <div x-show="showBut === '{{ $buttonKey }}'" class="space-y-8">
                         <p>
