@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         @foreach($actual_years as $actual_year)
-            <tr class="flex justify-between items-center">
+            <tr>
                 <td>{{$actual_year->year_title}}</td>
                 <td class="flex space-x-7">
                     <x-link.link name="Modifier" href="{{route('manager.actual_year.edit', ['actual_year' => $actual_year])}}"/>

@@ -4,7 +4,7 @@
         <thead>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom du dépôt</th>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Lien du dépôt</th>
-        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status du dépôt</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Statut du dépôt</th>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
 
         </thead>

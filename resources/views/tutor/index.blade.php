@@ -61,10 +61,10 @@
             lengthMenu: [12, 10, 5],
             language: {
                 "sEmptyTable": "Aucune donnée disponible dans le tableau",
-                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entreprises",
+                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ tuteurs",
                 "sInfoEmpty": "Affichage de 0 à 0 sur 0 entrées",
                 "sInfoFiltered": "(filtré de _MAX_ entrées au total)",
-                "sLengthMenu": "Afficher _MENU_ entreprises",
+                "sLengthMenu": "Afficher _MENU_ tuteurs",
                 "sLoadingRecords": "Chargement...",
                 "sProcessing": "Traitement...",
                 "sSearch": "Recherche:",

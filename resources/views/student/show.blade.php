@@ -7,7 +7,7 @@
 
     <div x-data="{ showBut: {{ array_key_exists('MMI3', $dataByTraining) ? "'but3'" : "'but2'" }} }">
         <div class="flex justify-center lg:px-60 space-x-6 items-center">
-            <div class="hidden lg:block">
+            <div class="hidden lg:!block">
                 <img class="w-72" src="/img/user_photo.png" alt="">
             </div>
 
@@ -24,7 +24,7 @@
                             </p>
                             @foreach ($dataByTraining[$trainingTitle]['courses'] as $course)
                                 <p>
-                                    <span class="font-poppins font-semibold">Status:</span> {{ $course->training_course->course_title }} en
+                                    <span class="font-poppins font-semibold">Statut:</span> {{ $course->training_course->course_title }} en
                                     @foreach ($dataByTraining[$trainingTitle]['status'] as $studentStatu)
                                         {{ $studentStatu->statu ? $studentStatu->statu->statut_title : 'Statut non défini' }}
                                     @endforeach
@@ -72,7 +72,7 @@
             @endforeach
         </div>
 
-        <div class="bg-secondary-color mt-8 lg:mx-60 py-3 px-3 lg:px-8 rounded-2xl h-16 w-auto lg:w-96 flex justify-between">
+        <div class="bg-secondary-color mt-8 lg:mx-60 py-3 px-3 lg:px-8 rounded-2xl h-16 w-auto lg:!w-96 flex justify-between">
             @if (array_key_exists('MMI2', $dataByTraining))
                 <div @click="showBut = 'but2'" :class="{'bg-seventh-color text-black': showBut === 'but2', 'text-white': showBut !== 'but2'}"
                      class="px-6 py-2 rounded-2xl cursor-pointer">
@@ -150,7 +150,7 @@
                                                 <li><span class="font-poppins font-semibold">Email:</span> {{ $studentStatu->company->company_manager_email }}</li>
                                                 <li><span class="font-poppins font-semibold">N° téléphone:</span> {{ $studentStatu->company->company_manager_tel_number }}</li>
                                             @else
-                                                <p>Aucun manager attribué.</p>
+                                                <p>Aucun manager attribuée.</p>
                                             @endif
                                         @endforeach
                                     </ul>

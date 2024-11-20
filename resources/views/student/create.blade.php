@@ -171,9 +171,9 @@
             </div>
 
             <div x-show="step === 4" class="space-y-4">
-                <h2 class="font-bold text-lg">Informations sur la visite éffectué</h2>
+                <h2 class="font-bold text-lg">Informations sur la visite</h2>
                 <div class="mb-4">
-                    <label class="text-gray-700 font-bold">Visit effectuer ? (Facultatif)</label>
+                    <label class="text-gray-700 font-bold">Visite effectuée ? (Facultatif)</label>
                     <div class="mt-2">
                         <label class="inline-flex items-center">
                             <input type="radio" name="visit_statu" value="oui" class="form-radio">
@@ -190,7 +190,7 @@
                     <x-form.input type="datetime-local" name_label="Date de fin de la visite (Facultatif)" name="end_date_visit" value=""/>
                 </div>
                 <div class="mb-4">
-                    <label class="text-gray-700 font-bold" for="note">Notes (Facultatif)</label>
+                    <label class="text-gray-700 font-bold" for="note">Remarque (Facultatif)</label>
                     <textarea name="note" id="note" rows="4" class=" form-textarea mt-1 block w-full rounded shadow-sm resize-none h-32"></textarea>
                 </div>
 

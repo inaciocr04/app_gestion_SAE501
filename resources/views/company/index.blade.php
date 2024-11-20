@@ -5,12 +5,12 @@
     </div>
             <table id="tableCompany">
                 <thead>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom Entreprise</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Adresse Entreprise</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Code postal Entreprise</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ville Entreprise</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Département Entreprise</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Pays Entreprise</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Adresse</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Code postal</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ville</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Activitée</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Pays</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
 
                 </thead>
