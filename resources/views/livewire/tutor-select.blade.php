@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-end space-x-7">
-        <label for="tutor" class="text-gray-700 font-bold">Tuteur
+        <label for="tutor" class="text-gray-700 font-bold">Tuteur (Facultatif)
             <select name="tutors_id" id="tutors_id" class="form-select w-full rounded">
                 <option value="">-- Sélectionner un tuteur --</option>
                 @foreach($tutors as $tutor)
@@ -40,8 +40,8 @@
                     <label for="civility" class="block text-sm font-medium text-gray-700">Civilité</label>
                     <select id="civility" wire:model="civility" class="form-control w-full p-2 border border-gray-300 rounded">
                         <option value="">Sélectionner</option>
-                        <option value="Mr">Monsieur</option>
-                        <option value="Mme">Madame</option>
+                        <option value="Monsieur">Monsieur</option>
+                        <option value="Madame">Madame</option>
                     </select>
                     @error('civility') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>

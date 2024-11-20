@@ -52,6 +52,6 @@ class CompanyController extends Controller
     {
         $company->delete();
 
-        return redirect()->route('manager.company.index');
+        return redirect()->route('manager.company.index')->with('success', 'L\'entreprise à été supprimé avec succès.');
     }
 }

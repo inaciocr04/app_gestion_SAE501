@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('depot:update-depot-status')->dailyAt('00:00');
+        $schedule->command('update:visit-status')->dailyAt('00:00');
     }
 
     /**

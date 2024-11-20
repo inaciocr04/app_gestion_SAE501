@@ -27,7 +27,7 @@ class GroupTDController extends Controller
         $td_group->fill($data);
         $td_group->save();
 
-        return redirect()->route('td_group.index')->with('status', 'Groupe de TD créer.');
+        return redirect()->route('manager.td_group.index')->with('status', 'Groupe de TD créer.');
 
     }
     public function edit(GroupTD $td_group)
@@ -44,12 +44,12 @@ class GroupTDController extends Controller
         $td_group->td_name = $request->td_name;
         $td_group->save();
 
-        return redirect()->route('td_group.index')->with('status', 'Groupe de TD mis à jour.');
+        return redirect()->route('manager.td_group.index')->with('status', 'Groupe de TD mis à jour.');
     }
 
     public function destroy(GroupTD $td_group)
     {
         $td_group->delete();
-        return redirect()->route('td_group.index')->with('status', 'Groupe de TD supprimer.');
+        return redirect()->route('manager.td_group.index')->with('status', 'Groupe de TD supprimer.');
     }
 }

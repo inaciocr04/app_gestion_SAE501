@@ -35,6 +35,12 @@
                     <x-form.input name_label="Code postal" name="postcode" value=""/>
                     <x-form.input name_label="Ville" name="city" value=""/>
                 </div>
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
+                    <x-form.input name_label="Numéro de téléphone permanent (Facultatif)" name="permanent_telephone_number" value=""/>
+                    <x-form.input name_label="Adresse permanente (Facultatif)" name="permanent_address" value=""/>
+                    <x-form.input name_label="Code postal permanent (Facultatif)" name="permanent_postcode" value=""/>
+                    <x-form.input name_label="Ville permanente (Facultatif)" name="permanent_city" value=""/>
+                </div>
                 <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4 w-fit" @click="step++">Suivant <x-heroicon-c-arrow-long-right class="w-6 h-auto" /></p>
             </div>
 
@@ -66,7 +72,7 @@
                         </label>
                     </div>
                     <div class="flex items-center w-full">
-                        <label for="training_courses" class="w-full text-gray-700 font-bold">Parcours
+                        <label for="training_courses" class="w-full text-gray-700 font-bold">Parcours (Facultatif)
                             <select name="training_courses_id" id="training_courses_id" required class="form-select w-full rounded">
                                 <option value="">-- Sélectionner un parcour --</option>
                             @foreach($training_courses as $training_course)
@@ -121,8 +127,8 @@
                 </div>
                 <x-form.input type="date" name_label="Date de début parcours" name="start_date" value=""/>
                 <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
-                    <x-form.input type="date" name_label="Date de début du status" name="start_date_status" value=""/>
-                    <x-form.input type="date" name_label="Date de fin du status" name="end_date_status" value=""/>
+                    <x-form.input type="date" name_label="Date de début du status (Facultatif)" name="start_date_status" value=""/>
+                    <x-form.input type="date" name_label="Date de fin du status (Facultatif)" name="end_date_status" value=""/>
                 </div>
                 <div class="flex space-x-7">
                     <p class="flex bg-seventh-color px-6 py-2 rounded-lg mt-4" @click="step--"><x-heroicon-c-arrow-long-left class="w-6 h-auto" /> Précédent</p>
@@ -138,7 +144,7 @@
                     <livewire:company-select/>
                 </div>
                 <div class="flex items-center w-full">
-                    <label for="teacher" class="w-full text-gray-700 font-bold">Professeur
+                    <label for="teacher" class="w-full text-gray-700 font-bold">Professeur (Facultatif)
                         <select name="teachers_id" id="teachers_id" class="form-select w-full rounded">
                             @if(empty($teachers_id))
                                 <option value="">-- Sélectionner un professeur --</option>
@@ -154,8 +160,8 @@
                 </div>
 
                 <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
-                    <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value=""/>
-                    <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value=""/>
+                    <x-form.input type="date" name_label="Date de début en entreprise (Facultatif)" name="start_date_company" value=""/>
+                    <x-form.input type="date" name_label="Date de fin en entreprise (Facultatif)" name="end_date_company" value=""/>
                 </div>
 
                 <div class="flex space-x-7">
@@ -167,7 +173,7 @@
             <div x-show="step === 4" class="space-y-4">
                 <h2 class="font-bold text-lg">Informations sur la visite éffectué</h2>
                 <div class="mb-4">
-                    <label class="text-gray-700 font-bold">Visit effectuer ?</label>
+                    <label class="text-gray-700 font-bold">Visit effectuer ? (Facultatif)</label>
                     <div class="mt-2">
                         <label class="inline-flex items-center">
                             <input type="radio" name="visit_statu" value="oui" class="form-radio">
@@ -180,11 +186,11 @@
                     </div>
                 </div>
                 <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
-                    <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value=""/>
-                    <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value=""/>
+                    <x-form.input type="datetime-local" name_label="Date de début de la visite (Facultatif)" name="start_date_visit" value=""/>
+                    <x-form.input type="datetime-local" name_label="Date de fin de la visite (Facultatif)" name="end_date_visit" value=""/>
                 </div>
                 <div class="mb-4">
-                    <label class="text-gray-700 font-bold" for="note">Notes </label>
+                    <label class="text-gray-700 font-bold" for="note">Notes (Facultatif)</label>
                     <textarea name="note" id="note" rows="4" class=" form-textarea mt-1 block w-full rounded shadow-sm resize-none h-32"></textarea>
                 </div>
 

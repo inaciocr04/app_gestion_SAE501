@@ -1,5 +1,8 @@
 <x-layout title="Tous les enseignants">
-         <table id="tableTeacher">
+    <div class="flex space-x-7 mb-6">
+        <x-link.link name="Créer un enseignant" href="{{route('manager.teacher.create')}}"/>
+    </div>
+    <table id="tableTeacher">
              <thead>
              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom</th>
              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Prénom</th>
@@ -12,7 +15,8 @@
                      <td> {{$teacher->lastname}}</td>
                      <td>{{ $teacher->firstname }}</td>
                      <td>{{ $teacher->unistra_email }}</td>
-                     <td>
+                     <td class="flex space-x-2">
+                         <x-link.link name="Modifier" href="{{route('manager.teacher.edit', ['teacher' => $teacher])}}"/>
                          <form action="{{route('manager.teacher.destroy', ['teacher' => $teacher])}}" method="POST">
                              @csrf
                              @method('DELETE')

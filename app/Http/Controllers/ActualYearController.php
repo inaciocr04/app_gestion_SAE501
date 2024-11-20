@@ -27,7 +27,7 @@ class ActualYearController extends Controller
         $actual_year->fill($data);
         $actual_year->save();
 
-        return redirect()->route('actual_year.index')->with('status', 'Année scolaire créer.');
+        return redirect()->route('manager.actual_year.index')->with('status', 'Année scolaire créer.');
 
     }
     public function edit(Actual_year $actual_year)
@@ -44,12 +44,12 @@ class ActualYearController extends Controller
         $actual_year->year_title = $request->year_title;
         $actual_year->save();
 
-        return redirect()->route('actual_year.index')->with('status', 'Annee scolaire mis à jour.');
+        return redirect()->route('manager.actual_year.index')->with('status', 'Annee scolaire mis à jour.');
     }
 
     public function destroy(Actual_year $actual_year)
     {
         $actual_year->delete();
-        return redirect()->route('actual_year.index')->with('status', 'Année scolaire supprimer.');
+        return redirect()->route('manager.actual_year.index')->with('status', 'Année scolaire supprimer.');
     }
 }

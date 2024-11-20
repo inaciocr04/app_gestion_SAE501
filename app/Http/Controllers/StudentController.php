@@ -368,4 +368,27 @@ class StudentController extends Controller
         return redirect()->route('global.students')->with('success', 'Étudiant mis à jour avec succès.');
     }
 
+    public function destroy(Student $student)
+    {
+
+        try {
+            // Supprimer les relations associées à l'étudiant
+            $student->visits()->delete(); // Supprimer les visites de l'étudiant
+            $student->student_statu()->delete(); // Supprimer les statuts de l'étudiant
+            $student->courses()->delete(); // Supprimer les cours de l'étudiant
+            $student->trainings()->delete(); // Supprimer les formations de l'étudiant
+
+            // Supprimer l'étudiant lui-même
+            $student->delete();
+
+
+            return redirect()->route('global.students')->with('success', 'Étudiant supprimé avec succès.');
+        } catch (\Exception $e) {
+
+            Log::error('Erreur lors de la suppression de l\'étudiant : ' . $e->getMessage());
+            return redirect()->route('global.students')->with('error', 'Une erreur est survenue lors de la suppression de l\'étudiant.');
+        }
+    }
+
+
 }

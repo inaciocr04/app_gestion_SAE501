@@ -77,12 +77,16 @@
                             </td>
                         @endcanany
                         @canany(['update', 'delete'], $student)
-                            <td>
+                            <td class="space-y-2">
                                 @can('update', $student)
                                     <x-link.link name="Modifier" href="{{route('manager.student.edit', ['student' => $student])}}"/>
                                 @endcan
                                 @can('delete', $student)
-                                    Delete
+                                    <form action="{{ route('manager.student.destroy', ['student' => $student]) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-form.button name="Supprimer"/>
+                                    </form>
                                 @endcan
                             </td>
                         @endcanany

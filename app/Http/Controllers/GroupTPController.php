@@ -28,7 +28,7 @@ class GroupTPController extends Controller
         $tp_group->fill($data);
         $tp_group->save();
 
-        return redirect()->route('tp_group.index')->with('status', 'Groupe de TP créer.');
+        return redirect()->route('manager.tp_group.index')->with('status', 'Groupe de TP créer.');
 
     }
     public function edit(GroupTP $tp_group)
@@ -45,12 +45,12 @@ class GroupTPController extends Controller
         $tp_group->tp_name = $request->tp_name;
         $tp_group->save();
 
-        return redirect()->route('tp_group.index')->with('status', 'Groupe de TP mis à jour.');
+        return redirect()->route('manager.tp_group.index')->with('status', 'Groupe de TP mis à jour.');
     }
 
     public function destroy(GroupTP $tp_group)
     {
         $tp_group->delete();
-        return redirect()->route('tp_group.index')->with('status', 'Groupe de TP supprimer.');
+        return redirect()->route('manager.tp_group.index')->with('status', 'Groupe de TP supprimer.');
     }
 }

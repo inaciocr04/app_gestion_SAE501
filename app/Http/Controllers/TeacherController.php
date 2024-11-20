@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherRequest;
 use App\Models\Actual_year;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -19,11 +20,43 @@ class TeacherController extends Controller
         return view('manager.teachers', ['teachers' => $teachers]);
     }
 
+    public function create()
+    {
+        return view('teacher.create');
+    }
+
+    public function store(TeacherRequest $request)
+    {
+        $data = $request->validated();
+        $teacher = new Teacher();
+        $teacher->fill($data);
+        $teacher->save();
+
+        return redirect()->route('manager.teachers')->with('success', 'Enseignant ajouté avec succès.');
+    }
+
+    public function edit(teacher $teacher)
+    {
+
+        return view('teacher.edit', [
+            'teacher' => $teacher,
+        ]);
+    }
+
+    public function update(TeacherRequest $request, teacher $teacher)
+    {
+        $data = $request->validated();
+        $teacher->fill($data);
+        $teacher->save();
+
+        return redirect()->route('manager.teachers')->with('success', 'Enseignant mis à jour avec succès.');
+    }
+
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
 
-        return redirect()->route('manager.teachers');
+        return redirect()->route('manager.teachers')->with('success', 'Enseignant supprimé avec succès.');
     }
 
     public function showStudents()

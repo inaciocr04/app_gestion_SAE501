@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-end space-x-7">
-        <label for="teacher" class="text-gray-700 font-bold">Entreprise
+        <label for="teacher" class="text-gray-700 font-bold">Entreprise (Facultatif)
             <select name="companies_id" id="companies_id" class="form-select w-full rounded">
                 <option value="">-- Sélectionner une entreprise --</option>
                 @foreach($companies as $company)
@@ -28,6 +28,12 @@
 
         <div class="bg-white p-6 rounded-lg shadow-lg z-10 w-full m-6 lg:!w-2/3 lg:m-0 max-h-screen overflow-auto" @click.stop>
             <h2 class="text-lg font-bold mb-4">Créer une Entreprise et un Tuteur</h2>
+
+            @if (session()->has('success'))
+                <div class="bg-green-500 text-white p-2 rounded mb-3">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             <form wire:submit.prevent="addCompany" class="space-y-4">
                 <div class="mb-4">
@@ -70,8 +76,8 @@
                     <label for="company_manager_civility" class="block text-sm font-medium text-gray-700">Civilité</label>
                     <select id="company_manager_civility" wire:model="company_manager_civility" class="form-control w-full p-2 border border-gray-300 rounded">
                         <option value="">Sélectionner</option>
-                        <option value="Mr">Monsieur</option>
-                        <option value="Mme">Madame</option>
+                        <option value="Monsieur">Monsieur</option>
+                        <option value="Madame">Madame</option>
                     </select>
                     @error('company_manager_civility') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
