@@ -190,10 +190,12 @@
                                 </a>
                             </div>
                             <template x-if="showLogoutForm">
-                                <div>
+                                <div class="w-60">
                                     <p>Êtes-vous sûr de vouloir vous déconnecter ?</p>
-                                    <button @click.prevent="$refs.logoutForm.submit()" class="text-red-500">Oui</button>
-                                    <button @click.prevent="showLogoutForm = false" class="text-gray-500">Non</button>
+                                    <div class="space-x-4">
+                                        <button @click.prevent="$refs.logoutForm.submit()" class="text-red-500 !bg-secondary-color text-white rounded-lg px-4 py-2">Oui</button>
+                                        <button @click.prevent="showLogoutForm = false" class="text-gray-500 !bg-red-400 text-white rounded-lg px-4 py-2">Non</button>
+                                    </div>
                                 </div>
                             </template>
                             <form x-ref="logoutForm" action="{{ route('logout') }}" method="POST" class="hidden">
