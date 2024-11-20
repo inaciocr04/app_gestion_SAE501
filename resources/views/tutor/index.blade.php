@@ -1,8 +1,8 @@
 <x-layout title="Liste des tuteurs">
-<div class="flex items-center space-x-7 mb-6">
-    <x-link.back href="{{route('manager.company.index')}}"/>
-    <x-link.link name="Créer un tuteur" href="{{route('manager.tutor.create')}}" class="mb-5"/>
-</div>
+    <div class="flex space-x-7 mb-6">
+        <x-link.back href="{{route('manager.company.index')}}"/>
+        <x-link.link name="Créer un tuteur" href="{{route('manager.tutor.create')}}"/>
+    </div>
     <table id="tableTeacher">
                 <thead>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Civilité</th>
@@ -47,6 +47,15 @@
         $('#tableTeacher').DataTable({
             paging: true,
             searching: true,
+            scrollY: '400px',
+            scrollX: true,
+            responsive: {
+                details: {
+                    type: 'inline',
+                    target: 'tr'
+                }
+            },
+            autoWidth: false,
             ordering: true,
             pageLength: 12,
             lengthMenu: [12, 10, 5],

@@ -63,8 +63,8 @@
                 </span>
             </div>
 
+            <x-form.button name="Mettre à jour le dépôt"/>
 
-            <button type="submit" class="btn btn-primary">Mettre à jour le dépôt</button>
         </form>
     </div>
 </x-layout>

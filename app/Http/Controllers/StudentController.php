@@ -100,41 +100,35 @@ class StudentController extends Controller
         $student = Student::with([
             'trainings.year_training',
             'student_statu',
-            'visits.year_training'
+            'visits.year_training',
+            'courses.year_training',
         ])->where('user_id', $user->id)->firstOrFail();
 
-        $mmi2 = $student->trainings->firstWhere('year_training.training_title', 'MMI2');
-        $mmi3 = $student->trainings->firstWhere('year_training.training_title', 'MMI3');
+        // Préparer les données pour MMI2 et MMI3
+        $dataByTraining = [];
 
-        $visitsMMI2 = $student->visits->filter(function ($visit) use ($mmi2) {
-            return $visit->year_training_id === optional($mmi2)->year_training_id;
-        });
+        foreach (['MMI2', 'MMI3'] as $trainingTitle) {
+            $mmi = $student->trainings->firstWhere('year_training.training_title', $trainingTitle);
 
-        $visitsMMI3 = $student->visits->filter(function ($visit) use ($mmi3) {
-            return $visit->year_training_id === optional($mmi3)->year_training_id;
-        });
-
-        $statusMMI2 = $student->student_statu->filter(function ($studentStatu) use ($mmi2) {
-            return $studentStatu->year_training_id === optional($mmi2)->year_training_id;
-        });
-
-        $statusMMI3 = $student->student_statu->filter(function ($studentStatu) use ($mmi3) {
-            return $studentStatu->year_training_id === optional($mmi3)->year_training_id;
-        });
-
-        $coursesMMI2 = $student->courses->where('year_training.training_title', 'MMI2');
-        $coursesMMI3 = $student->courses->where('year_training.training_title', 'MMI3');
+            if ($mmi) {
+                $dataByTraining[$trainingTitle] = [
+                    'training' => $mmi,
+                    'status' => $student->student_statu->filter(function ($status) use ($mmi) {
+                        return $status->year_training_id === $mmi->year_training_id;
+                    }),
+                    'visits' => $student->visits->filter(function ($visit) use ($mmi) {
+                        return $visit->year_training_id === $mmi->year_training_id;
+                    }),
+                    'courses' => $student->courses->filter(function ($course) use ($mmi) {
+                        return $course->year_training->training_title === $mmi->year_training->training_title;
+                    }),
+                ];
+            }
+        }
 
         return view('student.show', [
             'student' => $student,
-            'mmi2' => $mmi2,
-            'mmi3' => $mmi3,
-            'statusMMI2' => $statusMMI2,
-            'statusMMI3' => $statusMMI3,
-            'visitsMMI2' => $visitsMMI2,
-            'visitsMMI3' => $visitsMMI3,
-            'coursesMMI2' => $coursesMMI2,
-            'coursesMMI3' => $coursesMMI3,
+            'dataByTraining' => $dataByTraining,
         ]);
     }
 

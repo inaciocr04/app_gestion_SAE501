@@ -1,5 +1,5 @@
 <x-layout title="Année scolaire">
-    <div class="flex space-x-2">
+    <div class="flex space-x-2 mb-6">
         <x-link.back href="{{route('manager.groupes.index')}}"/>
         <x-link.link name="Créer une année" href="{{route('manager.actual_year.create')}}"/>
     </div>
@@ -33,15 +33,24 @@
             paging: true,
             searching: true,
             ordering: true,
+            scrollY: '400px',
+            scrollX: true,
+            responsive: {
+                details: {
+                    type: 'inline',
+                    target: 'tr'
+                }
+            },
+            autoWidth: false,
             pageLength: 15,
             lengthMenu: [15, 10, 5],
             order: [[0, 'desc']],
             language: {
                 "sEmptyTable": "Aucune donnée disponible dans le tableau",
-                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entreprises",
+                "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ années",
                 "sInfoEmpty": "Affichage de 0 à 0 sur 0 entrées",
                 "sInfoFiltered": "(filtré de _MAX_ entrées au total)",
-                "sLengthMenu": "Afficher _MENU_ entreprises",
+                "sLengthMenu": "Afficher _MENU_ années",
                 "sLoadingRecords": "Chargement...",
                 "sProcessing": "Traitement...",
                 "sSearch": "Recherche:",

@@ -30,7 +30,7 @@ class TutorController extends Controller
         $tutor->fill($data);
         $tutor->save();
 
-        return redirect()->route('tutor.index')->with('success', 'Tuteur ajouté avec succès.');
+        return redirect()->route('manager.tutor.index')->with('success', 'Tuteur ajouté avec succès.');
     }
 
     public function edit(Tutor $tutor)
@@ -49,14 +49,14 @@ class TutorController extends Controller
         $tutor->fill($data);
         $tutor->save();
 
-        return redirect()->route('tutor.index')->with('success', 'Tuteur mis à jour avec succès.');
+        return redirect()->route('manager.tutor.index')->with('success', 'Tuteur mis à jour avec succès.');
     }
 
     public function destroy(Tutor $tutor)
     {
         $tutor->delete();
 
-        return redirect()->route('tutor.index')->with('success', 'Tuteur supprimer avec succès.');
+        return redirect()->route('manager.tutor.index')->with('success', 'Tuteur supprimer avec succès.');
     }
 
 }

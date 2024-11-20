@@ -32,12 +32,12 @@
                     <input type="hidden" name="year_training_id" value="{{ $visit->year_training_id }}">
                 </div>
             </div>
-            <div class="flex space-x-20">
+            <div class=" block space-y-7 lg:flex lg:space-x-20 lg:space-y-0">
                 <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value="{{ old('start_date_visit', $visit->start_date_visit) }}"/>
                 <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value="{{ old('end_date_visit', $visit->end_date_visit) }}"/>
             </div>
             <div class="mb-4">
-                <label for="visit_statu" class="block text-gray-700 font-bold">Statut de la visite</label>
+                <label for="visit_statu" class="block text-gray-700 font-bold">Visite effectué ?</label>
                 <select name="visit_statu" id="visit_statu" class="w-full px-4 py-2 border rounded">
                     <option value="NON" {{ old('visit_statu', 'non') === 'non' ? 'selected' : '' }}>Non</option>
                     <option value="OUI" {{ old('visit_statu') === 'oui' ? 'selected' : '' }}>Oui</option>

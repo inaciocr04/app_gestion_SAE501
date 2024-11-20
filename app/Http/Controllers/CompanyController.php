@@ -31,7 +31,7 @@ class CompanyController extends Controller
         $company->fill($data);
         $company->save();
 
-        return redirect()->route('company.index');
+        return redirect()->route('manager.company.index')->with('success', 'L\'entreprise à été ajouté avec succès.');
 
     }
 
@@ -46,12 +46,12 @@ class CompanyController extends Controller
         $company->fill($data);
         $company->save();
 
-        return redirect()->route('company.show', ['company' => $company]);
+        return redirect()->route('manager.company.show', ['company' => $company])->with('success', 'L\'entreprise à été modifié avec succès.');;
     }
     public function destroy(Company $company)
     {
         $company->delete();
 
-        return redirect()->route('company.index');
+        return redirect()->route('manager.company.index');
     }
 }

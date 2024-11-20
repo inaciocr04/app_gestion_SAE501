@@ -43,7 +43,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'someFunction'])->name('dashboard');
     Route::get('students', [StudentController::class, 'students'])->name('global.students');
-    Route::resource('/user', UserController::class);
 });
 
 Route::middleware(UserIsStudent::class)->group(function () {
@@ -68,6 +67,7 @@ Route::name('manager.')
     ->prefix('/manager')
     ->middleware(UserIsManager::class)
     ->group(function () {
+        Route::resource('/user', UserController::class);
         Route::get('/manager', [ImportController::class, 'showImporForm'])->name('index');
         Route::post('/manager/import', [ImportController::class, 'import'])->name('import');
         Route::get('/user', [UserController::class, 'index'])->name('user.index');

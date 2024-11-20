@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (calendarEl) {
         let calendar = new Calendar(calendarEl, {
             plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-            initialView: window.innerWidth < 1024 ? 'listWeek' : 'timeGridWeek',
+            initialView: window.innerWidth < 1024 ? 'timeGridDay' : 'timeGridWeek',
             locale: 'fr',
             headerToolbar: {
                 left: 'prev,next today',
@@ -49,7 +49,15 @@ document.addEventListener('DOMContentLoaded', function () {
         calendar.render();
 
         document.querySelectorAll('.fc-button').forEach(button => {
-            button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded', 'hover:bg-blue-600');
+            button.classList.add(
+                'bg-blue-500',
+                'text-white',
+                'px-4', 'py-2',
+                'rounded',
+                'hover:bg-blue-600',
+                'text-sm',
+                'md:text-base'
+            );
         });
     }
 
@@ -57,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (managerCalendar) {
         let calendar = new Calendar(managerCalendar, {
             plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-            initialView: window.innerWidth < 1024 ? 'listWeek' : 'timeGridWeek',
+            initialView: window.innerWidth < 1024 ? 'timeGridDay' : 'timeGridWeek',
             locale: 'fr',
             headerToolbar: {
                 left: 'prev,next today',
@@ -97,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.fc-button').forEach(button => {
             button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded', 'hover:bg-blue-600');
         });
+        document.querySelector('.fc-toolbar-title').classList.add('text-md', 'lg:text-2xl');
     }
 
     document.getElementById('closeCalendarModal').addEventListener('click', function () {

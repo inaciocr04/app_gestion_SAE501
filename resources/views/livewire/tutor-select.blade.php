@@ -26,7 +26,7 @@
          @click.away="open = false"
          style="display: none;">
 
-        <div class="bg-white p-6 rounded-lg shadow-lg z-10 w-2/3" @click.stop>
+        <div class="bg-white p-6 rounded-lg shadow-lg z-10 w-full m-6 lg:!w-2/3 lg:m-0 max-h-screen overflow-auto" @click.stop>
             <h2 class="text-lg font-bold mb-4">Créer une Entreprise et un Tuteur</h2>
 
             @if (session()->has('success'))

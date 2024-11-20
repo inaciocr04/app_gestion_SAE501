@@ -30,6 +30,15 @@
         $('#tableTeacher').DataTable({
             paging: true,
             searching: true,
+            scrollY: '400px',
+            scrollX: true,
+            responsive: {
+                details: {
+                    type: 'inline',
+                    target: 'tr'
+                }
+            },
+            autoWidth: false,
             ordering: true,
             pageLength: 12,
             lengthMenu: [12, 10, 5],

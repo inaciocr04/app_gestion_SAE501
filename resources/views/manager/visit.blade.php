@@ -25,3 +25,10 @@
     </div>
 </x-layout>
 
+<script>
+    window.onload = function () {
+        document.querySelector('.fc-toolbar.fc-header-toolbar').classList.add('flex', 'flex-wrap', 'justify-between', 'items-center', 'w-full');
+    };
+
+</script>
+

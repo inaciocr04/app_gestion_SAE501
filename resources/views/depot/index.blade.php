@@ -40,6 +40,15 @@
         $('#tableDepot').DataTable({
             paging: true,
             searching: true,
+            scrollY: '400px',
+            scrollX: true,
+            responsive: {
+                details: {
+                    type: 'inline',
+                    target: 'tr'
+                }
+            },
+            autoWidth: false,
             ordering: true,
             pageLength: 15,
             lengthMenu: [15, 10, 5],

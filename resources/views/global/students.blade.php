@@ -3,7 +3,7 @@
         <x-link.link name="Créer un étudiant" href="{{route('manager.student.create')}}"/>
     @endcanany
     <div x-data="{ showBut : 'but1' }" class="mt-6">
-        <div class="flex space-x-28 m-auto items-center  justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
+        <div class="flex flex-wrap sm:flex-row xs:space-y-4 lg:space-x-28 m-auto items-center justify-center w-fit xs:px-6 sm:px-8 lg:px-24 py-4 bg-secondary-color rounded-2xl">
             @foreach (['but1' => 'BUT1', 'but2' => 'BUT2', 'but3' => 'BUT3'] as $but => $but_label)
             <div @click="showBut = '{{ $but }}'" :class="{'bg-seventh-color text-black': showBut === '{{ $but }}', 'text-white': showBut !== '{{ $but }}'}"
                     class="px-6 py-2 rounded-2xl cursor-pointer">
@@ -79,7 +79,7 @@
                         @canany(['update', 'delete'], $student)
                             <td>
                                 @can('update', $student)
-                                    <a href="{{route('manager.student.edit', ['student' => $student])}}">update</a>
+                                    <x-link.link name="Modifier" href="{{route('manager.student.edit', ['student' => $student])}}"/>
                                 @endcan
                                 @can('delete', $student)
                                     Delete
@@ -97,7 +97,16 @@
                 $('#table_{{ $but }}').DataTable({
                     paging: true,
                     searching: true,
+                    scrollY: '400px',
+                    scrollX: true,
+                    responsive: {
+                        details: {
+                            type: 'inline',
+                            target: 'tr'
+                        }
+                    },
                     ordering: true,
+                    autoWidth: false,
                     pageLength: 8,
                     lengthMenu: [5,8,10, 15],
                     language: {

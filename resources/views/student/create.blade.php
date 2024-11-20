@@ -17,20 +17,20 @@
             <div x-show="step === 1" class="space-y-4">
 
                     <h2 class="font-bold text-lg">Informations personnelles</h2>
-                <div class="flex w-full space-x-7">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input name_label="Nom" name="lastname" value=""/>
                     <x-form.input name_label="Prénom" name="firstname" value=""/>
                     <x-form.input name_label="Date de naissance" name="date_birth" type="date" value=""/>
                 </div>
-                <div class="flex w-full space-x-7">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input name_label="Numéro étudiant" name="student_number" value=""/>
                     <x-form.input name_label="Email unistra" name="unistra_email" type="email" value=""/>
                 </div>
-                <div class="flex w-full space-x-7">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input name_label="Numéro de téléphone" name="telephone_number" value=""/>
                     <x-form.input name_label="Email personnel" name="personal_email" type="email" value=""/>
                 </div>
-                <div class="flex space-x-7">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input name_label="Adresse" name="address" value=""/>
                     <x-form.input name_label="Code postal" name="postcode" value=""/>
                     <x-form.input name_label="Ville" name="city" value=""/>
@@ -40,7 +40,7 @@
 
             <div x-show="step === 2" class="space-y-4">
                 <h2 class="font-bold text-lg">Informations personnelles</h2>
-                <div class="flex space-x-20">
+                <div class="block lg:flex space-y-4 lg:space-y-0 lg:space-x-20">
                     <div class="flex items-center w-full">
                         <label for="year_training" class="w-full text-gray-700 font-bold">Formation
                             <select name="year_training_id" id="year_training_id" required class="form-select w-full rounded">
@@ -78,7 +78,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="flex space-x-20">
+                <div class="block lg:flex space-y-4 lg:space-y-0 lg:space-x-20">
                     <div class="flex items-center w-full">
                         <label for="td_group" class="w-full text-gray-700 font-bold">Groupe de TD
                             <select name="group_td_id" id="group_td_id" required class="form-select w-full rounded">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <x-form.input type="date" name_label="Date de début parcours" name="start_date" value=""/>
-                <div class="flex space-x-7">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input type="date" name_label="Date de début du status" name="start_date_status" value=""/>
                     <x-form.input type="date" name_label="Date de fin du status" name="end_date_status" value=""/>
                 </div>
@@ -132,7 +132,7 @@
 
             <div x-show="step === 3" class="space-y-4">
                 <h2 class="font-bold text-lg">Informations entreprises</h2>
-                <div class="flex space-x-20">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <livewire:tutor-select/>
 
                     <livewire:company-select/>
@@ -153,7 +153,7 @@
                     </label>
                 </div>
 
-                <div class="flex space-x-20">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input type="date" name_label="Date de début en entreprise" name="start_date_company" value=""/>
                     <x-form.input type="date" name_label="Date de fin en entreprise" name="end_date_company" value=""/>
                 </div>
@@ -179,7 +179,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="flex space-x-20">
+                <div class="block lg:flex w-full space-y-4 lg:space-y-0 lg:space-x-7">
                     <x-form.input type="datetime-local" name_label="Date de début de la visite" name="start_date_visit" value=""/>
                     <x-form.input type="datetime-local" name_label="Date de fin de la visite" name="end_date_visit" value=""/>
                 </div>

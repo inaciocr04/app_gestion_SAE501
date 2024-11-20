@@ -3,7 +3,7 @@
     <div class="flex flex-col justify-center items-center">
         <form action="{{route('manager.company.store')}}" method="POST" class="space-y-7 w-full">
             @csrf
-            <div class="flex justify-evenly">
+            <div class=" block lg:flex justify-evenly">
                 <div class="space-y-7">
                     <h2 class="font-bold text-lg">Information de l'entreprise</h2>
                     <div>
@@ -14,13 +14,13 @@
                         <x-form.input name_label="Adresse de l'entreprise" name="company_address"/>
                         <x-form.input name_label="Code postal de l'entreprise" name="company_postcode"/>
                     </div>
-                    <div class="flex justify-evenly space-x-4">
+                    <div class="block lg:flex justify-evenly space-y-4 lg:space-x-4 lg:space-y-0">
                         <x-form.input name_label="Ville de l'entreprise" name="company_city"/>
                         <x-form.input name_label="Pays de l'entreprise" name="company_country"/>
                     </div>
                 </div>
                 <div class="space-y-7">
-                    <h2 class="font-bold text-lg">Manager</h2>
+                    <h2 class="font-bold text-lg mt-4 lg:mt-0">Manager de l'entreprise</h2>
                     <div class="flex flex-col space-y-7">
                         <label>
                             Civilité du manager/manageuse

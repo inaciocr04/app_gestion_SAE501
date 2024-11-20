@@ -9,19 +9,19 @@
     @vite('resources/css/app.css')
 
 </head>
-<body class="font-sans antialiased bg-bg-primary-color flex h-screen ">
-    <header class=" w-3/6 px-10 py-28 flex flex-col space-y-20 text-white justify-between items-center">
-        <div class="space-y-24">
-            <h1 class="text-7xl font-custom font-extrabold">Bienvenue,</h1>
-            <p class="text-4xl">Voici le gestionnaire de stage et d’apprentissage des MMI,</p>
-            <p class="text-2xl">{{$infoForm}}</p>
+<body class="font-sans antialiased bg-bg-primary-color lg:flex h-screen space-y-8 lg:space-y-0 ">
+    <header class=" h-2/6 lg:h-auto lg:w-3/6 px-10 py-6 lg:py-28 flex flex-col space-y-4 lg:space-y-20 text-white justify-between items-center">
+        <div class=" space-y-4 lg:space-y-24">
+            <h1 class=" text-4xl lg:text-7xl font-custom font-extrabold">Bienvenue,</h1>
+            <p class=" text-lg lg:text-4xl">Voici le gestionnaire de stage et d’apprentissage des MMI,</p>
+            <p class=" text-lg lg:text-2xl">{{$infoForm}}</p>
         </div>
-        <img class="w-96 h-auto" src="/img/logo_iut_hauguenau.png" alt="">
+        <img class="w-64 lg:w-96 h-auto" src="/img/logo_iut_hauguenau.png" alt="">
     </header>
-    <main class="bg-gray-50 w-screen rounded-tl-3xl rounded-bl-3xl">
+    <main class="bg-gray-50 w-screen lg:rounded-tl-3xl lg:rounded-bl-3xl">
         <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img class="mx-auto h-24 w-auto" src="/img/logo_universite_de_strasbourg.png" alt="Your Company">
+                <img class="mx-auto h-16 lg:h-24 w-auto" src="/img/logo_universite_de_strasbourg.png" alt="Your Company">
                 <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">{{ $titleForm }}</h2>
             </div>
 

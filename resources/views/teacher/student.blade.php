@@ -1,7 +1,7 @@
 <x-layout title="Mes visites étudiants">
     <div x-data="{ showBut: 'but2' }" class="mt-6">
         <!-- Boutons de navigation -->
-        <div class="flex flex-wrap sm:flex-row xs:space-y-4 lg:space-x-28 m-auto items-center justify-center w-fit xs:px-6 sm:px-8 lg:px-24 py-4 bg-secondary-color rounded-2xl">
+        <div class="flex flex-wrap sm:flex-row xs:space-y-4 lg:space-x-28 m-auto items-center justify-center w-fit px-6 sm:px-8 lg:px-24 py-4 bg-secondary-color rounded-2xl">
             @foreach (['but2' => 'BUT2', 'but3' => 'BUT3'] as $key => $label)
                 <div
                     @click="showBut = '{{ $key }}'"
@@ -51,8 +51,12 @@
                                 @endif
                             </td>
                             <td>
+                                @if($student->last_visit->start_date_visit)
                                 Du {{ \Carbon\Carbon::parse($student->last_visit->start_date_visit)->format('d M Y à H:i') }} au
                                 {{ \Carbon\Carbon::parse($student->last_visit->end_date_visit)->format('d M Y à H:i') }}
+                                @else
+                                    N/A
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <x-link.link
@@ -63,7 +67,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4">Aucun étudiant trouvé</td>
+                            <td>Aucun étudiant trouvé</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
                         </tr>
                     @endforelse
                     </tbody>

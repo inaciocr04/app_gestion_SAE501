@@ -1,6 +1,6 @@
 <x-layout title="Tableau de Bord Etudiant">
     <div x-data="{ showBut : 'but1' }" class="mt-6">
-        <div class="flex space-x-28 m-auto items-center justify-center w-fit px-24 py-4 bg-secondary-color rounded-2xl">
+        <div class="flex flex-wrap sm:flex-row xs:space-y-4 lg:space-x-28 m-auto items-center justify-center w-fit xs:px-6 sm:px-8 lg:px-24 py-4 bg-secondary-color rounded-2xl">
             @foreach (['but1' => 'BUT1', 'but2' => 'BUT2', 'but3' => 'BUT3'] as $but => $label)
                 <div @click="showBut = '{{ $but }}'"
                      :class="{'bg-seventh-color text-black': showBut === '{{ $but }}', 'text-white': showBut !== '{{ $but }}'}"
@@ -20,7 +20,7 @@
                     <div>
                         @foreach ($visitsByTraining[$groupKey] as $visit)
                             @if($visit && $visit->company)
-                                <div class="flex justify-evenly">
+                                <div class="block lg:flex lg:flex-row lg:justify-evenly">
                                     <p><span class="font-poppins font-semibold">Nom de l'entreprise:</span> {{ $visit->company->company_name }}</p>
                                     <p><span class="font-poppins font-semibold">Adresse:</span> {{ $visit->company->company_address }}, {{ $visit->company->company_city }}, {{ $visit->company->company_postcode }}</p>
                                     <p><span class="font-poppins font-semibold">Pays:</span> {{ $visit->company->company_country }}</p>
@@ -41,15 +41,12 @@
                     <div class="space-y-2">
                         @foreach ($statusByTraining[$groupKey] as $status)
                             @if($status->tutor)
-                                <div class="flex justify-evenly">
+                                <div class="block lg:flex lg:flex-row lg:justify-evenly">
                                     <p><span class="font-poppins font-semibold">Civilité:</span> {{ $status->tutor->civility }}</p>
                                     <p><span class="font-poppins font-semibold">Nom:</span> {{ $status->tutor->lastname }}</p>
                                     <p><span class="font-poppins font-semibold">Prénom:</span> {{ $status->tutor->firstname }}</p>
                                     <p><span class="font-poppins font-semibold">Email:</span> {{ $status->tutor->email }}</p>
                                     <p><span class="font-poppins font-semibold">N°téléphone:</span> {{ $status->tutor->telephone_number }}</p>
-                                </div>
-                                <div class="flex justify-evenly">
-
                                 </div>
                             @else
                                 <p>Aucun tuteur enregistré pour {{ $groupKey }}.</p>
@@ -66,15 +63,12 @@
                     <div class="space-y-2">
                         @foreach ($managersByTraining[$groupKey] as $manager)
                             @if($manager)
-                                <div class="flex justify-evenly">
+                                <div class="block lg:flex lg:flex-row lg:justify-evenly">
                                     <p><span class="font-poppins font-semibold">Civilité:</span> {{ $manager->company_manager_civility }}</p>
                                     <p><span class="font-poppins font-semibold">Nom:</span> {{ $manager->company_manager_lastname }}</p>
                                     <p><span class="font-poppins font-semibold">Prénom:</span> {{ $manager->company_manager_firstname }}</p>
                                     <p><span class="font-poppins font-semibold">Email:</span> {{ $manager->company_manager_email }}</p>
                                     <p><span class="font-poppins font-semibold">N°téléphone:</span> {{ $manager->company_manager_tel_number }}</p>
-                                </div>
-                                <div class="flex justify-evenly">
-
                                 </div>
                                 @else
                                 <p>Aucun manager enregistré pour {{ $groupKey }}.</p>
