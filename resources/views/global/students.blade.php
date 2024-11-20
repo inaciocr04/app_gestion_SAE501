@@ -24,7 +24,6 @@
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date de début</th>
                     @canany(['viewTutor'], \App\Models\Student::class)
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">tuteur enseignant</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Visits</th>
                     @endcanany
                     @canany(['updateAny', 'deleteAny'], \App\Models\Student::class)
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
@@ -63,16 +62,6 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($student->student_statu->isNotEmpty())
                                     {{$student->student_statu->last()->teacher ? $student->student_statu->last()->teacher->firstname .' '. $student->student_statu->last()->teacher->lastname : 'N/A'}}
-                                @else
-                                    N/A
-                                @endif
-                            </td>
-                            <td>
-                                @if($student->visits->last()->start_date_visit >= now())
-                                    Visite prévu le
-                                    ({{$student->visits->last()->start_date_visit ? $student->visits->last()->start_date_visit : 'N/A'}})
-                                @elseif($student->visits->last()->start_date_visit <= now())
-                                    Visite déjà éffectuer
                                 @else
                                     N/A
                                 @endif
