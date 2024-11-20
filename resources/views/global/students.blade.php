@@ -12,8 +12,8 @@
             @endforeach
         </div>
         @foreach (['but1' => 'MMI1', 'but2' => 'MMI2', 'but3' => 'MMI3'] as $but => $students_key)
-        <div x-show="showBut === '{{ $but }}'" class="mt-6">
-            <table id="table_{{ $but }}" class="display">
+        <div x-show="showBut === '{{ $but }}'" class="mt-6 overflow-x-scroll" >
+            <table id="table_{{ $but }}">
                 <thead>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N°étudiant</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom</th>
@@ -71,8 +71,10 @@
                                 @if($student->visits->last()->start_date_visit >= now())
                                     Visite prévu le
                                     ({{$student->visits->last()->start_date_visit ? $student->visits->last()->start_date_visit : 'N/A'}})
-                                @else
+                                @elseif($student->visits->last()->start_date_visit <= now())
                                     Visite déjà éffectuer
+                                @else
+                                    N/A
                                 @endif
                             </td>
                         @endcanany
@@ -96,22 +98,20 @@
             </table>
         </div>
             <script>
-            window.addEventListener('load',
-            function () {
+            window.addEventListener('load', function () {
+
                 $('#table_{{ $but }}').DataTable({
                     paging: true,
                     searching: true,
-                    scrollY: '400px',
-                    scrollX: true,
                     responsive: {
                         details: {
                             type: 'inline',
                             target: 'tr'
                         }
                     },
-                    ordering: true,
                     autoWidth: false,
-                    pageLength: 8,
+                    ordering: true,
+                    pageLength: 5,
                     lengthMenu: [5,8,10, 15],
                     language: {
                         "sEmptyTable": "Aucune donnée disponible dans le tableau",
